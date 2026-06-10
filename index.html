@@ -534,7 +534,7 @@ function showResults(data) {
       var r = p.sampleReviews[xi];
       revHtml += '<div class="review"><div class="r-stars">' + stars(r.stars) + ' ' + r.stars + '/5</div><div class="r-txt">"' + r.text + '"</div><div class="r-auth">- ' + r.author + '</div></div>';
     }
-    var amzLink = 'https://www.amazon.com/s?tag=neocomparison-20&k=' + encodeURIComponent(p.affiliateSearch || p.name);
+    var amzLink = p.asin ? 'https://www.amazon.com/dp/' + p.asin + '?tag=neocomparison-20' : 'https://www.amazon.com/s?tag=neocomparison-20&k=' + encodeURIComponent(p.affiliateSearch || p.name);
     var alreadyWatching = false;
     for (var xi = 0; xi < wl.length; xi++) { if (wl[xi].name === p.name) { alreadyWatching = true; break; } }
     var pname = p.name.replace(/'/g, "\\'");

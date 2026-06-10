@@ -496,6 +496,13 @@ function animSteps() {
 }
 
 function showResults(data) {
+  if (!data || !data.products || !data.products.length) {
+    var eb = document.getElementById("errBox");
+    eb.style.display = "block";
+    eb.textContent = "Could not parse results. Please try again.";
+    document.getElementById("emptyState").style.display = "block";
+    return;
+  }
   document.getElementById('resHdr').style.display = 'flex';
   document.getElementById('resTtl').textContent = data.query || 'Results';
   document.getElementById('resMeta').textContent = data.products.length + ' products analyzed';

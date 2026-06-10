@@ -6,7 +6,7 @@
 <title>NeoComparison — AI Product Comparisons</title>
 <style>
 * { margin: 0; padding: 0; box-sizing: border-box; }
-
+ 
 [data-theme="dark"] {
   --bg: #0a0a0f;
   --bg2: #12121a;
@@ -31,7 +31,7 @@
   --input-bg: #1a1a26;
   --star: #f59e0b;
 }
-
+ 
 [data-theme="light"] {
   --bg: #f8f8fc;
   --bg2: #f0f0f8;
@@ -56,9 +56,9 @@
   --input-bg: #f0f0f8;
   --star: #d97706;
 }
-
+ 
 body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; line-height: 1.6; transition: background 0.3s, color 0.3s; }
-
+ 
 /* NAV */
 nav { display: flex; align-items: center; justify-content: space-between; padding: 1rem 2rem; border-bottom: 1px solid var(--border); position: sticky; top: 0; background: var(--nav-bg); backdrop-filter: blur(12px); z-index: 100; }
 .logo { font-size: 1.2rem; font-weight: 800; letter-spacing: -0.03em; color: var(--text); }
@@ -70,7 +70,7 @@ nav { display: flex; align-items: center; justify-content: space-between; paddin
 .nav-btn.primary:hover { background: var(--accent2); }
 .theme-toggle { width: 36px; height: 36px; border-radius: 8px; border: 1px solid var(--border2); background: none; cursor: pointer; font-size: 1rem; display: flex; align-items: center; justify-content: center; transition: all 0.2s; }
 .theme-toggle:hover { background: var(--accent-bg); }
-
+ 
 /* HERO */
 .hero { text-align: center; padding: 4rem 2rem 2.5rem; max-width: 780px; margin: 0 auto; }
 .hero-label { display: inline-block; background: var(--accent-bg); color: var(--accent2); font-size: 0.75rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; padding: 0.3rem 0.85rem; border-radius: 100px; border: 1px solid rgba(108,99,255,0.25); margin-bottom: 1.25rem; }
@@ -90,7 +90,7 @@ h1 { font-size: clamp(2rem, 5vw, 3rem); font-weight: 800; letter-spacing: -0.03e
 .quick-picks { display: flex; gap: 0.5rem; flex-wrap: wrap; justify-content: center; margin-top: 0.75rem; }
 .quick-pick { background: var(--bg3); border: 1px solid var(--border); border-radius: 100px; padding: 0.35rem 0.85rem; font-size: 0.78rem; color: var(--text2); cursor: pointer; transition: all 0.2s; font-family: inherit; }
 .quick-pick:hover { border-color: var(--accent); color: var(--accent2); background: var(--accent-bg); }
-
+ 
 /* RESULTS */
 .results-section { max-width: 1100px; margin: 0 auto; padding: 0 2rem 4rem; }
 .loading-state { text-align: center; padding: 4rem 2rem; display: none; }
@@ -132,7 +132,7 @@ h1 { font-size: clamp(2rem, 5vw, 3rem); font-weight: 800; letter-spacing: -0.03e
 .pc-item { font-size: 0.78rem; color: var(--text2); padding: 0.15rem 0; line-height: 1.4; }
 .verdict-box { background: var(--bg3); border-radius: 10px; padding: 0.85rem 1rem; font-size: 0.82rem; color: var(--text2); line-height: 1.5; border-left: 3px solid var(--accent); margin-bottom: 1rem; }
 .verdict-box.green { border-left-color: var(--green); }
-
+ 
 /* REVIEWS SECTION */
 .reviews-section { margin-bottom: 1rem; }
 .reviews-label { font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em; color: var(--text3); margin-bottom: 0.6rem; display: flex; align-items: center; gap: 0.4rem; }
@@ -140,15 +140,15 @@ h1 { font-size: clamp(2rem, 5vw, 3rem); font-weight: 800; letter-spacing: -0.03e
 .review-stars { color: var(--star); font-size: 0.75rem; margin-bottom: 0.2rem; }
 .review-text { font-size: 0.78rem; color: var(--text2); line-height: 1.4; font-style: italic; }
 .review-author { font-size: 0.7rem; color: var(--text3); margin-top: 0.3rem; }
-
+ 
 .affiliate-btn { display: block; width: 100%; background: var(--accent-bg); color: var(--accent2); border: 1px solid rgba(108,99,255,0.25); border-radius: 10px; padding: 0.6rem; font-size: 0.83rem; font-weight: 600; text-align: center; cursor: pointer; text-decoration: none; transition: all 0.2s; font-family: inherit; }
 .affiliate-btn:hover { background: rgba(108,99,255,0.2); color: #fff; }
-
+ 
 /* WATCHLIST BTN */
 .watchlist-btn { display: block; width: 100%; margin-top: 0.5rem; background: var(--amber-bg); color: var(--amber); border: 1px solid rgba(245,158,11,0.25); border-radius: 10px; padding: 0.6rem; font-size: 0.83rem; font-weight: 600; text-align: center; cursor: pointer; transition: all 0.2s; font-family: inherit; }
 .watchlist-btn:hover { background: rgba(245,158,11,0.2); }
 .watchlist-btn.added { background: var(--green-bg); color: var(--green); border-color: rgba(34,211,160,0.25); }
-
+ 
 /* SPECS TABLE */
 .comparison-table-wrap { background: var(--card); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; margin-bottom: 1.5rem; display: none; }
 .table-header { padding: 1rem 1.5rem; border-bottom: 1px solid var(--border); }
@@ -159,20 +159,20 @@ td { padding: 0.8rem 1.25rem; border-bottom: 1px solid var(--border); color: var
 tr:last-child td { border-bottom: none; }
 tr:hover td { background: var(--accent-bg); }
 td:first-child { color: var(--text); font-weight: 500; }
-
+ 
 /* AI SUMMARY */
 .ai-summary { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 1.5rem; display: none; margin-bottom: 1.5rem; }
 .ai-summary-label { display: flex; align-items: center; gap: 0.5rem; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em; color: var(--accent2); margin-bottom: 0.75rem; }
 .ai-dot { width: 7px; height: 7px; background: var(--accent); border-radius: 50%; animation: pulse 2s ease-in-out infinite; }
 @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.5;transform:scale(0.8)} }
 .ai-summary-text { font-size: 0.9rem; color: var(--text2); line-height: 1.7; }
-
+ 
 .empty-state { text-align: center; padding: 5rem 2rem; }
 .empty-icon { font-size: 3rem; margin-bottom: 1rem; opacity: 0.3; }
 .empty-title { font-size: 1.1rem; font-weight: 700; color: var(--text); margin-bottom: 0.5rem; }
 .empty-sub { font-size: 0.88rem; color: var(--text3); }
 .error-box { background: var(--red-bg); border: 1px solid rgba(239,68,68,0.2); border-radius: 12px; padding: 1rem 1.25rem; color: var(--red); font-size: 0.85rem; display: none; margin-bottom: 1rem; }
-
+ 
 /* MODAL */
 .modal-overlay { position: fixed; inset: 0; background: var(--modal-bg); z-index: 1000; display: none; align-items: center; justify-content: center; padding: 1rem; }
 .modal-overlay.open { display: flex; }
@@ -197,7 +197,7 @@ td:first-child { color: var(--text); font-weight: 500; }
 .divider::before, .divider::after { content: ''; position: absolute; top: 50%; width: 42%; height: 1px; background: var(--border); }
 .divider::before { left: 0; }
 .divider::after { right: 0; }
-
+ 
 /* WATCHLIST PANEL */
 .watchlist-panel { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 1.5rem; display: none; margin-bottom: 1.5rem; }
 .watchlist-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem; }
@@ -208,18 +208,18 @@ td:first-child { color: var(--text); font-weight: 500; }
 .watchlist-item-meta { font-size: 0.75rem; color: var(--text3); }
 .watchlist-remove { background: none; border: none; color: var(--text3); cursor: pointer; font-size: 1rem; padding: 0.2rem 0.4rem; border-radius: 6px; }
 .watchlist-remove:hover { background: var(--red-bg); color: var(--red); }
-
+ 
 /* USER MENU */
 .user-badge { display: flex; align-items: center; gap: 0.5rem; background: var(--accent-bg); border: 1px solid rgba(108,99,255,0.25); border-radius: 8px; padding: 0.35rem 0.75rem; font-size: 0.82rem; color: var(--accent2); cursor: pointer; font-family: inherit; }
-
+ 
 /* NOTIFICATION TOAST */
 .toast { position: fixed; bottom: 2rem; right: 2rem; background: var(--card); border: 1px solid var(--border2); border-radius: 12px; padding: 0.85rem 1.25rem; font-size: 0.85rem; color: var(--text); z-index: 2000; transform: translateY(100px); opacity: 0; transition: all 0.3s; max-width: 300px; box-shadow: 0 8px 32px rgba(0,0,0,0.2); }
 .toast.show { transform: translateY(0); opacity: 1; }
 .toast-icon { margin-right: 0.5rem; }
-
+ 
 footer { border-top: 1px solid var(--border); padding: 2rem; text-align: center; color: var(--text3); font-size: 0.8rem; }
 footer a { color: var(--text2); text-decoration: none; }
-
+ 
 @media (max-width: 600px) {
   nav { padding: 0.75rem 1rem; }
   .hero { padding: 2.5rem 1rem 1.5rem; }
@@ -230,7 +230,7 @@ footer a { color: var(--text2); text-decoration: none; }
 </style>
 </head>
 <body>
-
+ 
 <!-- NAV -->
 <nav>
   <div class="logo">Neo<span>Comparison</span></div>
@@ -249,7 +249,7 @@ footer a { color: var(--text2); text-decoration: none; }
     <button class="theme-toggle" onclick="toggleTheme()" title="Toggle theme" id="themeBtn">🌙</button>
   </div>
 </nav>
-
+ 
 <!-- AUTH MODAL -->
 <div class="modal-overlay" id="authModal">
   <div class="modal">
@@ -296,7 +296,7 @@ footer a { color: var(--text2); text-decoration: none; }
     </div>
   </div>
 </div>
-
+ 
 <!-- MAIN -->
 <div class="hero">
   <div class="hero-label">✦ AI-Powered · Review-Analyzed</div>
@@ -318,10 +318,10 @@ footer a { color: var(--text2); text-decoration: none; }
     <button class="quick-pick" onclick="setQuery('Traeger vs Weber pellet grill')">🔥 Traeger vs Weber</button>
   </div>
 </div>
-
+ 
 <div class="results-section">
   <div class="error-box" id="errorBox"></div>
-
+ 
   <div class="loading-state" id="loadingState">
     <div class="spinner"></div>
     <div class="loading-text">Analyzing products & reviews...</div>
@@ -332,7 +332,7 @@ footer a { color: var(--text2); text-decoration: none; }
       <div class="loading-step" id="step4">⟳ Final verdict</div>
     </div>
   </div>
-
+ 
   <!-- WATCHLIST PANEL -->
   <div class="watchlist-panel" id="watchlistPanel">
     <div class="watchlist-header">
@@ -341,12 +341,12 @@ footer a { color: var(--text2); text-decoration: none; }
     </div>
     <div id="watchlistItems"><div class="watchlist-empty">No products on your watchlist yet.<br>Compare products and click "Watch for deals" to get sale alerts.</div></div>
   </div>
-
+ 
   <div class="results-header" id="resultsHeader">
     <div class="results-title" id="resultsTitle">Comparison Results</div>
     <div class="results-meta" id="resultsMeta"></div>
   </div>
-
+ 
   <div class="winner-banner" id="winnerBanner">
     <div class="winner-icon">🏆</div>
     <div>
@@ -355,51 +355,51 @@ footer a { color: var(--text2); text-decoration: none; }
       <div class="winner-reason" id="winnerReason"></div>
     </div>
   </div>
-
+ 
   <div class="products-grid" id="productsGrid"></div>
-
+ 
   <div class="comparison-table-wrap" id="compTableWrap">
     <div class="table-header"><span class="table-title">Side-by-side specs</span></div>
     <div style="overflow-x:auto"><table id="compTable"></table></div>
   </div>
-
+ 
   <div class="ai-summary" id="aiSummary">
     <div class="ai-summary-label"><div class="ai-dot"></div> AI Verdict — Based on Real Reviews</div>
     <div class="ai-summary-text" id="aiSummaryText"></div>
   </div>
-
+ 
   <div class="empty-state" id="emptyState">
     <div class="empty-icon">⚖️</div>
     <div class="empty-title">Ready to compare</div>
     <div class="empty-sub">Enter any two products above for an AI breakdown based on real customer reviews</div>
   </div>
 </div>
-
+ 
 <div class="toast" id="toast"><span class="toast-icon"></span><span id="toastMsg"></span></div>
-
+ 
 <footer>
   <p>NeoComparison uses AI to analyze real customer reviews. Affiliate links support the site at no extra cost to you.</p>
   <p style="margin-top:0.5rem"><a href="#">Privacy</a> · <a href="#">Affiliate Disclosure</a> · <a href="#">About</a></p>
 </footer>
-
+ 
 <script>
 // STATE
 let currentUser = JSON.parse(localStorage.getItem('neo_user') || 'null');
 let watchlist = JSON.parse(localStorage.getItem('neo_watchlist') || '[]');
 let currentTheme = localStorage.getItem('neo_theme') || 'dark';
-
+ 
 // INIT
 document.documentElement.setAttribute('data-theme', currentTheme);
 document.getElementById('themeBtn').textContent = currentTheme === 'dark' ? '☀️' : '🌙';
 updateNavAuth();
-
+ 
 function toggleTheme() {
   currentTheme = currentTheme === 'dark' ? 'light' : 'dark';
   document.documentElement.setAttribute('data-theme', currentTheme);
   document.getElementById('themeBtn').textContent = currentTheme === 'dark' ? '☀️' : '🌙';
   localStorage.setItem('neo_theme', currentTheme);
 }
-
+ 
 // AUTH
 function updateNavAuth() {
   if (currentUser) {
@@ -413,20 +413,20 @@ function updateNavAuth() {
     document.getElementById('navUser').style.display = 'none';
   }
 }
-
+ 
 function openModal(tab) {
   document.getElementById('authModal').classList.add('open');
   switchTab(tab);
 }
-
+ 
 function closeModal() {
   document.getElementById('authModal').classList.remove('open');
 }
-
+ 
 document.getElementById('authModal').addEventListener('click', function(e) {
   if (e.target === this) closeModal();
 });
-
+ 
 function switchTab(tab) {
   document.getElementById('loginForm').style.display = tab === 'login' ? 'block' : 'none';
   document.getElementById('registerForm').style.display = tab === 'register' ? 'block' : 'none';
@@ -435,7 +435,7 @@ function switchTab(tab) {
   document.getElementById('modalTitle').textContent = tab === 'login' ? 'Welcome back' : 'Create your account';
   document.getElementById('modalSub').textContent = tab === 'login' ? 'Sign in to track price drops and get sale alerts' : 'Get notified when your watchlist items go on sale';
 }
-
+ 
 function handleLogin() {
   const email = document.getElementById('loginEmail').value.trim();
   const pass = document.getElementById('loginPassword').value;
@@ -449,7 +449,7 @@ function handleLogin() {
   updateNavAuth();
   showToast('✅', 'Welcome back, ' + (user.name || user.email) + '!');
 }
-
+ 
 function handleRegister() {
   const name = document.getElementById('regName').value.trim();
   const email = document.getElementById('regEmail').value.trim();
@@ -468,14 +468,14 @@ function handleRegister() {
   updateNavAuth();
   showToast('🎉', 'Account created! Welcome, ' + name + '!');
 }
-
+ 
 function logout() {
   currentUser = null;
   localStorage.removeItem('neo_user');
   updateNavAuth();
   showToast('👋', 'Signed out successfully');
 }
-
+ 
 // WATCHLIST
 function toggleWatchlist() {
   const panel = document.getElementById('watchlistPanel');
@@ -483,7 +483,7 @@ function toggleWatchlist() {
   panel.style.display = isVisible ? 'none' : 'block';
   if (!isVisible) renderWatchlist();
 }
-
+ 
 function renderWatchlist() {
   const container = document.getElementById('watchlistItems');
   if (watchlist.length === 0) {
@@ -500,7 +500,7 @@ function renderWatchlist() {
     </div>
   `).join('');
 }
-
+ 
 function addToWatchlist(name, searchQuery) {
   if (!currentUser) { openModal('register'); showToast('🔔', 'Create an account to track deals!'); return; }
   if (watchlist.find(w => w.name === name)) { showToast('ℹ️', 'Already on your watchlist!'); return; }
@@ -511,14 +511,14 @@ function addToWatchlist(name, searchQuery) {
     if (btn.dataset.product === name) { btn.textContent = '✓ Watching for deals'; btn.className = 'watchlist-btn added'; }
   });
 }
-
+ 
 function removeFromWatchlist(index) {
   watchlist.splice(index, 1);
   localStorage.setItem('neo_watchlist', JSON.stringify(watchlist));
   renderWatchlist();
   showToast('🗑️', 'Removed from watchlist');
 }
-
+ 
 // TOAST
 function showToast(icon, msg) {
   const toast = document.getElementById('toast');
@@ -527,15 +527,15 @@ function showToast(icon, msg) {
   toast.classList.add('show');
   setTimeout(() => toast.classList.remove('show'), 3000);
 }
-
+ 
 // SEARCH
 function setQuery(q) {
   document.getElementById('searchInput').value = q;
   document.getElementById('searchInput').focus();
 }
-
+ 
 document.getElementById('searchInput').addEventListener('keydown', e => { if (e.key === 'Enter') runComparison(); });
-
+ 
 async function runComparison() {
   const query = document.getElementById('searchInput').value.trim();
   if (!query) return;
@@ -552,11 +552,11 @@ async function runComparison() {
   const loading = document.getElementById('loadingState');
   loading.style.display = 'block';
   animateSteps();
-
+ 
   const prompt = `You are an expert product reviewer who has read thousands of real customer reviews. The user wants to compare: "${query}"
-
+ 
 Analyze these products as if you've read hundreds of Amazon, Reddit, and YouTube reviews. Include real-sounding review quotes that reflect common customer sentiments.
-
+ 
 Return ONLY valid JSON (no markdown, no backticks) in this exact structure:
 {
   "query": "short comparison title",
@@ -597,7 +597,7 @@ Return ONLY valid JSON (no markdown, no backticks) in this exact structure:
   ],
   "summary": "3-4 sentence verdict based on review analysis. Mention specific things reviewers love and hate. Give clear buying advice."
 }`;
-
+ 
   try {
     const res = await fetch('https://icy-hill-1036.neocaleband.workers.dev', {
       method: 'POST',
@@ -620,7 +620,7 @@ Return ONLY valid JSON (no markdown, no backticks) in this exact structure:
     document.getElementById('emptyState').style.display = 'block';
   }
 }
-
+ 
 function animateSteps() {
   const steps = ['step1','step2','step3','step4'];
   let i = 0;
@@ -630,9 +630,9 @@ function animateSteps() {
     else clearInterval(interval);
   }, 800);
 }
-
+ 
 function starStr(n) { return '★'.repeat(Math.round(n)) + '☆'.repeat(5 - Math.round(n)); }
-
+ 
 function renderResults(data) {
   document.getElementById('resultsHeader').style.display = 'flex';
   document.getElementById('resultsTitle').textContent = data.query || 'Comparison Results';

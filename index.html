@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NeoComparison - AI Product Comparisons</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+[data-theme="dark"] {
+  --bg:#0a0a0f;--bg2:#12121a;--bg3:#1a1a26;--card:#16161f;
+  --border:rgba(255,255,255,0.08);--border2:rgba(255,255,255,0.14);
+  --text:#f0f0f5;--text2:#9090a8;--text3:#5a5a72;
+  --accent:#6c63ff;--accent2:#8b84ff;--accent-bg:rgba(108,99,255,0.12);
+  --green:#22d3a0;--green-bg:rgba(34,211,160,0.1);
+  --amber:#f59e0b;--amber-bg:rgba(245,158,11,0.1);
+  --red:#ef4444;--red-bg:rgba(239,68,68,0.1);
+  --nav-bg:rgba(10,10,15,0.92);--modal-bg:rgba(0,0,0,0.7);--input-bg:#1a1a26;--star:#f59e0b;
+}
+[data-theme="light"] {
+  --bg:#f8f8fc;--bg2:#f0f0f8;--bg3:#e8e8f4;--card:#ffffff;
+  --border:rgba(0,0,0,0.08);--border2:rgba(0,0,0,0.14);
+  --text:#0a0a1a;--text2:#4a4a6a;--text3:#8a8aaa;
+  --accent:#6c63ff;--accent2:#4f46e5;--accent-bg:rgba(108,99,255,0.08);
+  --green:#059669;--green-bg:rgba(5,150,105,0.08);
+  --amber:#d97706;--amber-bg:rgba(217,119,6,0.08);
+  --red:#dc2626;--red-bg:rgba(220,38,38,0.08);
+  --nav-bg:rgba(248,248,252,0.92);--modal-bg:rgba(0,0,0,0.5);--input-bg:#f0f0f8;--star:#d97706;
+}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;line-height:1.6;transition:background 0.3s,color 0.3s;}
+nav{display:flex;align-items:center;justify-content:space-between;padding:1rem 2rem;border-bottom:1px solid var(--border);position:sticky;top:0;background:var(--nav-bg);backdrop-filter:blur(12px);z-index:100;}
+.logo{font-size:1.2rem;font-weight:800;letter-spacing:-0.03em;color:var(--text);}
+.logo span{color:var(--accent);}
+.nav-right{display:flex;align-items:center;gap:0.75rem;}
+.nav-btn{background:none;border:1px solid var(--border2);border-radius:8px;padding:0.4rem 0.85rem;font-size:0.82rem;color:var(--text2);cursor:pointer;font-family:inherit;transition:all 0.2s;}
+.nav-btn:hover{background:var(--accent-bg);color:var(--accent2);border-color:var(--accent);}
+.nav-btn.primary{background:var(--accent);color:#fff;border-color:var(--accent);}
+.nav-btn.primary:hover{opacity:0.9;}
+.theme-btn{width:36px;height:36px;border-radius:8px;border:1px solid var(--border2);background:none;cursor:pointer;font-size:1rem;display:flex;align-items:center;justify-content:center;transition:all 0.2s;}
+.theme-btn:hover{background:var(--accent-bg);}
+.hero{text-align:center;padding:4rem 2rem 2.5rem;max-width:780px;margin:0 auto;}
+.hero-badge{display:inline-block;background:var(--accent-bg);color:var(--accent2);font-size:0.75rem;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;padding:0.3rem 0.85rem;border-radius:100px;border:1px solid rgba(108,99,255,0.25);margin-bottom:1.25rem;}
+h1{font-size:clamp(2rem,5vw,3rem);font-weight:800;letter-spacing:-0.03em;line-height:1.15;margin-bottom:1rem;color:var(--text);}
+[data-theme="dark"] h1{background:linear-gradient(135deg,#fff 40%,#9090a8);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.hero-sub{font-size:1rem;color:var(--text2);max-width:500px;margin:0 auto 2rem;}
+.search-box{background:var(--card);border:1px solid var(--border2);border-radius:16px;padding:1.25rem 1.5rem;margin-bottom:1rem;text-align:left;}
+.search-lbl{font-size:0.72rem;font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:0.07em;margin-bottom:0.6rem;}
+.search-row{display:flex;gap:0.75rem;align-items:center;}
+.search-inp{flex:1;background:var(--input-bg);border:1px solid var(--border);border-radius:10px;padding:0.7rem 1rem;color:var(--text);font-size:0.92rem;outline:none;transition:border-color 0.2s;font-family:inherit;}
+.search-inp:focus{border-color:var(--accent);}
+.search-inp::placeholder{color:var(--text3);}
+.cmp-btn{background:var(--accent);color:#fff;border:none;border-radius:10px;padding:0.7rem 1.4rem;font-size:0.92rem;font-weight:600;cursor:pointer;transition:all 0.2s;font-family:inherit;white-space:nowrap;}
+.cmp-btn:hover{opacity:0.9;transform:translateY(-1px);}
+.cmp-btn:disabled{opacity:0.5;cursor:not-allowed;transform:none;}
+.picks{display:flex;gap:0.5rem;flex-wrap:wrap;justify-content:center;margin-top:0.75rem;}
+.pick{background:var(--bg3);border:1px solid var(--border);border-radius:100px;padding:0.35rem 0.85rem;font-size:0.78rem;color:var(--text2);cursor:pointer;transition:all 0.2s;font-family:inherit;}
+.pick:hover{border-color:var(--accent);color:var(--accent2);background:var(--accent-bg);}
+.results{max-width:1100px;margin:0 auto;padding:0 2rem 4rem;}
+.loader{text-align:center;padding:4rem 2rem;display:none;}
+.spinner{width:40px;height:40px;border:3px solid var(--border2);border-top-color:var(--accent);border-radius:50%;animation:spin 0.8s linear infinite;margin:0 auto 1rem;}
+@keyframes spin{to{transform:rotate(360deg);}}
+.loader-txt{color:var(--text2);font-size:0.92rem;}
+.steps{display:flex;justify-content:center;gap:1.5rem;margin-top:1rem;flex-wrap:wrap;}
+.step{font-size:0.78rem;color:var(--text3);}
+.step.on{color:var(--accent2);}
+.step.ok{color:var(--green);}
+.res-hdr{display:none;align-items:center;justify-content:space-between;margin-bottom:1.5rem;}
+.res-ttl{font-size:1.2rem;font-weight:700;letter-spacing:-0.02em;}
+.res-meta{font-size:0.8rem;color:var(--text3);}
+.winner{background:var(--green-bg);border:1px solid rgba(34,211,160,0.2);border-radius:14px;padding:1.25rem 1.5rem;margin-bottom:1.5rem;display:none;align-items:center;gap:1rem;}
+.winner-icon{width:42px;height:42px;background:rgba(34,211,160,0.2);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.3rem;flex-shrink:0;}
+.winner-lbl{font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;color:var(--green);margin-bottom:0.2rem;}
+.winner-name{font-size:1rem;font-weight:700;color:var(--text);}
+.winner-why{font-size:0.83rem;color:var(--text2);margin-top:0.2rem;}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1rem;margin-bottom:1.5rem;}
+.card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:1.5rem;transition:border-color 0.2s;}
+.card.top{border-color:rgba(34,211,160,0.4);}
+.card-top{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:1rem;}
+.pname{font-size:1rem;font-weight:700;color:var(--text);}
+.pcat{font-size:0.75rem;color:var(--text3);margin-top:0.15rem;}
+.badge{background:var(--accent-bg);color:var(--accent2);border:1px solid rgba(108,99,255,0.25);border-radius:8px;padding:0.25rem 0.55rem;font-size:0.82rem;font-weight:700;white-space:nowrap;}
+.badge.win{background:var(--green-bg);color:var(--green);border-color:rgba(34,211,160,0.25);}
+.bars{margin-bottom:1.25rem;}
+.bar-row{display:flex;align-items:center;gap:0.75rem;margin-bottom:0.45rem;}
+.bar-lbl{font-size:0.75rem;color:var(--text2);width:85px;flex-shrink:0;}
+.bar-bg{flex:1;height:5px;background:var(--bg3);border-radius:100px;overflow:hidden;}
+.bar-fill{height:100%;border-radius:100px;background:var(--accent);transition:width 1s ease;}
+.bar-fill.g{background:var(--green);}
+.bar-val{font-size:0.75rem;font-weight:600;color:var(--text2);width:28px;text-align:right;}
+.pc{display:grid;grid-template-columns:1fr 1fr;gap:0.75rem;margin-bottom:1rem;}
+.pros,.cons{background:var(--bg3);border-radius:10px;padding:0.75rem;}
+.pc-lbl{font-size:0.68rem;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;margin-bottom:0.5rem;}
+.pros .pc-lbl{color:var(--green);}
+.cons .pc-lbl{color:var(--red);}
+.pc-item{font-size:0.78rem;color:var(--text2);padding:0.15rem 0;line-height:1.4;}
+.verdict{background:var(--bg3);border-radius:10px;padding:0.85rem 1rem;font-size:0.82rem;color:var(--text2);line-height:1.5;border-left:3px solid var(--accent);margin-bottom:1rem;}
+.verdict.g{border-left-color:var(--green);}
+.reviews-lbl{font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;color:var(--text3);margin-bottom:0.6rem;}
+.review{background:var(--bg3);border-radius:8px;padding:0.65rem 0.85rem;margin-bottom:0.5rem;}
+.r-stars{color:var(--star);font-size:0.75rem;margin-bottom:0.2rem;}
+.r-txt{font-size:0.78rem;color:var(--text2);line-height:1.4;font-style:italic;}
+.r-auth{font-size:0.7rem;color:var(--text3);margin-top:0.3rem;}
+.amz-btn{display:block;width:100%;margin-top:1rem;background:var(--accent-bg);color:var(--accent2);border:1px solid rgba(108,99,255,0.25);border-radius:10px;padding:0.6rem;font-size:0.83rem;font-weight:600;text-align:center;cursor:pointer;text-decoration:none;transition:all 0.2s;font-family:inherit;}
+.amz-btn:hover{background:rgba(108,99,255,0.2);color:#fff;}
+.watch-btn{display:block;width:100%;margin-top:0.5rem;background:var(--amber-bg);color:var(--amber);border:1px solid rgba(245,158,11,0.25);border-radius:10px;padding:0.6rem;font-size:0.83rem;font-weight:600;text-align:center;cursor:pointer;transition:all 0.2s;font-family:inherit;}
+.watch-btn:hover{background:rgba(245,158,11,0.2);}
+.watch-btn.added{background:var(--green-bg);color:var(--green);border-color:rgba(34,211,160,0.25);}
+.tbl-wrap{background:var(--card);border:1px solid var(--border);border-radius:16px;overflow:hidden;margin-bottom:1.5rem;display:none;}
+.tbl-hdr{padding:1rem 1.5rem;border-bottom:1px solid var(--border);font-size:0.88rem;font-weight:600;color:var(--text);}
+table{width:100%;border-collapse:collapse;font-size:0.83rem;}
+th{padding:0.8rem 1.25rem;text-align:left;font-size:0.75rem;font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:0.06em;border-bottom:1px solid var(--border);background:var(--bg3);}
+td{padding:0.8rem 1.25rem;border-bottom:1px solid var(--border);color:var(--text2);vertical-align:top;}
+tr:last-child td{border-bottom:none;}
+tr:hover td{background:var(--accent-bg);}
+td:first-child{color:var(--text);font-weight:500;}
+.ai-box{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:1.5rem;display:none;margin-bottom:1.5rem;}
+.ai-lbl{display:flex;align-items:center;gap:0.5rem;font-size:0.75rem;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;color:var(--accent2);margin-bottom:0.75rem;}
+.ai-dot{width:7px;height:7px;background:var(--accent);border-radius:50%;animation:pulse 2s ease-in-out infinite;}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1);}50%{opacity:0.5;transform:scale(0.8);}}
+.ai-txt{font-size:0.9rem;color:var(--text2);line-height:1.7;}
+.empty{text-align:center;padding:5rem 2rem;}
+.empty-ico{font-size:3rem;margin-bottom:1rem;opacity:0.3;}
+.empty-ttl{font-size:1.1rem;font-weight:700;color:var(--text);margin-bottom:0.5rem;}
+.empty-sub{font-size:0.88rem;color:var(--text3);}
+.err{background:var(--red-bg);border:1px solid rgba(239,68,68,0.2);border-radius:12px;padding:1rem 1.25rem;color:var(--red);font-size:0.85rem;display:none;margin-bottom:1rem;}
+.overlay{position:fixed;inset:0;background:var(--modal-bg);z-index:1000;display:none;align-items:center;justify-content:center;padding:1rem;}
+.overlay.open{display:flex;}
+.modal{background:var(--card);border:1px solid var(--border2);border-radius:20px;padding:2rem;width:100%;max-width:420px;position:relative;}
+.modal-x{position:absolute;top:1rem;right:1rem;background:none;border:none;color:var(--text3);font-size:1.3rem;cursor:pointer;width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;}
+.modal-x:hover{background:var(--bg3);color:var(--text);}
+.modal-ttl{font-size:1.2rem;font-weight:800;letter-spacing:-0.02em;margin-bottom:0.35rem;}
+.modal-sub{font-size:0.85rem;color:var(--text2);margin-bottom:1.5rem;}
+.tabs{display:flex;gap:0.5rem;margin-bottom:1.5rem;}
+.tab{flex:1;padding:0.5rem;border-radius:8px;border:1px solid var(--border);background:none;font-size:0.85rem;font-weight:600;color:var(--text2);cursor:pointer;font-family:inherit;transition:all 0.2s;}
+.tab.on{background:var(--accent);color:#fff;border-color:var(--accent);}
+.fg{margin-bottom:1rem;}
+.fl{font-size:0.78rem;font-weight:600;color:var(--text2);margin-bottom:0.4rem;display:block;}
+.fi{width:100%;background:var(--input-bg);border:1px solid var(--border2);border-radius:10px;padding:0.7rem 1rem;color:var(--text);font-size:0.88rem;outline:none;font-family:inherit;transition:border-color 0.2s;}
+.fi:focus{border-color:var(--accent);}
+.fsub{width:100%;background:var(--accent);color:#fff;border:none;border-radius:10px;padding:0.8rem;font-size:0.92rem;font-weight:600;cursor:pointer;font-family:inherit;margin-top:0.5rem;transition:all 0.2s;}
+.fsub:hover{opacity:0.9;}
+.fchk{display:flex;align-items:flex-start;gap:0.6rem;margin-top:0.75rem;}
+.fchk input{margin-top:3px;accent-color:var(--accent);}
+.fchk label{font-size:0.78rem;color:var(--text2);line-height:1.4;}
+.wl-panel{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:1.5rem;display:none;margin-bottom:1.5rem;}
+.wl-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;}
+.wl-ttl{font-size:1rem;font-weight:700;}
+.wl-empty{font-size:0.85rem;color:var(--text3);text-align:center;padding:1.5rem;}
+.wl-item{display:flex;align-items:center;justify-content:space-between;padding:0.75rem;background:var(--bg3);border-radius:10px;margin-bottom:0.5rem;}
+.wl-name{font-size:0.85rem;font-weight:600;color:var(--text);}
+.wl-date{font-size:0.75rem;color:var(--text3);}
+.wl-rm{background:none;border:none;color:var(--text3);cursor:pointer;font-size:1rem;padding:0.2rem 0.4rem;border-radius:6px;}
+.wl-rm:hover{background:var(--red-bg);color:var(--red);}
+.ubadge{display:flex;align-items:center;gap:0.5rem;background:var(--accent-bg);border:1px solid rgba(108,99,255,0.25);border-radius:8px;padding:0.35rem 0.75rem;font-size:0.82rem;color:var(--accent2);cursor:pointer;font-family:inherit;}
+.toast{position:fixed;bottom:2rem;right:2rem;background:var(--card);border:1px solid var(--border2);border-radius:12px;padding:0.85rem 1.25rem;font-size:0.85rem;color:var(--text);z-index:2000;transform:translateY(100px);opacity:0;transition:all 0.3s;max-width:300px;}
+.toast.show{transform:translateY(0);opacity:1;}
+footer{border-top:1px solid var(--border);padding:2rem;text-align:center;color:var(--text3);font-size:0.8rem;}
+footer a{color:var(--text2);text-decoration:none;}
+@media(max-width:600px){nav{padding:0.75rem 1rem;}.hero{padding:2.5rem 1rem 1.5rem;}.results{padding:0 1rem 3rem;}.pc{grid-template-columns:1fr;}.modal{padding:1.5rem;}}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">Neo<span>Comparison</span></div>
+  <div class="nav-right">
+    <div id="navAuth" style="display:flex;gap:0.5rem;">
+      <button class="nav-btn" onclick="openModal('login')">Sign in</button>
+      <button class="nav-btn primary" onclick="openModal('register')">Create account</button>
+    </div>
+    <div id="navUser" style="display:none;align-items:center;gap:0.5rem;">
+      <button class="ubadge" onclick="toggleWL()"><span>🔔</span><span id="uname" style="max-width:140px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;"></span></button>
+      <button class="nav-btn" onclick="doLogout()">Sign out</button>
+    </div>
+    <button class="theme-btn" onclick="toggleTheme()" id="themeBtn">🌙</button>
+  </div>
+</nav>
+
+<div class="overlay" id="authModal">
+  <div class="modal">
+    <button class="modal-x" onclick="closeModal()">x</button>
+    <div class="modal-ttl" id="mttl">Welcome back</div>
+    <div class="modal-sub" id="msub">Sign in to track price drops and get sale alerts</div>
+    <div class="tabs">
+      <button class="tab on" id="t1" onclick="switchTab('login')">Sign in</button>
+      <button class="tab" id="t2" onclick="switchTab('register')">Create account</button>
+    </div>
+    <div id="loginForm">
+      <div class="fg"><label class="fl">Email</label><input class="fi" type="email" id="le" placeholder="you@example.com"></div>
+      <div class="fg"><label class="fl">Password</label><input class="fi" type="password" id="lp" placeholder="password"></div>
+      <button class="fsub" onclick="doLogin()">Sign in</button>
+    </div>
+    <div id="regForm" style="display:none;">
+      <div class="fg"><label class="fl">Full name</label><input class="fi" type="text" id="rn" placeholder="Your name"></div>
+      <div class="fg"><label class="fl">Email</label><input class="fi" type="email" id="re" placeholder="you@example.com"></div>
+      <div class="fg"><label class="fl">Password</label><input class="fi" type="password" id="rp" placeholder="Create a password"></div>
+      <div class="fchk"><input type="checkbox" id="eal" checked><label for="eal">Email me when watchlist items go on sale on Amazon</label></div>
+      <div class="fchk"><input type="checkbox" id="wkly"><label for="wkly">Send me a weekly digest of top comparisons</label></div>
+      <button class="fsub" onclick="doRegister()">Create account</button>
+    </div>
+  </div>
+</div>
+
+<div class="hero">
+  <div class="hero-badge">AI-Powered - Review-Analyzed</div>
+  <h1>Compare Any Product.<br>Get the Real Answer.</h1>
+  <p class="hero-sub">Our AI reads thousands of real reviews to give you an honest, unbiased comparison - not just specs.</p>
+  <div class="search-box">
+    <div class="search-lbl">Products to compare</div>
+    <div class="search-row">
+      <input class="search-inp" id="q" type="text" placeholder="e.g. DeWalt vs Milwaukee drill, iPhone 15 vs Samsung S24...">
+      <button class="cmp-btn" id="goBtn" onclick="runSearch()">Compare</button>
+    </div>
+  </div>
+  <div class="picks">
+    <button class="pick" onclick="setQ('DeWalt vs Milwaukee power drill')">DeWalt vs Milwaukee</button>
+    <button class="pick" onclick="setQ('Honda vs Simpson pressure washer')">Pressure Washers</button>
+    <button class="pick" onclick="setQ('Ego vs Greenworks cordless lawn mower')">Lawn Mowers</button>
+    <button class="pick" onclick="setQ('iPhone 15 vs Samsung Galaxy S24')">iPhone vs Samsung</button>
+    <button class="pick" onclick="setQ('Traeger vs Weber pellet grill')">Traeger vs Weber</button>
+  </div>
+</div>
+
+<div class="results">
+  <div class="err" id="errBox"></div>
+  <div class="loader" id="loader">
+    <div class="spinner"></div>
+    <div class="loader-txt">Analyzing products and reviews...</div>
+    <div class="steps">
+      <div class="step on" id="s1">Reading reviews</div>
+      <div class="step" id="s2">Scoring performance</div>
+      <div class="step" id="s3">Writing analysis</div>
+      <div class="step" id="s4">Final verdict</div>
+    </div>
+  </div>
+  <div class="wl-panel" id="wlPanel">
+    <div class="wl-hdr">
+      <div class="wl-ttl">My Watchlist</div>
+      <button class="nav-btn" onclick="toggleWL()">Close</button>
+    </div>
+    <div id="wlItems"></div>
+  </div>
+  <div class="res-hdr" id="resHdr">
+    <div class="res-ttl" id="resTtl">Results</div>
+    <div class="res-meta" id="resMeta"></div>
+  </div>
+  <div class="winner" id="winnerBox">
+    <div class="winner-icon">🏆</div>
+    <div>
+      <div class="winner-lbl">AI Recommendation</div>
+      <div class="winner-name" id="winName"></div>
+      <div class="winner-why" id="winWhy"></div>
+    </div>
+  </div>
+  <div class="grid" id="cardsGrid"></div>
+  <div class="tbl-wrap" id="tblWrap">
+    <div class="tbl-hdr">Side-by-side specs</div>
+    <div style="overflow-x:auto"><table id="specsTable"></table></div>
+  </div>
+  <div class="ai-box" id="aiBox">
+    <div class="ai-lbl"><div class="ai-dot"></div>AI Verdict - Based on Real Reviews</div>
+    <div class="ai-txt" id="aiTxt"></div>
+  </div>
+  <div class="empty" id="emptyState">
+    <div class="empty-ico">⚖️</div>
+    <div class="empty-ttl">Ready to compare</div>
+    <div class="empty-sub">Enter any two products for an AI breakdown based on real customer reviews</div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<footer>
+  <p>NeoComparison uses AI to analyze real customer reviews. Affiliate links support the site at no extra cost to you.</p>
+  <p style="margin-top:0.5rem"><a href="#">Privacy</a> · <a href="#">Affiliate Disclosure</a> · <a href="#">About</a></p>
+</footer>
+
+<script>
+var user = JSON.parse(localStorage.getItem('nc_user') || 'null');
+var wl = JSON.parse(localStorage.getItem('nc_wl') || '[]');
+var theme = localStorage.getItem('nc_theme') || 'dark';
+
+document.documentElement.setAttribute('data-theme', theme);
+document.getElementById('themeBtn').textContent = theme === 'dark' ? '☀️' : '🌙';
+refreshNav();
+
+function toggleTheme() {
+  theme = theme === 'dark' ? 'light' : 'dark';
+  document.documentElement.setAttribute('data-theme', theme);
+  document.getElementById('themeBtn').textContent = theme === 'dark' ? '☀️' : '🌙';
+  localStorage.setItem('nc_theme', theme);
+}
+
+function refreshNav() {
+  if (user) {
+    document.getElementById('navAuth').style.display = 'none';
+    document.getElementById('navUser').style.display = 'flex';
+    document.getElementById('uname').textContent = user.name || user.email;
+  } else {
+    document.getElementById('navAuth').style.display = 'flex';
+    document.getElementById('navUser').style.display = 'none';
+  }
+}
+
+function openModal(tab) {
+  document.getElementById('authModal').classList.add('open');
+  switchTab(tab);
+}
+
+function closeModal() {
+  document.getElementById('authModal').classList.remove('open');
+}
+
+document.getElementById('authModal').addEventListener('click', function(e) {
+  if (e.target === this) closeModal();
+});
+
+function switchTab(tab) {
+  document.getElementById('loginForm').style.display = tab === 'login' ? 'block' : 'none';
+  document.getElementById('regForm').style.display = tab === 'register' ? 'block' : 'none';
+  document.getElementById('t1').className = 'tab' + (tab === 'login' ? ' on' : '');
+  document.getElementById('t2').className = 'tab' + (tab === 'register' ? ' on' : '');
+  document.getElementById('mttl').textContent = tab === 'login' ? 'Welcome back' : 'Create your account';
+  document.getElementById('msub').textContent = tab === 'login' ? 'Sign in to track deals' : 'Get notified when items go on sale';
+}
+
+function doLogin() {
+  var email = document.getElementById('le').value.trim();
+  var pass = document.getElementById('lp').value;
+  if (!email || !pass) { toast('Please fill in all fields'); return; }
+  var users = JSON.parse(localStorage.getItem('nc_users') || '[]');
+  var found = null;
+  for (var i = 0; i < users.length; i++) {
+    if (users[i].email === email && users[i].password === pass) { found = users[i]; break; }
+  }
+  if (!found) { toast('Invalid email or password'); return; }
+  user = found;
+  localStorage.setItem('nc_user', JSON.stringify(user));
+  closeModal();
+  refreshNav();
+  toast('Welcome back ' + (user.name || user.email));
+}
+
+function doRegister() {
+  var name = document.getElementById('rn').value.trim();
+  var email = document.getElementById('re').value.trim();
+  var pass = document.getElementById('rp').value;
+  var alerts = document.getElementById('eal').checked;
+  if (!name || !email || !pass) { toast('Please fill in all fields'); return; }
+  if (pass.length < 6) { toast('Password must be at least 6 characters'); return; }
+  var users = JSON.parse(localStorage.getItem('nc_users') || '[]');
+  for (var i = 0; i < users.length; i++) {
+    if (users[i].email === email) { toast('Email already registered'); return; }
+  }
+  var newUser = { name: name, email: email, password: pass, alerts: alerts, joined: new Date().toISOString() };
+  users.push(newUser);
+  localStorage.setItem('nc_users', JSON.stringify(users));
+  user = newUser;
+  localStorage.setItem('nc_user', JSON.stringify(user));
+  closeModal();
+  refreshNav();
+  toast('Account created! Welcome ' + name);
+}
+
+function doLogout() {
+  user = null;
+  localStorage.removeItem('nc_user');
+  refreshNav();
+  toast('Signed out');
+}
+
+function toggleWL() {
+  var panel = document.getElementById('wlPanel');
+  panel.style.display = panel.style.display === 'block' ? 'none' : 'block';
+  renderWL();
+}
+
+function renderWL() {
+  var el = document.getElementById('wlItems');
+  if (wl.length === 0) {
+    el.innerHTML = '<div class="wl-empty">No products yet. Compare products and click Watch for deals.</div>';
+    return;
+  }
+  var html = '';
+  for (var i = 0; i < wl.length; i++) {
+    html += '<div class="wl-item"><div><div class="wl-name">' + wl[i].name + '</div><div class="wl-date">Added ' + new Date(wl[i].added).toLocaleDateString() + '</div></div><button class="wl-rm" onclick="rmWL(' + i + ')">x</button></div>';
+  }
+  el.innerHTML = html;
+}
+
+function addWL(name, search) {
+  if (!user) { openModal('register'); toast('Create an account to track deals!'); return; }
+  for (var i = 0; i < wl.length; i++) {
+    if (wl[i].name === name) { toast('Already on your watchlist!'); return; }
+  }
+  wl.push({ name: name, search: search, added: new Date().toISOString() });
+  localStorage.setItem('nc_wl', JSON.stringify(wl));
+  toast(name + ' added to watchlist!');
+  var btns = document.querySelectorAll('.watch-btn');
+  for (var i = 0; i < btns.length; i++) {
+    if (btns[i].getAttribute('data-p') === name) {
+      btns[i].textContent = 'Watching for deals';
+      btns[i].className = 'watch-btn added';
+    }
+  }
+}
+
+function rmWL(idx) {
+  wl.splice(idx, 1);
+  localStorage.setItem('nc_wl', JSON.stringify(wl));
+  renderWL();
+  toast('Removed from watchlist');
+}
+
+function toast(msg) {
+  var el = document.getElementById('toast');
+  el.textContent = msg;
+  el.classList.add('show');
+  setTimeout(function() { el.classList.remove('show'); }, 3000);
+}
+
+function setQ(q) {
+  document.getElementById('q').value = q;
+}
+
+document.getElementById('q').addEventListener('keydown', function(e) {
+  if (e.key === 'Enter') runSearch();
+});
+
+function stars(n) {
+  var s = '';
+  for (var i = 0; i < 5; i++) s += i < Math.round(n) ? '★' : '☆';
+  return s;
+}
+
+function runSearch() {
+  var query = document.getElementById('q').value.trim();
+  if (!query) return;
+  var btn = document.getElementById('goBtn');
+  btn.disabled = true;
+  document.getElementById('emptyState').style.display = 'none';
+  document.getElementById('cardsGrid').innerHTML = '';
+  document.getElementById('errBox').style.display = 'none';
+  document.getElementById('resHdr').style.display = 'none';
+  document.getElementById('winnerBox').style.display = 'none';
+  document.getElementById('tblWrap').style.display = 'none';
+  document.getElementById('aiBox').style.display = 'none';
+  document.getElementById('wlPanel').style.display = 'none';
+  document.getElementById('loader').style.display = 'block';
+  animSteps();
+
+  var prompt = 'You are an expert product reviewer who has read thousands of real customer reviews. Compare: "' + query + '". Analyze as if you read hundreds of Amazon and Reddit reviews. Return ONLY valid JSON with no markdown or backticks:\n{"query":"short title","products":[{"name":"Product Name","category":"type","overallScore":87,"reviewSummary":"one sentence summary","avgRating":4.3,"totalReviews":2847,"ratings":{"Performance":88,"Value":75,"Build Quality":90,"Ease of Use":82,"Reliability":85},"pros":["pro 1","pro 2","pro 3"],"cons":["con 1","con 2"],"sampleReviews":[{"stars":5,"text":"positive review quote","author":"Verified Buyer"},{"stars":2,"text":"critical review quote","author":"Verified Buyer"}],"verdict":"2-3 sentence verdict based on reviews","bestFor":"who this is best for","affiliateSearch":"amazon search query"}],"winner":"winning product name","winnerReason":"one sentence why","specsTable":[{"spec":"Price Range","values":["$X","$Y"]},{"spec":"Avg Rating","values":["4.3/5","4.1/5"]},{"spec":"Warranty","values":["val","val"]},{"spec":"Best For","values":["val","val"]}],"summary":"3-4 sentence verdict based on review analysis with buying advice"}';
+
+  fetch('https://icy-hill-1036.neocaleband.workers.dev', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ model: 'claude-sonnet-4-20250514', max_tokens: 1000, messages: [{ role: 'user', content: prompt }] })
+  })
+  .then(function(res) { return res.json(); })
+  .then(function(data) {
+    var raw = '';
+    for (var i = 0; i < data.content.length; i++) {
+      if (data.content[i].text) raw += data.content[i].text;
+    }
+    raw = raw.replace(/```json/g, '').replace(/```/g, '').trim();
+    var result = JSON.parse(raw);
+    document.getElementById('loader').style.display = 'none';
+    btn.disabled = false;
+    showResults(result);
+  })
+  .catch(function(err) {
+    document.getElementById('loader').style.display = 'none';
+    btn.disabled = false;
+    var eb = document.getElementById('errBox');
+    eb.style.display = 'block';
+    eb.textContent = 'Error: ' + err.message + '. Please check the console for details.';
+    document.getElementById('emptyState').style.display = 'block';
+  });
+}
+
+function animSteps() {
+  var ids = ['s1','s2','s3','s4'];
+  var i = 0;
+  var iv = setInterval(function() {
+    if (i > 0) {
+      document.getElementById(ids[i-1]).className = 'step ok';
+      document.getElementById(ids[i-1]).textContent = '✓ ' + document.getElementById(ids[i-1]).textContent;
+    }
+    if (i < ids.length) {
+      document.getElementById(ids[i]).className = 'step on';
+      i++;
+    } else {
+      clearInterval(iv);
+    }
+  }, 800);
+}
+
+function showResults(data) {
+  document.getElementById('resHdr').style.display = 'flex';
+  document.getElementById('resTtl').textContent = data.query || 'Results';
+  document.getElementById('resMeta').textContent = data.products.length + ' products analyzed';
+  if (data.winner) {
+    document.getElementById('winnerBox').style.display = 'flex';
+    document.getElementById('winName').textContent = data.winner;
+    document.getElementById('winWhy').textContent = data.winnerReason || '';
+  }
+  var grid = document.getElementById('cardsGrid');
+  grid.innerHTML = '';
+  for (var pi = 0; pi < data.products.length; pi++) {
+    var p = data.products[pi];
+    var isWin = p.name === data.winner;
+    var card = document.createElement('div');
+    card.className = 'card' + (isWin ? ' top' : '');
+    var barHtml = '';
+    var rkeys = Object.keys(p.ratings || {});
+    for (var ri = 0; ri < rkeys.length; ri++) {
+      var k = rkeys[ri];
+      var v = p.ratings[k];
+      barHtml += '<div class="bar-row"><span class="bar-lbl">' + k + '</span><div class="bar-bg"><div class="bar-fill' + (v >= 80 ? ' g' : '') + '" style="width:' + v + '%"></div></div><span class="bar-val">' + v + '</span></div>';
+    }
+    var prosHtml = '';
+    for (var xi = 0; xi < (p.pros || []).length; xi++) prosHtml += '<div class="pc-item">+ ' + p.pros[xi] + '</div>';
+    var consHtml = '';
+    for (var xi = 0; xi < (p.cons || []).length; xi++) consHtml += '<div class="pc-item">- ' + p.cons[xi] + '</div>';
+    var revHtml = '';
+    for (var xi = 0; xi < (p.sampleReviews || []).length; xi++) {
+      var r = p.sampleReviews[xi];
+      revHtml += '<div class="review"><div class="r-stars">' + stars(r.stars) + ' ' + r.stars + '/5</div><div class="r-txt">"' + r.text + '"</div><div class="r-auth">- ' + r.author + '</div></div>';
+    }
+    var amzLink = 'https://www.amazon.com/s?tag=YOUR-AFFILIATE-ID&k=' + encodeURIComponent(p.affiliateSearch || p.name);
+    var alreadyWatching = false;
+    for (var xi = 0; xi < wl.length; xi++) { if (wl[xi].name === p.name) { alreadyWatching = true; break; } }
+    var pname = p.name.replace(/'/g, "\\'");
+    var psearch = (p.affiliateSearch || p.name).replace(/'/g, "\\'");
+    card.innerHTML = '<div class="card-top"><div><div class="pname">' + p.name + '</div><div class="pcat">' + (p.category || '') + ' - ' + stars(Math.round(p.avgRating || 4)) + ' ' + (p.avgRating || '') + ' (' + ((p.totalReviews || 0).toLocaleString()) + ' reviews)</div></div><div class="badge' + (isWin ? ' win' : '') + '">' + p.overallScore + '/100</div></div><div style="font-size:0.8rem;color:var(--text2);margin-bottom:1rem;font-style:italic;">' + (p.reviewSummary || '') + '</div><div class="bars">' + barHtml + '</div><div class="pc"><div class="pros"><div class="pc-lbl">Pros</div>' + prosHtml + '</div><div class="cons"><div class="pc-lbl">Cons</div>' + consHtml + '</div></div><div class="verdict' + (isWin ? ' g' : '') + '">' + p.verdict + '</div><div style="margin-bottom:1rem;"><div class="reviews-lbl">What reviewers say</div>' + revHtml + '</div><a class="amz-btn" href="' + amzLink + '" target="_blank" rel="noopener noreferrer nofollow">View on Amazon</a><button class="watch-btn' + (alreadyWatching ? ' added' : '') + '" data-p="' + p.name + '" onclick="addWL(\'' + pname + '\',\'' + psearch + '\')">' + (alreadyWatching ? 'Watching for deals' : 'Watch for deals') + '</button>';
+    grid.appendChild(card);
+  }
+  if (data.specsTable && data.specsTable.length) {
+    document.getElementById('tblWrap').style.display = 'block';
+    var headers = ['Spec'];
+    for (var i = 0; i < data.products.length; i++) headers.push(data.products[i].name);
+    var thtml = '<thead><tr>';
+    for (var i = 0; i < headers.length; i++) thtml += '<th>' + headers[i] + '</th>';
+    thtml += '</tr></thead><tbody>';
+    for (var i = 0; i < data.specsTable.length; i++) {
+      var row = data.specsTable[i];
+      thtml += '<tr><td>' + row.spec + '</td>';
+      for (var j = 0; j < (row.values || []).length; j++) thtml += '<td>' + row.values[j] + '</td>';
+      thtml += '</tr>';
+    }
+    thtml += '</tbody>';
+    document.getElementById('specsTable').innerHTML = thtml;
+  }
+  if (data.summary) {
+    document.getElementById('aiBox').style.display = 'block';
+    document.getElementById('aiTxt').textContent = data.summary;
+  }
+}
+</script>
+</body>
+</html>

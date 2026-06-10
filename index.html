@@ -457,7 +457,8 @@ function runSearch() {
   })
   .then(function(res) { return res.json(); })
   .then(function(data) {
-    var raw = '';
+    var raw = '';console.log('API response:', JSON.stringify(data));
+    if (!data.content) { throw new Error('No content in response. Raw: ' + JSON.stringify(data)); }
     for (var i = 0; i < data.content.length; i++) {
       if (data.content[i].text) raw += data.content[i].text;
     }

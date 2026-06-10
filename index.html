@@ -10,7 +10,7 @@
 <style>
 *{margin:0;padding:0;box-sizing:border-box;}
 [data-theme="dark"]{
-  --bg:#06080a;--bg2:#0a0d10;--bg3:#0e1318;--card:rgba(12,16,20,0.9);--card2:rgba(16,22,28,0.95);
+  --bg:#06080a;--bg2:#0a0d10;--bg3:#0e1318;--card:#0e1318;--card2:#141c22;
   --border:rgba(0,200,120,0.12);--border2:rgba(0,200,120,0.2);--border3:rgba(0,200,120,0.35);
   --text:#d0f0e0;--text2:#6a9a80;--text3:#2a4a38;
   --accent:#00c878;--accent2:#00ff9a;--accent3:#80ffcc;
@@ -625,7 +625,7 @@ footer a:hover{color:var(--accent2);}
     <div class="empty-sub">// select_compare_mode → enter_products → execute</div>
   </div>
 
-  <div id="dealSections">
+  <div id="dealSections" style="display:block;">
     <div class="sec-hdr">
       <div><div class="sec-title">◈ TODAY'S BEST DEALS</div><div class="sec-sub">// biggest_savings — all_links_support_this_site</div></div>
     </div>
@@ -703,7 +703,7 @@ var theme=localStorage.getItem('nc_theme')||'dark';
 var cmpMode=2;
 document.documentElement.setAttribute('data-theme',theme);
 document.getElementById('themeBtn').textContent=theme==='dark'?'◐':'◑';
-refreshNav();buildInputs(2);renderDeals('all');
+
 
 function toggleTheme(){
   theme=theme==='dark'?'light':'dark';
@@ -840,6 +840,7 @@ function showResult(data){
   if(data.summary){
     document.getElementById('aiVerdict').style.display='block';
     document.getElementById('aiBody').textContent=data.summary;
+  document.getElementById('dealSections').style.display='block';
   }
 }
 
@@ -1091,6 +1092,9 @@ function toast(msg){
   var el=document.getElementById('toast');el.textContent=msg;el.classList.add('show');
   setTimeout(function(){el.classList.remove('show');},3000);
 }
+refreshNav();
+buildInputs(2);
+renderDeals('all');
 </script>
 </body>
 </html>

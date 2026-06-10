@@ -3,565 +3,1093 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>NeoComparison - AI Product Comparisons</title>
+<title>NeoComparison — Compare Anything. Know Before You Buy.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Rajdhani:wght@400;500;600;700&family=Orbitron:wght@400;600;700;900&display=swap" rel="stylesheet">
 <style>
-* { margin: 0; padding: 0; box-sizing: border-box; }
-[data-theme="dark"] {
-  --bg:#0a0a0f;--bg2:#12121a;--bg3:#1a1a26;--card:#16161f;
-  --border:rgba(255,255,255,0.08);--border2:rgba(255,255,255,0.14);
-  --text:#f0f0f5;--text2:#9090a8;--text3:#5a5a72;
-  --accent:#6c63ff;--accent2:#8b84ff;--accent-bg:rgba(108,99,255,0.12);
-  --green:#22d3a0;--green-bg:rgba(34,211,160,0.1);
-  --amber:#f59e0b;--amber-bg:rgba(245,158,11,0.1);
-  --red:#ef4444;--red-bg:rgba(239,68,68,0.1);
-  --nav-bg:rgba(10,10,15,0.92);--modal-bg:rgba(0,0,0,0.7);--input-bg:#1a1a26;--star:#f59e0b;
+*{margin:0;padding:0;box-sizing:border-box;}
+[data-theme="dark"]{
+  --bg:#06080a;--bg2:#0a0d10;--bg3:#0e1318;--card:rgba(12,16,20,0.9);--card2:rgba(16,22,28,0.95);
+  --border:rgba(0,200,120,0.12);--border2:rgba(0,200,120,0.2);--border3:rgba(0,200,120,0.35);
+  --text:#d0f0e0;--text2:#6a9a80;--text3:#2a4a38;
+  --accent:#00c878;--accent2:#00ff9a;--accent3:#80ffcc;
+  --accent-bg:rgba(0,200,120,0.06);--accent-border:rgba(0,200,120,0.18);
+  --red:#ff2244;--red-bg:rgba(255,34,68,0.06);--red-border:rgba(255,34,68,0.2);
+  --amber:#ffaa00;--amber-bg:rgba(255,170,0,0.06);
+  --nav:rgba(4,6,8,0.96);--shadow:0 20px 60px rgba(0,0,0,0.6);
+  --shadow-sm:0 4px 20px rgba(0,200,120,0.06);--star:#ffaa00;
+  --glow:0 0 30px rgba(0,200,120,0.08);
 }
-[data-theme="light"] {
-  --bg:#f8f8fc;--bg2:#f0f0f8;--bg3:#e8e8f4;--card:#ffffff;
-  --border:rgba(0,0,0,0.08);--border2:rgba(0,0,0,0.14);
-  --text:#0a0a1a;--text2:#4a4a6a;--text3:#8a8aaa;
-  --accent:#6c63ff;--accent2:#4f46e5;--accent-bg:rgba(108,99,255,0.08);
-  --green:#059669;--green-bg:rgba(5,150,105,0.08);
-  --amber:#d97706;--amber-bg:rgba(217,119,6,0.08);
-  --red:#dc2626;--red-bg:rgba(220,38,38,0.08);
-  --nav-bg:rgba(248,248,252,0.92);--modal-bg:rgba(0,0,0,0.5);--input-bg:#f0f0f8;--star:#d97706;
+[data-theme="light"]{
+  --bg:#f8faf9;--bg2:#eef4f0;--bg3:#e2ede6;--card:rgba(255,255,255,0.95);--card2:rgba(245,252,248,0.95);
+  --border:rgba(0,140,80,0.1);--border2:rgba(0,140,80,0.18);--border3:rgba(0,140,80,0.3);
+  --text:#0a1a10;--text2:#3a6a48;--text3:#8ab8a0;
+  --accent:#008844;--accent2:#00aa55;--accent3:#00cc66;
+  --accent-bg:rgba(0,136,68,0.06);--accent-border:rgba(0,136,68,0.16);
+  --red:#cc1133;--red-bg:rgba(204,17,51,0.05);--red-border:rgba(204,17,51,0.18);
+  --amber:#aa7700;--amber-bg:rgba(170,119,0,0.06);
+  --nav:rgba(248,250,249,0.96);--shadow:0 20px 60px rgba(0,0,0,0.1);
+  --shadow-sm:0 4px 20px rgba(0,136,68,0.06);--star:#aa7700;
+  --glow:0 0 30px rgba(0,136,68,0.06);
 }
-body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;line-height:1.6;transition:background 0.3s,color 0.3s;}
-nav{display:flex;align-items:center;justify-content:space-between;padding:1rem 2rem;border-bottom:1px solid var(--border);position:sticky;top:0;background:var(--nav-bg);backdrop-filter:blur(12px);z-index:100;}
-.logo{font-size:1.2rem;font-weight:800;letter-spacing:-0.03em;color:var(--text);}
-.logo span{color:var(--accent);}
-.nav-right{display:flex;align-items:center;gap:0.75rem;}
-.nav-btn{background:none;border:1px solid var(--border2);border-radius:8px;padding:0.4rem 0.85rem;font-size:0.82rem;color:var(--text2);cursor:pointer;font-family:inherit;transition:all 0.2s;}
-.nav-btn:hover{background:var(--accent-bg);color:var(--accent2);border-color:var(--accent);}
-.nav-btn.primary{background:var(--accent);color:#fff;border-color:var(--accent);}
-.nav-btn.primary:hover{opacity:0.9;}
-.theme-btn{width:36px;height:36px;border-radius:8px;border:1px solid var(--border2);background:none;cursor:pointer;font-size:1rem;display:flex;align-items:center;justify-content:center;transition:all 0.2s;}
-.theme-btn:hover{background:var(--accent-bg);}
-.hero{text-align:center;padding:4rem 2rem 2.5rem;max-width:780px;margin:0 auto;}
-.hero-badge{display:inline-block;background:var(--accent-bg);color:var(--accent2);font-size:0.75rem;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;padding:0.3rem 0.85rem;border-radius:100px;border:1px solid rgba(108,99,255,0.25);margin-bottom:1.25rem;}
-h1{font-size:clamp(2rem,5vw,3rem);font-weight:800;letter-spacing:-0.03em;line-height:1.15;margin-bottom:1rem;color:var(--text);}
-[data-theme="dark"] h1{background:linear-gradient(135deg,#fff 40%,#9090a8);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
-.hero-sub{font-size:1rem;color:var(--text2);max-width:500px;margin:0 auto 2rem;}
-.search-box{background:var(--card);border:1px solid var(--border2);border-radius:16px;padding:1.25rem 1.5rem;margin-bottom:1rem;text-align:left;}
-.search-lbl{font-size:0.72rem;font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:0.07em;margin-bottom:0.6rem;}
-.search-row{display:flex;gap:0.75rem;align-items:center;}
-.search-inp{flex:1;background:var(--input-bg);border:1px solid var(--border);border-radius:10px;padding:0.7rem 1rem;color:var(--text);font-size:0.92rem;outline:none;transition:border-color 0.2s;font-family:inherit;}
-.search-inp:focus{border-color:var(--accent);}
-.search-inp::placeholder{color:var(--text3);}
-.cmp-btn{background:var(--accent);color:#fff;border:none;border-radius:10px;padding:0.7rem 1.4rem;font-size:0.92rem;font-weight:600;cursor:pointer;transition:all 0.2s;font-family:inherit;white-space:nowrap;}
-.cmp-btn:hover{opacity:0.9;transform:translateY(-1px);}
-.cmp-btn:disabled{opacity:0.5;cursor:not-allowed;transform:none;}
-.picks{display:flex;gap:0.5rem;flex-wrap:wrap;justify-content:center;margin-top:0.75rem;}
-.pick{background:var(--bg3);border:1px solid var(--border);border-radius:100px;padding:0.35rem 0.85rem;font-size:0.78rem;color:var(--text2);cursor:pointer;transition:all 0.2s;font-family:inherit;}
-.pick:hover{border-color:var(--accent);color:var(--accent2);background:var(--accent-bg);}
-.results{max-width:1100px;margin:0 auto;padding:0 2rem 4rem;}
-.loader{text-align:center;padding:4rem 2rem;display:none;}
-.spinner{width:40px;height:40px;border:3px solid var(--border2);border-top-color:var(--accent);border-radius:50%;animation:spin 0.8s linear infinite;margin:0 auto 1rem;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:'Rajdhani',sans-serif;
+  background:var(--bg);color:var(--text);min-height:100vh;line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+}
+[data-theme="dark"] body{
+  background:linear-gradient(180deg,#06080a 0%,#080c0e 50%,#06080a 100%);
+  background-attachment:fixed;
+}
+.mono{font-family:'Share Tech Mono',monospace;}
+.orb{font-family:'Orbitron',sans-serif;}
+
+/* ── SCANLINE OVERLAY ── */
+[data-theme="dark"] body::before{
+  content:'';position:fixed;inset:0;
+  background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,200,120,0.015) 2px,rgba(0,200,120,0.015) 4px);
+  pointer-events:none;z-index:0;
+}
+
+/* ── NAV ── */
+nav{
+  height:54px;display:flex;align-items:center;justify-content:space-between;
+  padding:0 1.5rem;border-bottom:1px solid var(--border2);
+  position:sticky;top:0;background:var(--nav);backdrop-filter:blur(24px);z-index:300;
+  position:relative;
+}
+[data-theme="dark"] nav::after{
+  content:'';position:absolute;bottom:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,var(--accent),transparent);
+}
+.logo{
+  font-family:'Orbitron',sans-serif;font-size:1rem;font-weight:900;
+  letter-spacing:0.04em;color:var(--accent2);text-decoration:none;
+  display:flex;align-items:center;gap:0.5rem;
+}
+.logo-bracket{color:var(--text3);font-size:1.2rem;}
+.nav-links{display:flex;gap:0;list-style:none;height:54px;}
+.nav-item{position:relative;height:54px;}
+.nav-item > a, .nav-item > button{
+  color:var(--text2);text-decoration:none;
+  font-family:'Rajdhani',sans-serif;font-size:0.78rem;font-weight:700;
+  padding:0 1rem;height:54px;display:flex;align-items:center;gap:0.3rem;
+  border:none;background:none;cursor:pointer;font-family:inherit;
+  border-bottom:2px solid transparent;transition:all 0.2s;
+  text-transform:uppercase;letter-spacing:0.06em;white-space:nowrap;
+}
+.nav-item > a:hover,.nav-item > button:hover,.nav-item > a.on,.nav-item > button.on{
+  color:var(--accent2);border-bottom-color:var(--accent);background:var(--accent-bg);
+}
+.nav-arrow{font-size:0.6rem;transition:transform 0.2s;}
+.nav-item:hover .nav-arrow{transform:rotate(180deg);}
+
+/* MEGA MENU */
+.mega-menu{
+  position:absolute;top:54px;left:0;min-width:820px;
+  background:var(--bg2);border:1px solid var(--border2);border-top:2px solid var(--accent);
+  padding:1.75rem 2rem;display:none;z-index:400;
+  box-shadow:0 20px 60px rgba(0,0,0,0.5);
+}
+[data-theme="dark"] .mega-menu{box-shadow:0 20px 60px rgba(0,0,0,0.7),0 0 40px rgba(0,200,120,0.05);}
+.nav-item:hover .mega-menu{display:block;}
+.mega-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:1.5rem;}
+.mega-col h4{
+  font-family:'Orbitron',sans-serif;font-size:0.62rem;font-weight:700;
+  text-transform:uppercase;letter-spacing:0.1em;color:var(--accent);
+  margin-bottom:0.75rem;padding-bottom:0.5rem;border-bottom:1px solid var(--border2);
+}
+.mega-col a{
+  display:block;font-size:0.78rem;color:var(--text2);text-decoration:none;
+  padding:0.22rem 0;transition:all 0.15s;font-weight:500;
+  letter-spacing:0.02em;
+}
+.mega-col a:hover{color:var(--accent2);padding-left:0.4rem;}
+.mega-see-all{
+  display:inline-flex;align-items:center;gap:0.4rem;
+  background:var(--accent);color:#000;
+  font-family:'Orbitron',sans-serif;font-size:0.62rem;font-weight:700;
+  padding:0.45rem 1.1rem;letter-spacing:0.06em;text-transform:uppercase;
+  cursor:pointer;border:none;font-family:inherit;margin-top:1.25rem;
+  transition:all 0.2s;text-decoration:none;
+}
+.mega-see-all:hover{background:var(--accent2);}
+
+.nav-r{display:flex;align-items:center;gap:0.45rem;}
+.nbtn{
+  background:none;border:1px solid var(--border2);padding:0.34rem 0.8rem;
+  font-family:'Rajdhani',sans-serif;font-size:0.72rem;font-weight:700;color:var(--text2);
+  cursor:pointer;transition:all 0.2s;letter-spacing:0.06em;text-transform:uppercase;
+}
+.nbtn:hover{color:var(--accent2);border-color:var(--accent);background:var(--accent-bg);}
+.nbtn.pri{background:var(--accent);color:#000;border-color:var(--accent);}
+.nbtn.pri:hover{background:var(--accent2);}
+.icon-btn{
+  width:32px;height:32px;border:1px solid var(--border2);background:none;
+  cursor:pointer;font-size:0.82rem;display:flex;align-items:center;justify-content:center;
+  transition:all 0.2s;color:var(--text2);
+}
+.icon-btn:hover{background:var(--accent-bg);border-color:var(--accent);color:var(--accent2);}
+.u-chip{
+  display:flex;align-items:center;gap:0.35rem;background:var(--accent-bg);
+  border:1px solid var(--accent-border);padding:0.34rem 0.75rem;
+  font-family:'Rajdhani',sans-serif;font-size:0.72rem;color:var(--accent2);
+  cursor:pointer;font-weight:700;text-transform:uppercase;letter-spacing:0.04em;
+}
+
+/* ── HERO ── */
+.hero{position:relative;overflow:hidden;padding:3.5rem 1.5rem 2.5rem;text-align:center;}
+[data-theme="dark"] .hero::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse 80% 60% at 50% -5%,rgba(0,200,120,0.08),transparent);
+  pointer-events:none;
+}
+[data-theme="dark"] .hero::after{
+  content:'';position:absolute;top:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(0,200,120,0.5),transparent);
+}
+.hero-content{position:relative;max-width:700px;margin:0 auto;}
+.hero-pill{
+  display:inline-flex;align-items:center;gap:0.5rem;
+  background:var(--accent-bg);border:1px solid var(--accent-border);
+  padding:0.28rem 1rem;font-family:'Share Tech Mono',monospace;
+  font-size:0.68rem;letter-spacing:0.08em;color:var(--accent2);margin-bottom:1.5rem;
+}
+.hero-pill-dot{width:5px;height:5px;background:var(--accent);animation:blink 1.5s ease-in-out infinite;}
+@keyframes blink{0%,100%{opacity:1;}50%{opacity:0.1;}}
+h1{
+  font-family:'Orbitron',sans-serif;
+  font-size:clamp(1.75rem,4vw,2.9rem);font-weight:900;
+  letter-spacing:0.02em;line-height:1.1;margin-bottom:0.85rem;
+}
+[data-theme="dark"] h1{
+  background:linear-gradient(135deg,#ffffff 0%,#80ffcc 40%,#00c878 80%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+[data-theme="light"] h1{color:var(--text);}
+.hero-sub{
+  font-family:'Rajdhani',sans-serif;font-size:1rem;color:var(--text2);
+  max-width:480px;margin:0 auto 2rem;line-height:1.65;font-weight:500;
+  letter-spacing:0.02em;
+}
+
+/* ── MODE TABS ── */
+.mode-tabs{display:flex;gap:0;margin-bottom:0.85rem;border:1px solid var(--border2);}
+.mode-tab{
+  flex:1;padding:0.55rem;background:none;border:none;border-right:1px solid var(--border2);
+  font-family:'Share Tech Mono',monospace;font-size:0.7rem;font-weight:600;
+  color:var(--text3);cursor:pointer;transition:all 0.2s;text-transform:uppercase;letter-spacing:0.05em;
+}
+.mode-tab:last-child{border-right:none;}
+.mode-tab:hover{color:var(--text2);background:var(--accent-bg);}
+.mode-tab.on{background:var(--accent);color:#000;font-weight:700;}
+
+/* ── SEARCH ── */
+.search-card{
+  background:var(--card);border:1px solid var(--border2);
+  padding:1.25rem;box-shadow:var(--shadow-sm);backdrop-filter:blur(12px);
+}
+[data-theme="dark"] .search-card{border-top:2px solid var(--accent);}
+.search-label{
+  font-family:'Share Tech Mono',monospace;font-size:0.65rem;
+  letter-spacing:0.1em;color:var(--text3);margin-bottom:0.6rem;
+}
+.search-inner{display:flex;gap:0.6rem;align-items:center;}
+.search-inp{
+  flex:1;background:var(--bg3);border:1px solid var(--border);
+  padding:0.72rem 1rem;color:var(--text);font-size:0.88rem;outline:none;
+  transition:all 0.2s;font-family:'Rajdhani',sans-serif;font-weight:500;letter-spacing:0.02em;
+}
+.search-inp:focus{border-color:var(--accent);box-shadow:0 0 0 2px var(--accent-bg);}
+.search-inp::placeholder{color:var(--text3);font-family:'Share Tech Mono',monospace;font-size:0.8rem;}
+.search-btn{
+  background:var(--accent);color:#000;border:none;
+  padding:0.72rem 1.5rem;font-family:'Orbitron',sans-serif;font-size:0.72rem;
+  font-weight:700;cursor:pointer;white-space:nowrap;transition:all 0.2s;
+  text-transform:uppercase;letter-spacing:0.06em;
+}
+.search-btn:hover{background:var(--accent2);box-shadow:0 4px 20px rgba(0,200,120,0.25);}
+.search-btn:disabled{opacity:0.4;cursor:not-allowed;box-shadow:none;}
+.multi-inputs{display:flex;flex-direction:column;gap:0.45rem;margin-bottom:0.75rem;}
+.multi-row{display:flex;align-items:center;gap:0.5rem;}
+.multi-num{
+  width:22px;height:22px;background:var(--accent);color:#000;
+  font-family:'Share Tech Mono',monospace;font-size:0.65rem;font-weight:700;
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;
+}
+.trending-row{display:flex;align-items:center;gap:0.4rem;flex-wrap:wrap;justify-content:center;margin-top:0.85rem;}
+.trending-lbl{font-family:'Share Tech Mono',monospace;font-size:0.62rem;color:var(--text3);letter-spacing:0.08em;}
+.chip{
+  background:none;border:1px solid var(--border);padding:0.26rem 0.7rem;
+  font-family:'Rajdhani',sans-serif;font-size:0.74rem;font-weight:600;
+  color:var(--text2);cursor:pointer;transition:all 0.2s;letter-spacing:0.03em;
+}
+.chip:hover{border-color:var(--accent);color:var(--accent2);background:var(--accent-bg);}
+
+/* ── QUICK CATS BAR ── */
+.catbar{
+  display:flex;gap:0;overflow-x:auto;
+  border-bottom:1px solid var(--border2);background:var(--bg2);scrollbar-width:none;
+}
+.catbar::-webkit-scrollbar{display:none;}
+.catbtn{
+  display:inline-flex;align-items:center;gap:0.35rem;background:none;border:none;
+  border-right:1px solid var(--border);border-bottom:2px solid transparent;
+  padding:0.65rem 1.1rem;font-family:'Rajdhani',sans-serif;font-size:0.72rem;
+  font-weight:700;color:var(--text3);cursor:pointer;white-space:nowrap;
+  transition:all 0.2s;text-transform:uppercase;letter-spacing:0.05em;
+}
+.catbtn:hover,.catbtn.on{background:var(--accent-bg);color:var(--accent2);border-bottom-color:var(--accent);}
+
+/* ── PAGE ── */
+.page{max-width:1280px;margin:0 auto;padding:2rem 1.5rem 4rem;position:relative;z-index:1;}
+
+/* ── LOADER ── */
+.loader{text-align:center;padding:5rem 2rem;display:none;}
+.spinner{width:36px;height:36px;border:2px solid var(--border2);border-top-color:var(--accent);animation:spin 0.6s linear infinite;margin:0 auto 1rem;}
 @keyframes spin{to{transform:rotate(360deg);}}
-.loader-txt{color:var(--text2);font-size:0.92rem;}
-.steps{display:flex;justify-content:center;gap:1.5rem;margin-top:1rem;flex-wrap:wrap;}
-.step{font-size:0.78rem;color:var(--text3);}
-.step.on{color:var(--accent2);}
-.step.ok{color:var(--green);}
-.res-hdr{display:none;align-items:center;justify-content:space-between;margin-bottom:1.5rem;}
-.res-ttl{font-size:1.2rem;font-weight:700;letter-spacing:-0.02em;}
-.res-meta{font-size:0.8rem;color:var(--text3);}
-.winner{background:var(--green-bg);border:1px solid rgba(34,211,160,0.2);border-radius:14px;padding:1.25rem 1.5rem;margin-bottom:1.5rem;display:none;align-items:center;gap:1rem;}
-.winner-icon{width:42px;height:42px;background:rgba(34,211,160,0.2);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.3rem;flex-shrink:0;}
-.winner-lbl{font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;color:var(--green);margin-bottom:0.2rem;}
-.winner-name{font-size:1rem;font-weight:700;color:var(--text);}
-.winner-why{font-size:0.83rem;color:var(--text2);margin-top:0.2rem;}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1rem;margin-bottom:1.5rem;}
-.card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:1.5rem;transition:border-color 0.2s;}
-.card.top{border-color:rgba(34,211,160,0.4);}
-.card-top{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:1rem;}
-.pname{font-size:1rem;font-weight:700;color:var(--text);}
-.pcat{font-size:0.75rem;color:var(--text3);margin-top:0.15rem;}
-.badge{background:var(--accent-bg);color:var(--accent2);border:1px solid rgba(108,99,255,0.25);border-radius:8px;padding:0.25rem 0.55rem;font-size:0.82rem;font-weight:700;white-space:nowrap;}
-.badge.win{background:var(--green-bg);color:var(--green);border-color:rgba(34,211,160,0.25);}
-.bars{margin-bottom:1.25rem;}
-.bar-row{display:flex;align-items:center;gap:0.75rem;margin-bottom:0.45rem;}
-.bar-lbl{font-size:0.75rem;color:var(--text2);width:85px;flex-shrink:0;}
-.bar-bg{flex:1;height:5px;background:var(--bg3);border-radius:100px;overflow:hidden;}
-.bar-fill{height:100%;border-radius:100px;background:var(--accent);transition:width 1s ease;}
-.bar-fill.g{background:var(--green);}
-.bar-val{font-size:0.75rem;font-weight:600;color:var(--text2);width:28px;text-align:right;}
-.pc{display:grid;grid-template-columns:1fr 1fr;gap:0.75rem;margin-bottom:1rem;}
-.pros,.cons{background:var(--bg3);border-radius:10px;padding:0.75rem;}
-.pc-lbl{font-size:0.68rem;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;margin-bottom:0.5rem;}
-.pros .pc-lbl{color:var(--green);}
-.cons .pc-lbl{color:var(--red);}
-.pc-item{font-size:0.78rem;color:var(--text2);padding:0.15rem 0;line-height:1.4;}
-.verdict{background:var(--bg3);border-radius:10px;padding:0.85rem 1rem;font-size:0.82rem;color:var(--text2);line-height:1.5;border-left:3px solid var(--accent);margin-bottom:1rem;}
-.verdict.g{border-left-color:var(--green);}
-.reviews-lbl{font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;color:var(--text3);margin-bottom:0.6rem;}
-.review{background:var(--bg3);border-radius:8px;padding:0.65rem 0.85rem;margin-bottom:0.5rem;}
-.r-stars{color:var(--star);font-size:0.75rem;margin-bottom:0.2rem;}
-.r-txt{font-size:0.78rem;color:var(--text2);line-height:1.4;font-style:italic;}
-.r-auth{font-size:0.7rem;color:var(--text3);margin-top:0.3rem;}
-.amz-btn{display:block;width:100%;margin-top:1rem;background:var(--accent-bg);color:var(--accent2);border:1px solid rgba(108,99,255,0.25);border-radius:10px;padding:0.6rem;font-size:0.83rem;font-weight:600;text-align:center;cursor:pointer;text-decoration:none;transition:all 0.2s;font-family:inherit;}
-.amz-btn:hover{background:rgba(108,99,255,0.2);color:#fff;}
-.watch-btn{display:block;width:100%;margin-top:0.5rem;background:var(--amber-bg);color:var(--amber);border:1px solid rgba(245,158,11,0.25);border-radius:10px;padding:0.6rem;font-size:0.83rem;font-weight:600;text-align:center;cursor:pointer;transition:all 0.2s;font-family:inherit;}
-.watch-btn:hover{background:rgba(245,158,11,0.2);}
-.watch-btn.added{background:var(--green-bg);color:var(--green);border-color:rgba(34,211,160,0.25);}
-.tbl-wrap{background:var(--card);border:1px solid var(--border);border-radius:16px;overflow:hidden;margin-bottom:1.5rem;display:none;}
-.tbl-hdr{padding:1rem 1.5rem;border-bottom:1px solid var(--border);font-size:0.88rem;font-weight:600;color:var(--text);}
-table{width:100%;border-collapse:collapse;font-size:0.83rem;}
-th{padding:0.8rem 1.25rem;text-align:left;font-size:0.75rem;font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:0.06em;border-bottom:1px solid var(--border);background:var(--bg3);}
-td{padding:0.8rem 1.25rem;border-bottom:1px solid var(--border);color:var(--text2);vertical-align:top;}
+.loader-msg{font-family:'Share Tech Mono',monospace;color:var(--text2);font-size:0.8rem;margin-bottom:1rem;letter-spacing:0.06em;}
+.loader-steps{display:flex;justify-content:center;gap:1.5rem;flex-wrap:wrap;}
+.lstep{font-family:'Share Tech Mono',monospace;font-size:0.68rem;color:var(--text3);letter-spacing:0.04em;}
+.lstep.on{color:var(--accent2);}
+.lstep.ok{color:var(--accent);}
+
+/* ── RESULT ── */
+.result-zone{display:none;}
+.result-top{
+  display:flex;align-items:center;justify-content:space-between;
+  margin-bottom:1.25rem;flex-wrap:wrap;gap:0.75rem;
+  padding-bottom:0.85rem;border-bottom:1px solid var(--border2);
+}
+.result-title{font-family:'Orbitron',sans-serif;font-size:1rem;font-weight:700;letter-spacing:0.04em;text-transform:uppercase;}
+.result-meta{font-family:'Share Tech Mono',monospace;font-size:0.68rem;color:var(--text3);letter-spacing:0.06em;}
+.win-bar{
+  display:flex;align-items:center;gap:1rem;
+  background:var(--accent-bg);border:1px solid var(--accent-border);border-left:3px solid var(--accent);
+  padding:1rem 1.25rem;margin-bottom:1.25rem;
+}
+.win-trophy{width:38px;height:38px;background:rgba(0,200,120,0.1);display:flex;align-items:center;justify-content:center;font-size:1.15rem;flex-shrink:0;border:1px solid var(--accent-border);}
+.win-tag{font-family:'Share Tech Mono',monospace;font-size:0.6rem;letter-spacing:0.1em;color:var(--accent);margin-bottom:0.1rem;}
+.win-nm{font-family:'Orbitron',sans-serif;font-size:0.88rem;font-weight:700;color:var(--text);}
+.win-rsn{font-size:0.8rem;color:var(--text2);margin-top:0.1rem;font-weight:500;}
+
+/* ── VS GRID ── */
+.vs-grid{display:grid;gap:1px;margin-bottom:1.5rem;background:var(--border2);}
+.vs-grid.one{grid-template-columns:1fr;}
+.vs-grid.two{grid-template-columns:1fr 1fr;}
+.vs-grid.three{grid-template-columns:1fr 1fr 1fr;}
+.vs-grid.four{grid-template-columns:1fr 1fr 1fr 1fr;}
+.pcard{background:var(--bg2);transition:all 0.2s;position:relative;}
+.pcard.win::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--accent);}
+.pcard-inner{padding:1.15rem;}
+.pcard-top{display:flex;align-items:flex-start;gap:0.85rem;margin-bottom:0.85rem;padding-bottom:0.85rem;border-bottom:1px solid var(--border);}
+.pcard-img{width:62px;height:62px;background:var(--bg3);flex-shrink:0;border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;overflow:hidden;}
+.pcard-img img{width:100%;height:100%;object-fit:contain;padding:6px;}
+.pcard-img-ph{font-size:1.5rem;color:var(--text3);}
+.pcard-info{flex:1;min-width:0;}
+.pcard-name{font-family:'Rajdhani',sans-serif;font-size:0.9rem;font-weight:700;color:var(--text);line-height:1.3;margin-bottom:0.2rem;letter-spacing:0.01em;}
+.pcard-cat{font-family:'Share Tech Mono',monospace;font-size:0.6rem;color:var(--text3);letter-spacing:0.07em;text-transform:uppercase;}
+.pcard-rating{font-size:0.68rem;color:var(--star);margin-top:0.18rem;}
+.score-box{text-align:center;flex-shrink:0;}
+.score-n{font-family:'Orbitron',sans-serif;font-size:2rem;font-weight:900;line-height:1;letter-spacing:-0.02em;}
+.score-n.top{color:var(--accent);}
+.score-n.bot{color:var(--text3);}
+.score-l{font-family:'Share Tech Mono',monospace;font-size:0.52rem;letter-spacing:0.1em;color:var(--text3);}
+.pcard-summary{font-size:0.78rem;color:var(--text2);font-style:italic;line-height:1.55;margin-bottom:1rem;font-weight:500;}
+.statlist{margin-bottom:0.85rem;}
+.statrow{display:flex;align-items:center;gap:0.5rem;padding:0.26rem 0;border-bottom:1px solid var(--border);}
+.statrow:last-child{border-bottom:none;}
+.stat-k{font-family:'Share Tech Mono',monospace;font-size:0.62rem;color:var(--text2);width:88px;flex-shrink:0;letter-spacing:0.03em;text-transform:uppercase;}
+.stat-track{flex:1;height:3px;background:var(--bg3);}
+.stat-fill{height:100%;background:var(--accent2);transition:width 1s ease;opacity:0.7;}
+.stat-fill.hi{background:var(--accent);opacity:1;}
+.stat-v{font-family:'Share Tech Mono',monospace;font-size:0.65rem;font-weight:700;color:var(--text);width:22px;text-align:right;}
+.pdiffs{background:var(--bg3);border:1px solid var(--border);padding:0.8rem;margin-bottom:0.85rem;}
+.pdiffs-title{font-family:'Share Tech Mono',monospace;font-size:0.58rem;letter-spacing:0.1em;color:var(--text3);margin-bottom:0.55rem;text-transform:uppercase;}
+.pdrow{display:flex;align-items:center;justify-content:space-between;padding:0.18rem 0;}
+.pd-k{font-family:'Rajdhani',sans-serif;font-size:0.72rem;color:var(--text2);font-weight:600;letter-spacing:0.03em;text-transform:uppercase;}
+.pd-v{font-family:'Share Tech Mono',monospace;font-size:0.65rem;font-weight:700;padding:0.08rem 0.4rem;border:1px solid;}
+.pd-v.up{background:var(--accent-bg);color:var(--accent);border-color:var(--accent-border);}
+.pd-v.dn{background:var(--red-bg);color:var(--red);border-color:var(--red-border);}
+.pc{display:grid;grid-template-columns:1fr 1fr;gap:0.45rem;margin-bottom:0.85rem;}
+.pc-col{background:var(--bg3);border:1px solid var(--border);padding:0.65rem;}
+.pc-hd{font-family:'Share Tech Mono',monospace;font-size:0.58rem;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:0.4rem;}
+.pc-col.pros .pc-hd{color:var(--accent);}
+.pc-col.cons .pc-hd{color:var(--red);}
+.pc-li{font-size:0.75rem;color:var(--text2);padding:0.1rem 0;line-height:1.4;font-weight:500;}
+.rev-hd{font-family:'Share Tech Mono',monospace;font-size:0.58rem;letter-spacing:0.1em;color:var(--text3);margin-bottom:0.45rem;text-transform:uppercase;}
+.rev-card{background:var(--bg3);border-left:2px solid var(--border2);padding:0.5rem 0.7rem;margin-bottom:0.3rem;}
+.rev-stars{color:var(--star);font-size:0.65rem;margin-bottom:0.08rem;}
+.rev-body{font-size:0.73rem;color:var(--text2);line-height:1.45;font-style:italic;font-weight:500;}
+.verdict{padding:0.72rem 0.9rem;font-size:0.76rem;color:var(--text2);line-height:1.6;border-left:2px solid var(--accent2);background:var(--accent-bg);margin-bottom:0.8rem;font-weight:500;}
+.verdict.win{border-left-color:var(--accent);background:rgba(0,200,120,0.07);}
+.btn-amz{
+  display:flex;align-items:center;justify-content:center;gap:0.4rem;width:100%;
+  background:var(--accent);color:#000;border:none;padding:0.6rem;
+  font-family:'Orbitron',sans-serif;font-size:0.68rem;font-weight:700;
+  text-align:center;cursor:pointer;text-decoration:none;transition:all 0.2s;
+  text-transform:uppercase;letter-spacing:0.06em;margin-top:0.65rem;
+}
+.btn-amz:hover{background:var(--accent2);box-shadow:0 4px 16px rgba(0,200,120,0.25);}
+.btn-watch{
+  display:block;width:100%;background:none;color:var(--text3);
+  border:1px solid var(--border);padding:0.48rem;
+  font-family:'Share Tech Mono',monospace;font-size:0.65rem;font-weight:700;
+  text-align:center;cursor:pointer;transition:all 0.2s;margin-top:0.3rem;
+  text-transform:uppercase;letter-spacing:0.04em;
+}
+.btn-watch:hover{border-color:var(--amber);color:var(--amber);background:var(--amber-bg);}
+.btn-watch.saved{border-color:var(--accent);color:var(--accent);background:var(--accent-bg);}
+
+/* SPEC TABLE */
+.spec-box{background:var(--card);border:1px solid var(--border2);margin-bottom:1.25rem;display:none;}
+.spec-hd{padding:0.72rem 1.25rem;border-bottom:1px solid var(--border2);font-family:'Orbitron',sans-serif;font-size:0.65rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--accent);}
+table{width:100%;border-collapse:collapse;font-size:0.75rem;}
+th{padding:0.62rem 1rem;text-align:left;font-family:'Share Tech Mono',monospace;font-size:0.6rem;color:var(--text3);text-transform:uppercase;letter-spacing:0.08em;border-bottom:1px solid var(--border2);background:var(--bg3);}
+td{padding:0.62rem 1rem;border-bottom:1px solid var(--border);color:var(--text2);font-weight:500;}
 tr:last-child td{border-bottom:none;}
 tr:hover td{background:var(--accent-bg);}
-td:first-child{color:var(--text);font-weight:500;}
-.ai-box{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:1.5rem;display:none;margin-bottom:1.5rem;}
-.ai-lbl{display:flex;align-items:center;gap:0.5rem;font-size:0.75rem;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;color:var(--accent2);margin-bottom:0.75rem;}
-.ai-dot{width:7px;height:7px;background:var(--accent);border-radius:50%;animation:pulse 2s ease-in-out infinite;}
-@keyframes pulse{0%,100%{opacity:1;transform:scale(1);}50%{opacity:0.5;transform:scale(0.8);}}
-.ai-txt{font-size:0.9rem;color:var(--text2);line-height:1.7;}
+td:first-child{color:var(--text);font-family:'Share Tech Mono',monospace;font-size:0.68rem;letter-spacing:0.04em;}
+
+/* AI VERDICT */
+.ai-verdict{background:var(--card);border:1px solid var(--border2);border-top:2px solid var(--accent);padding:1.25rem;display:none;margin-bottom:1.25rem;}
+.ai-hd{display:flex;align-items:center;gap:0.5rem;font-family:'Share Tech Mono',monospace;font-size:0.62rem;letter-spacing:0.1em;color:var(--accent2);margin-bottom:0.65rem;text-transform:uppercase;}
+.ai-pulse{width:6px;height:6px;background:var(--accent);animation:pulse 2s ease-in-out infinite;}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:0.2;}}
+.ai-body{font-size:0.86rem;color:var(--text2);line-height:1.75;font-weight:500;}
+
+/* ── SECTION ── */
+.sec-hdr{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:1rem;margin-top:2.5rem;padding-bottom:0.7rem;border-bottom:1px solid var(--border2);}
+.sec-title{font-family:'Orbitron',sans-serif;font-size:0.82rem;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:var(--accent);}
+.sec-sub{font-family:'Share Tech Mono',monospace;font-size:0.62rem;color:var(--text3);margin-top:0.1rem;letter-spacing:0.04em;}
+
+/* ── DEALS ── */
+.deals-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(185px,1fr));gap:1px;background:var(--border);margin-bottom:2rem;}
+.deal{background:var(--card);transition:all 0.2s;position:relative;overflow:hidden;}
+.deal:hover{background:var(--card2);box-shadow:var(--glow);z-index:2;}
+.deal-img{width:100%;height:130px;background:var(--bg3);display:flex;align-items:center;justify-content:center;overflow:hidden;border-bottom:1px solid var(--border);position:relative;}
+.deal-img img{width:100%;height:100%;object-fit:contain;padding:10px;transition:transform 0.3s;}
+.deal:hover .deal-img img{transform:scale(1.05);}
+.deal-flag{position:absolute;top:0;left:0;font-family:'Share Tech Mono',monospace;font-size:0.58rem;font-weight:700;padding:0.18rem 0.5rem;text-transform:uppercase;letter-spacing:0.06em;}
+.deal-flag.sale{background:var(--red);color:#fff;}
+.deal-flag.hot{background:var(--amber);color:#000;}
+.deal-flag.top{background:var(--accent);color:#000;}
+.deal-flag.new{background:var(--accent2);color:#000;}
+.deal-body{padding:0.75rem;}
+.deal-cat{font-family:'Share Tech Mono',monospace;font-size:0.58rem;letter-spacing:0.08em;color:var(--text3);margin-bottom:0.2rem;text-transform:uppercase;}
+.deal-name{font-family:'Rajdhani',sans-serif;font-size:0.82rem;font-weight:700;color:var(--text);line-height:1.3;margin-bottom:0.28rem;letter-spacing:0.01em;}
+.deal-stars{font-size:0.65rem;color:var(--star);margin-bottom:0.38rem;}
+.deal-pricing{display:flex;align-items:baseline;gap:0.35rem;margin-bottom:0.55rem;flex-wrap:wrap;}
+.deal-now{font-family:'Orbitron',sans-serif;font-size:1rem;font-weight:700;color:var(--text);}
+.deal-was{font-size:0.7rem;color:var(--text3);text-decoration:line-through;}
+.deal-pct{font-family:'Share Tech Mono',monospace;font-size:0.65rem;font-weight:700;color:var(--accent);}
+.deal-amz{display:block;width:100%;background:var(--accent);color:#000;border:none;padding:0.48rem;font-family:'Orbitron',sans-serif;font-size:0.62rem;font-weight:700;text-align:center;text-decoration:none;transition:all 0.2s;text-transform:uppercase;letter-spacing:0.04em;cursor:pointer;}
+.deal-amz:hover{background:var(--accent2);}
+.deal-cmp{display:block;width:100%;background:none;color:var(--text3);border:1px solid var(--border);padding:0.38rem;font-family:'Share Tech Mono',monospace;font-size:0.6rem;font-weight:700;text-align:center;cursor:pointer;transition:all 0.2s;margin-top:0.28rem;text-transform:uppercase;letter-spacing:0.04em;}
+.deal-cmp:hover{border-color:var(--accent);color:var(--accent2);background:var(--accent-bg);}
+
+/* EMPTY */
 .empty{text-align:center;padding:5rem 2rem;}
-.empty-ico{font-size:3rem;margin-bottom:1rem;opacity:0.3;}
-.empty-ttl{font-size:1.1rem;font-weight:700;color:var(--text);margin-bottom:0.5rem;}
-.empty-sub{font-size:0.88rem;color:var(--text3);}
-.err{background:var(--red-bg);border:1px solid rgba(239,68,68,0.2);border-radius:12px;padding:1rem 1.25rem;color:var(--red);font-size:0.85rem;display:none;margin-bottom:1rem;}
-.overlay{position:fixed;inset:0;background:var(--modal-bg);z-index:1000;display:none;align-items:center;justify-content:center;padding:1rem;}
+.empty-icon{font-size:2.5rem;margin-bottom:0.75rem;opacity:0.15;}
+.empty-title{font-family:'Orbitron',sans-serif;font-size:0.88rem;font-weight:700;color:var(--text);margin-bottom:0.35rem;text-transform:uppercase;letter-spacing:0.06em;}
+.empty-sub{font-family:'Share Tech Mono',monospace;font-size:0.72rem;color:var(--text3);letter-spacing:0.04em;}
+.errbox{background:var(--red-bg);border:1px solid var(--red-border);border-left:2px solid var(--red);padding:0.8rem 1rem;color:var(--red);font-family:'Share Tech Mono',monospace;font-size:0.72rem;display:none;margin-bottom:1rem;letter-spacing:0.03em;}
+
+/* MODAL */
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,0.8);z-index:1000;display:none;align-items:center;justify-content:center;padding:1rem;}
 .overlay.open{display:flex;}
-.modal{background:var(--card);border:1px solid var(--border2);border-radius:20px;padding:2rem;width:100%;max-width:420px;position:relative;}
-.modal-x{position:absolute;top:1rem;right:1rem;background:none;border:none;color:var(--text3);font-size:1.3rem;cursor:pointer;width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;}
-.modal-x:hover{background:var(--bg3);color:var(--text);}
-.modal-ttl{font-size:1.2rem;font-weight:800;letter-spacing:-0.02em;margin-bottom:0.35rem;}
-.modal-sub{font-size:0.85rem;color:var(--text2);margin-bottom:1.5rem;}
-.tabs{display:flex;gap:0.5rem;margin-bottom:1.5rem;}
-.tab{flex:1;padding:0.5rem;border-radius:8px;border:1px solid var(--border);background:none;font-size:0.85rem;font-weight:600;color:var(--text2);cursor:pointer;font-family:inherit;transition:all 0.2s;}
-.tab.on{background:var(--accent);color:#fff;border-color:var(--accent);}
-.fg{margin-bottom:1rem;}
-.fl{font-size:0.78rem;font-weight:600;color:var(--text2);margin-bottom:0.4rem;display:block;}
-.fi{width:100%;background:var(--input-bg);border:1px solid var(--border2);border-radius:10px;padding:0.7rem 1rem;color:var(--text);font-size:0.88rem;outline:none;font-family:inherit;transition:border-color 0.2s;}
+.modal{background:var(--bg2);border:1px solid var(--border2);border-top:2px solid var(--accent);padding:1.75rem;width:100%;max-width:400px;position:relative;}
+.modal-x{position:absolute;top:0.85rem;right:0.85rem;background:none;border:1px solid var(--border);color:var(--text3);cursor:pointer;width:28px;height:28px;display:flex;align-items:center;justify-content:center;font-size:0.9rem;font-family:inherit;}
+.modal-x:hover{background:var(--red-bg);color:var(--red);border-color:var(--red);}
+.modal-title{font-family:'Orbitron',sans-serif;font-size:1rem;font-weight:700;letter-spacing:0.04em;text-transform:uppercase;margin-bottom:0.2rem;}
+.modal-sub{font-family:'Share Tech Mono',monospace;font-size:0.7rem;color:var(--text2);margin-bottom:1.1rem;letter-spacing:0.03em;}
+.mtabs{display:flex;gap:0;margin-bottom:1.1rem;border:1px solid var(--border2);}
+.mtab{flex:1;padding:0.45rem;background:none;border:none;border-right:1px solid var(--border2);font-family:'Share Tech Mono',monospace;font-size:0.68rem;font-weight:700;color:var(--text3);cursor:pointer;transition:all 0.2s;text-transform:uppercase;letter-spacing:0.06em;}
+.mtab:last-child{border-right:none;}
+.mtab.on{background:var(--accent);color:#000;}
+.fg{margin-bottom:0.8rem;}
+.fl{font-family:'Share Tech Mono',monospace;font-size:0.65rem;letter-spacing:0.08em;color:var(--text2);margin-bottom:0.3rem;display:block;text-transform:uppercase;}
+.fi{width:100%;background:var(--bg3);border:1px solid var(--border2);padding:0.62rem 0.9rem;color:var(--text);font-size:0.84rem;outline:none;font-family:'Rajdhani',sans-serif;font-weight:500;transition:border-color 0.2s;}
 .fi:focus{border-color:var(--accent);}
-.fsub{width:100%;background:var(--accent);color:#fff;border:none;border-radius:10px;padding:0.8rem;font-size:0.92rem;font-weight:600;cursor:pointer;font-family:inherit;margin-top:0.5rem;transition:all 0.2s;}
-.fsub:hover{opacity:0.9;}
-.fchk{display:flex;align-items:flex-start;gap:0.6rem;margin-top:0.75rem;}
+textarea.fi{resize:vertical;min-height:90px;}
+.fsub{width:100%;background:var(--accent);color:#000;border:none;padding:0.72rem;font-family:'Orbitron',sans-serif;font-size:0.7rem;font-weight:700;cursor:pointer;margin-top:0.25rem;transition:all 0.2s;text-transform:uppercase;letter-spacing:0.06em;}
+.fsub:hover{background:var(--accent2);}
+.fchk{display:flex;align-items:flex-start;gap:0.5rem;margin-top:0.6rem;}
 .fchk input{margin-top:3px;accent-color:var(--accent);}
-.fchk label{font-size:0.78rem;color:var(--text2);line-height:1.4;}
-.wl-panel{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:1.5rem;display:none;margin-bottom:1.5rem;}
-.wl-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;}
-.wl-ttl{font-size:1rem;font-weight:700;}
-.wl-empty{font-size:0.85rem;color:var(--text3);text-align:center;padding:1.5rem;}
-.wl-item{display:flex;align-items:center;justify-content:space-between;padding:0.75rem;background:var(--bg3);border-radius:10px;margin-bottom:0.5rem;}
-.wl-name{font-size:0.85rem;font-weight:600;color:var(--text);}
-.wl-date{font-size:0.75rem;color:var(--text3);}
-.wl-rm{background:none;border:none;color:var(--text3);cursor:pointer;font-size:1rem;padding:0.2rem 0.4rem;border-radius:6px;}
-.wl-rm:hover{background:var(--red-bg);color:var(--red);}
-.ubadge{display:flex;align-items:center;gap:0.5rem;background:var(--accent-bg);border:1px solid rgba(108,99,255,0.25);border-radius:8px;padding:0.35rem 0.75rem;font-size:0.82rem;color:var(--accent2);cursor:pointer;font-family:inherit;}
-.toast{position:fixed;bottom:2rem;right:2rem;background:var(--card);border:1px solid var(--border2);border-radius:12px;padding:0.85rem 1.25rem;font-size:0.85rem;color:var(--text);z-index:2000;transform:translateY(100px);opacity:0;transition:all 0.3s;max-width:300px;}
+.fchk label{font-family:'Rajdhani',sans-serif;font-size:0.78rem;color:var(--text2);line-height:1.4;font-weight:500;}
+
+/* WATCHLIST */
+.wl-panel{background:var(--card);border:1px solid var(--border2);border-top:2px solid var(--accent);padding:1.25rem;display:none;margin-bottom:1.25rem;}
+.wl-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:0.85rem;}
+.wl-title{font-family:'Orbitron',sans-serif;font-size:0.75rem;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;}
+.wl-empty{font-family:'Share Tech Mono',monospace;font-size:0.7rem;color:var(--text3);text-align:center;padding:1.25rem;letter-spacing:0.04em;}
+.wl-row{display:flex;align-items:center;justify-content:space-between;padding:0.55rem 0.8rem;background:var(--bg3);border:1px solid var(--border);margin-bottom:0.3rem;}
+.wl-name{font-family:'Rajdhani',sans-serif;font-size:0.8rem;font-weight:700;color:var(--text);}
+.wl-date{font-family:'Share Tech Mono',monospace;font-size:0.6rem;color:var(--text3);letter-spacing:0.04em;}
+.wl-del{background:none;border:1px solid transparent;color:var(--text3);cursor:pointer;font-size:0.8rem;padding:0.12rem 0.3rem;}
+.wl-del:hover{background:var(--red-bg);color:var(--red);border-color:var(--red);}
+
+/* CONTACT */
+.contact-section{background:var(--card);border:1px solid var(--border2);border-top:2px solid var(--accent);padding:2rem;margin-top:3rem;}
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:2.5rem;}
+.contact-info h3,.contact-form h3{font-family:'Orbitron',sans-serif;font-size:0.78rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--accent);margin-bottom:0.85rem;}
+.contact-info p{font-family:'Rajdhani',sans-serif;font-size:0.85rem;color:var(--text2);line-height:1.7;margin-bottom:0.5rem;font-weight:500;}
+.contact-detail{font-family:'Share Tech Mono',monospace;font-size:0.72rem;color:var(--text2);margin-top:0.5rem;letter-spacing:0.04em;}
+
+/* TOAST */
+.toast{position:fixed;bottom:1.25rem;right:1.25rem;background:var(--bg2);border:1px solid var(--border2);border-left:2px solid var(--accent);padding:0.65rem 1rem;font-family:'Share Tech Mono',monospace;font-size:0.72rem;color:var(--text);z-index:9999;transform:translateY(60px);opacity:0;transition:all 0.22s;max-width:260px;box-shadow:var(--shadow-sm);letter-spacing:0.03em;}
 .toast.show{transform:translateY(0);opacity:1;}
-footer{border-top:1px solid var(--border);padding:2rem;text-align:center;color:var(--text3);font-size:0.8rem;}
+
+footer{border-top:1px solid var(--border2);padding:1.5rem;text-align:center;color:var(--text3);font-family:'Share Tech Mono',monospace;font-size:0.65rem;letter-spacing:0.06em;}
 footer a{color:var(--text2);text-decoration:none;}
-@media(max-width:600px){nav{padding:0.75rem 1rem;}.hero{padding:2.5rem 1rem 1.5rem;}.results{padding:0 1rem 3rem;}.pc{grid-template-columns:1fr;}.modal{padding:1.5rem;}}
+footer a:hover{color:var(--accent2);}
+
+@media(max-width:768px){
+  nav{padding:0 1rem;}.nav-links{display:none;}
+  .hero{padding:2.5rem 1rem 1.5rem;}
+  .page{padding:1rem 1rem 3rem;}
+  .vs-grid.two,.vs-grid.three,.vs-grid.four{grid-template-columns:1fr;}
+  .pc{grid-template-columns:1fr;}
+  .deals-grid{grid-template-columns:repeat(auto-fill,minmax(150px,1fr));}
+  .contact-grid{grid-template-columns:1fr;}
+  .mega-menu{min-width:100vw;left:-1.5rem;}
+  .mega-grid{grid-template-columns:repeat(2,1fr);}
+}
 </style>
 </head>
 <body>
 
 <nav>
-  <div class="logo">Neo<span>Comparison</span></div>
-  <div class="nav-right">
-    <div id="navAuth" style="display:flex;gap:0.5rem;">
-      <button class="nav-btn" onclick="openModal('login')">Sign in</button>
-      <button class="nav-btn primary" onclick="openModal('register')">Create account</button>
+  <a class="logo" href="#"><span class="logo-bracket">[</span>NEO<span style="color:var(--text2);">CMP</span><span class="logo-bracket">]</span></a>
+  <ul class="nav-links">
+    <!-- CATEGORIES MEGA MENU -->
+    <li class="nav-item">
+      <button>CATEGORIES <span class="nav-arrow">▾</span></button>
+      <div class="mega-menu">
+        <div class="mega-grid">
+          <div class="mega-col">
+            <h4>Mobile Devices</h4>
+            <a href="#" onclick="sq('iPhone 15 vs Samsung Galaxy S24');return false;">Smartphones</a>
+            <a href="#" onclick="sq('iPad Pro vs Samsung Galaxy Tab S9');return false;">Tablets</a>
+            <a href="#" onclick="sq('Apple Watch Series 9 vs Samsung Galaxy Watch 6');return false;">Smartwatches</a>
+            <a href="#" onclick="sq('Kindle Paperwhite vs Kobo Libra');return false;">E-Readers</a>
+            <a href="#" onclick="sq('MacBook Air M3 vs Dell XPS 13');return false;">Laptops</a>
+            <a href="#" onclick="sq('AirPods Pro vs Sony WF-1000XM5');return false;">Earbuds</a>
+          </div>
+          <div class="mega-col">
+            <h4>Computer Components</h4>
+            <a href="#" onclick="sq('RTX 4070 vs RX 7800 XT');return false;">Graphics Cards</a>
+            <a href="#" onclick="sq('Ryzen 7 7700X vs Intel i7-14700K');return false;">CPUs</a>
+            <a href="#" onclick="sq('ASUS ROG Strix vs MSI MAG Motherboard');return false;">Motherboards</a>
+            <a href="#" onclick="sq('Samsung 990 Pro vs WD Black SN850X');return false;">SSDs</a>
+            <a href="#" onclick="sq('Corsair DDR5 vs G.Skill DDR5 RAM');return false;">Memory</a>
+            <a href="#" onclick="sq('Logitech MX Master 3S vs Razer DeathAdder');return false;">Mice</a>
+          </div>
+          <div class="mega-col">
+            <h4>Audio</h4>
+            <a href="#" onclick="sq('Sony WH-1000XM5 vs Bose QuietComfort 45');return false;">Headphones</a>
+            <a href="#" onclick="sq('AirPods Pro vs Galaxy Buds 2 Pro');return false;">Wireless Earbuds</a>
+            <a href="#" onclick="sq('Sonos Era 100 vs Bose SoundLink Flex');return false;">Bluetooth Speakers</a>
+            <a href="#" onclick="sq('Blue Yeti vs HyperX QuadCast microphone');return false;">Microphones</a>
+            <a href="#" onclick="sq('Sonos Beam vs Samsung Soundbar');return false;">Soundbars</a>
+          </div>
+          <div class="mega-col">
+            <h4>Power Tools & Lawn</h4>
+            <a href="#" onclick="sq('DeWalt vs Milwaukee drill');return false;">Power Drills</a>
+            <a href="#" onclick="sq('DeWalt vs Makita circular saw');return false;">Circular Saws</a>
+            <a href="#" onclick="sq('Simpson vs Honda pressure washer');return false;">Pressure Washers</a>
+            <a href="#" onclick="sq('Ego vs Greenworks cordless mower');return false;">Lawn Mowers</a>
+            <a href="#" onclick="sq('Husqvarna vs Stihl chainsaw');return false;">Chainsaws</a>
+            <a href="#" onclick="sq('Traeger vs Weber pellet grill');return false;">Grills & Smokers</a>
+          </div>
+          <div class="mega-col">
+            <h4>Gaming & Home</h4>
+            <a href="#" onclick="sq('PS5 vs Xbox Series X');return false;">Game Consoles</a>
+            <a href="#" onclick="sq('LG OLED vs Samsung QLED TV');return false;">TVs</a>
+            <a href="#" onclick="sq('LG 4K vs Asus ROG gaming monitor');return false;">Monitors</a>
+            <a href="#" onclick="sq('Dyson V15 vs Shark IZ462H vacuum');return false;">Vacuums</a>
+            <a href="#" onclick="sq('Instant Pot vs Ninja Foodi');return false;">Kitchen Appliances</a>
+            <a href="#" onclick="sq('Vitamix 5200 vs Ninja Professional blender');return false;">Blenders</a>
+          </div>
+        </div>
+        <a class="mega-see-all" href="#dealsZone">See All Categories →</a>
+      </div>
+    </li>
+    <li class="nav-item"><a href="#" onclick="setCat('gpu',this);scrollTo(0,600);return false;">GRAPHICS CARDS</a></li>
+    <li class="nav-item"><a href="#" onclick="setCat('tech',this);scrollTo(0,600);return false;">TECH</a></li>
+    <li class="nav-item"><a href="#" onclick="setCat('tools',this);scrollTo(0,600);return false;">TOOLS</a></li>
+    <li class="nav-item"><a href="#" onclick="setCat('gaming',this);scrollTo(0,600);return false;">GAMING</a></li>
+    <li class="nav-item"><a href="#contactSection">CONTACT</a></li>
+  </ul>
+  <div class="nav-r">
+    <div id="navGuest" style="display:flex;gap:0.4rem;">
+      <button class="nbtn" onclick="openM('login')">SIGN IN</button>
+      <button class="nbtn pri" onclick="openM('register')">JOIN FREE</button>
     </div>
-    <div id="navUser" style="display:none;align-items:center;gap:0.5rem;">
-      <button class="ubadge" onclick="toggleWL()"><span>🔔</span><span id="uname" style="max-width:140px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;"></span></button>
-      <button class="nav-btn" onclick="doLogout()">Sign out</button>
+    <div id="navUser" style="display:none;align-items:center;gap:0.4rem;">
+      <button class="u-chip" onclick="toggleWL()">◈ <span id="uname"></span></button>
+      <button class="nbtn" onclick="logout()">SIGN OUT</button>
     </div>
-    <button class="theme-btn" onclick="toggleTheme()" id="themeBtn">🌙</button>
+    <button class="icon-btn" id="themeBtn" onclick="toggleTheme()">◑</button>
   </div>
 </nav>
 
-<div class="overlay" id="authModal">
-  <div class="modal">
-    <button class="modal-x" onclick="closeModal()">x</button>
-    <div class="modal-ttl" id="mttl">Welcome back</div>
-    <div class="modal-sub" id="msub">Sign in to track price drops and get sale alerts</div>
-    <div class="tabs">
-      <button class="tab on" id="t1" onclick="switchTab('login')">Sign in</button>
-      <button class="tab" id="t2" onclick="switchTab('register')">Create account</button>
-    </div>
-    <div id="loginForm">
-      <div class="fg"><label class="fl">Email</label><input class="fi" type="email" id="le" placeholder="you@example.com"></div>
-      <div class="fg"><label class="fl">Password</label><input class="fi" type="password" id="lp" placeholder="password"></div>
-      <button class="fsub" onclick="doLogin()">Sign in</button>
-    </div>
-    <div id="regForm" style="display:none;">
-      <div class="fg"><label class="fl">Full name</label><input class="fi" type="text" id="rn" placeholder="Your name"></div>
-      <div class="fg"><label class="fl">Email</label><input class="fi" type="email" id="re" placeholder="you@example.com"></div>
-      <div class="fg"><label class="fl">Password</label><input class="fi" type="password" id="rp" placeholder="Create a password"></div>
-      <div class="fchk"><input type="checkbox" id="eal" checked><label for="eal">Email me when watchlist items go on sale on Amazon</label></div>
-      <div class="fchk"><input type="checkbox" id="wkly"><label for="wkly">Send me a weekly digest of top comparisons</label></div>
-      <button class="fsub" onclick="doRegister()">Create account</button>
-    </div>
-  </div>
-</div>
-
 <div class="hero">
-  <div class="hero-badge">AI-Powered - Review-Analyzed</div>
-  <h1>Compare Any Product.<br>Get the Real Answer.</h1>
-  <p class="hero-sub">Our AI reads thousands of real reviews to give you an honest, unbiased comparison - not just specs.</p>
-  <div class="search-box">
-    <div class="search-lbl">Products to compare</div>
-    <div class="search-row">
-      <input class="search-inp" id="q" type="text" placeholder="e.g. DeWalt vs Milwaukee drill, iPhone 15 vs Samsung S24...">
-      <button class="cmp-btn" id="goBtn" onclick="runSearch()">Compare</button>
+  <div class="hero-content">
+    <div class="hero-pill"><span class="hero-pill-dot"></span>// AI_POWERED · REVIEW_ANALYZED · FREE</div>
+    <h1>COMPARE ANYTHING.<br>KNOW BEFORE YOU BUY.</h1>
+    <p class="hero-sub">Real AI analysis from thousands of verified reviews. Compare 1, 2, 3, or 4 products simultaneously.</p>
+    <div class="mode-tabs" id="modeTabs">
+      <button class="mode-tab" onclick="setMode(1,this)">[ SINGLE ]</button>
+      <button class="mode-tab on" onclick="setMode(2,this)">[ 1 VS 1 ]</button>
+      <button class="mode-tab" onclick="setMode(3,this)">[ 3-WAY ]</button>
+      <button class="mode-tab" onclick="setMode(4,this)">[ 4-WAY ]</button>
     </div>
-  </div>
-  <div class="picks">
-    <button class="pick" onclick="setQ('DeWalt vs Milwaukee power drill')">DeWalt vs Milwaukee</button>
-    <button class="pick" onclick="setQ('Honda vs Simpson pressure washer')">Pressure Washers</button>
-    <button class="pick" onclick="setQ('Ego vs Greenworks cordless lawn mower')">Lawn Mowers</button>
-    <button class="pick" onclick="setQ('iPhone 15 vs Samsung Galaxy S24')">iPhone vs Samsung</button>
-    <button class="pick" onclick="setQ('Traeger vs Weber pellet grill')">Traeger vs Weber</button>
+    <div class="search-card">
+      <div class="search-label" id="searchLabel">// ENTER_PRODUCTS_TO_COMPARE</div>
+      <div id="multiInputs" class="multi-inputs"></div>
+      <button class="search-btn" id="goBtn" onclick="runCompare()" style="width:100%;margin-top:0.6rem;">ANALYZE →</button>
+    </div>
+    <div class="trending-row">
+      <span class="trending-lbl">// TRENDING:</span>
+      <button class="chip" onclick="loadTrend('DeWalt vs Milwaukee drill')">DeWalt vs Milwaukee</button>
+      <button class="chip" onclick="loadTrend('iPhone 15 vs Samsung Galaxy S24')">iPhone vs Samsung</button>
+      <button class="chip" onclick="loadTrend('PS5 vs Xbox Series X')">PS5 vs Xbox</button>
+      <button class="chip" onclick="loadTrend('RTX 4070 vs RX 7800 XT vs RX 7900 GRE')">GPU 3-Way</button>
+      <button class="chip" onclick="loadTrend('Traeger vs Weber grill')">Traeger vs Weber</button>
+    </div>
   </div>
 </div>
 
-<div class="results">
-  <div class="err" id="errBox"></div>
+<div class="catbar">
+  <button class="catbtn on" onclick="setCat('all',this)">◈ ALL DEALS</button>
+  <button class="catbtn" onclick="setCat('gpu',this)">◈ GPUS & PC PARTS</button>
+  <button class="catbtn" onclick="setCat('tech',this)">◈ COMPUTER & TECH</button>
+  <button class="catbtn" onclick="setCat('tools',this)">◈ POWER TOOLS</button>
+  <button class="catbtn" onclick="setCat('lawn',this)">◈ LAWN & GARDEN</button>
+  <button class="catbtn" onclick="setCat('home',this)">◈ HOME & KITCHEN</button>
+  <button class="catbtn" onclick="setCat('bbq',this)">◈ BBQ & OUTDOOR</button>
+  <button class="catbtn" onclick="setCat('gaming',this)">◈ GAMING</button>
+</div>
+
+<div class="page" id="dealsZone">
+  <div class="errbox" id="errBox"></div>
   <div class="loader" id="loader">
     <div class="spinner"></div>
-    <div class="loader-txt">Analyzing products and reviews...</div>
-    <div class="steps">
-      <div class="step on" id="s1">Reading reviews</div>
-      <div class="step" id="s2">Scoring performance</div>
-      <div class="step" id="s3">Writing analysis</div>
-      <div class="step" id="s4">Final verdict</div>
+    <div class="loader-msg">// ANALYZING_PRODUCTS_AND_REVIEWS...</div>
+    <div class="loader-steps">
+      <div class="lstep on" id="ls1">01_READING_REVIEWS</div>
+      <div class="lstep" id="ls2">02_SCORING_PRODUCTS</div>
+      <div class="lstep" id="ls3">03_BUILDING_COMPARISON</div>
+      <div class="lstep" id="ls4">04_FINAL_VERDICT</div>
     </div>
   </div>
+
   <div class="wl-panel" id="wlPanel">
-    <div class="wl-hdr">
-      <div class="wl-ttl">My Watchlist</div>
-      <button class="nav-btn" onclick="toggleWL()">Close</button>
+    <div class="wl-top">
+      <div class="wl-title">◈ WATCHLIST</div>
+      <button class="nbtn" onclick="toggleWL()">CLOSE</button>
     </div>
     <div id="wlItems"></div>
   </div>
-  <div class="res-hdr" id="resHdr">
-    <div class="res-ttl" id="resTtl">Results</div>
-    <div class="res-meta" id="resMeta"></div>
-  </div>
-  <div class="winner" id="winnerBox">
-    <div class="winner-icon">🏆</div>
-    <div>
-      <div class="winner-lbl">AI Recommendation</div>
-      <div class="winner-name" id="winName"></div>
-      <div class="winner-why" id="winWhy"></div>
+
+  <div class="result-zone" id="resultZone">
+    <div class="result-top">
+      <div class="result-title" id="resTitle"></div>
+      <div class="result-meta" id="resMeta"></div>
+    </div>
+    <div class="win-bar" id="winBar" style="display:none;">
+      <div class="win-trophy">◈</div>
+      <div>
+        <div class="win-tag">// AI_RECOMMENDATION</div>
+        <div class="win-nm" id="winName"></div>
+        <div class="win-rsn" id="winReason"></div>
+      </div>
+    </div>
+    <div id="vsGrid"></div>
+    <div class="spec-box" id="specBox">
+      <div class="spec-hd">// FULL_SPEC_COMPARISON</div>
+      <div style="overflow-x:auto"><table id="specTable"></table></div>
+    </div>
+    <div class="ai-verdict" id="aiVerdict">
+      <div class="ai-hd"><div class="ai-pulse"></div>// AI_VERDICT — BASED_ON_REAL_REVIEWS</div>
+      <div class="ai-body" id="aiBody"></div>
     </div>
   </div>
-  <div class="grid" id="cardsGrid"></div>
-  <div class="tbl-wrap" id="tblWrap">
-    <div class="tbl-hdr">Side-by-side specs</div>
-    <div style="overflow-x:auto"><table id="specsTable"></table></div>
-  </div>
-  <div class="ai-box" id="aiBox">
-    <div class="ai-lbl"><div class="ai-dot"></div>AI Verdict - Based on Real Reviews</div>
-    <div class="ai-txt" id="aiTxt"></div>
-  </div>
+
   <div class="empty" id="emptyState">
-    <div class="empty-ico">⚖️</div>
-    <div class="empty-ttl">Ready to compare</div>
-    <div class="empty-sub">Enter any two products for an AI breakdown based on real customer reviews</div>
+    <div class="empty-icon">⚔</div>
+    <div class="empty-title">AWAITING_INPUT</div>
+    <div class="empty-sub">// select_compare_mode → enter_products → execute</div>
+  </div>
+
+  <div id="dealSections">
+    <div class="sec-hdr">
+      <div><div class="sec-title">◈ TODAY'S BEST DEALS</div><div class="sec-sub">// biggest_savings — all_links_support_this_site</div></div>
+    </div>
+    <div class="deals-grid" id="dealsGrid"></div>
+
+    <div class="sec-hdr">
+      <div><div class="sec-title">◈ GPU & PC COMPONENT DEALS</div><div class="sec-sub">// graphics_cards · processors · memory · storage</div></div>
+    </div>
+    <div class="deals-grid" id="pcGrid"></div>
+
+    <div class="sec-hdr">
+      <div><div class="sec-title">◈ BEST SELLERS</div><div class="sec-sub">// top_rated — highest_reviewed</div></div>
+    </div>
+    <div class="deals-grid" id="bestsGrid"></div>
+  </div>
+
+  <div class="contact-section" id="contactSection">
+    <div class="contact-grid">
+      <div class="contact-info">
+        <h3>◈ Contact The Creator</h3>
+        <p>Have a suggestion, found a bug, want to partner, or just want to say hello? I'd love to hear from you.</p>
+        <p>NeoComparison is independently built and maintained. Your feedback directly shapes the roadmap.</p>
+        <div class="contact-detail">◈ LOCATION: Celina, Texas</div>
+        <div class="contact-detail">◈ SITE: neocomparison.com</div>
+      </div>
+      <div class="contact-form">
+        <h3>◈ Send A Message</h3>
+        <div class="fg"><label class="fl">// YOUR_NAME</label><input class="fi" type="text" id="cName" placeholder="Your name"></div>
+        <div class="fg"><label class="fl">// YOUR_EMAIL</label><input class="fi" type="email" id="cEmail" placeholder="your@email.com"></div>
+        <div class="fg"><label class="fl">// MESSAGE</label><textarea class="fi" id="cMsg" placeholder="Your message..."></textarea></div>
+        <button class="fsub" onclick="sendContact()">SEND_MESSAGE →</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- AUTH MODAL -->
+<div class="overlay" id="authOverlay">
+  <div class="modal">
+    <button class="modal-x" onclick="closeOverlay('authOverlay')">✕</button>
+    <div class="modal-title" id="mTitle">WELCOME_BACK</div>
+    <div class="modal-sub" id="mSub">// sign_in to save comparisons and track deals</div>
+    <div class="mtabs">
+      <button class="mtab on" id="mt1" onclick="switchTab('login')">SIGN_IN</button>
+      <button class="mtab" id="mt2" onclick="switchTab('register')">JOIN_FREE</button>
+    </div>
+    <div id="loginF">
+      <div class="fg"><label class="fl">// EMAIL</label><input class="fi" type="email" id="le" placeholder="you@example.com"></div>
+      <div class="fg"><label class="fl">// PASSWORD</label><input class="fi" type="password" id="lp" placeholder="••••••••"></div>
+      <button class="fsub" onclick="doLogin()">SIGN_IN →</button>
+    </div>
+    <div id="regF" style="display:none;">
+      <div class="fg"><label class="fl">// NAME</label><input class="fi" type="text" id="rn" placeholder="Your name"></div>
+      <div class="fg"><label class="fl">// EMAIL</label><input class="fi" type="email" id="re" placeholder="you@example.com"></div>
+      <div class="fg"><label class="fl">// PASSWORD</label><input class="fi" type="password" id="rp" placeholder="6+ characters"></div>
+      <div class="fchk"><input type="checkbox" id="ea" checked><label for="ea">Email me when watchlist items go on sale</label></div>
+      <button class="fsub" onclick="doRegister()">CREATE_ACCOUNT →</button>
+    </div>
   </div>
 </div>
 
 <div class="toast" id="toast"></div>
 
 <footer>
-  <p>NeoComparison uses AI to analyze real customer reviews. Affiliate links support the site at no extra cost to you.</p>
-  <p style="margin-top:0.5rem"><a href="#">Privacy</a> · <a href="#">Affiliate Disclosure</a> · <a href="#">About</a></p>
+  <p>NEOCOMPARISON © 2026 — AI-POWERED PRODUCT COMPARISONS BASED ON REAL CUSTOMER REVIEWS</p>
+  <p style="margin-top:0.4rem"><a href="#">PRIVACY</a> · <a href="#">AFFILIATE_DISCLOSURE</a> · <a href="#contactSection">CONTACT</a></p>
+  <p style="margin-top:0.4rem">AS AN AMAZON ASSOCIATE, NEOCOMPARISON EARNS FROM QUALIFYING PURCHASES AT NO EXTRA COST TO YOU.</p>
 </footer>
 
 <script>
-var user = JSON.parse(localStorage.getItem('nc_user') || 'null');
-var wl = JSON.parse(localStorage.getItem('nc_wl') || '[]');
-var theme = localStorage.getItem('nc_theme') || 'dark';
+var TAG='neocomparison-20';
+var user=JSON.parse(localStorage.getItem('nc_u')||'null');
+var wl=JSON.parse(localStorage.getItem('nc_wl')||'[]');
+var theme=localStorage.getItem('nc_theme')||'dark';
+var cmpMode=2;
+document.documentElement.setAttribute('data-theme',theme);
+document.getElementById('themeBtn').textContent=theme==='dark'?'◐':'◑';
+refreshNav();buildInputs(2);renderDeals('all');
 
-document.documentElement.setAttribute('data-theme', theme);
-document.getElementById('themeBtn').textContent = theme === 'dark' ? '☀️' : '🌙';
-refreshNav();
-
-function toggleTheme() {
-  theme = theme === 'dark' ? 'light' : 'dark';
-  document.documentElement.setAttribute('data-theme', theme);
-  document.getElementById('themeBtn').textContent = theme === 'dark' ? '☀️' : '🌙';
-  localStorage.setItem('nc_theme', theme);
+function toggleTheme(){
+  theme=theme==='dark'?'light':'dark';
+  document.documentElement.setAttribute('data-theme',theme);
+  document.getElementById('themeBtn').textContent=theme==='dark'?'◐':'◑';
+  localStorage.setItem('nc_theme',theme);
 }
 
-function refreshNav() {
-  if (user) {
-    document.getElementById('navAuth').style.display = 'none';
-    document.getElementById('navUser').style.display = 'flex';
-    document.getElementById('uname').textContent = user.name || user.email;
-  } else {
-    document.getElementById('navAuth').style.display = 'flex';
-    document.getElementById('navUser').style.display = 'none';
+function setMode(n,el){
+  cmpMode=n;
+  document.querySelectorAll('.mode-tab').forEach(function(b){b.classList.remove('on');});
+  el.classList.add('on');
+  buildInputs(n);
+  var labels={1:'// ANALYZE_SINGLE_PRODUCT_IN_DEPTH',2:'// COMPARE_TWO_PRODUCTS_HEAD_TO_HEAD',3:'// COMPARE_THREE_PRODUCTS_AT_ONCE',4:'// COMPARE_FOUR_PRODUCTS_SIMULTANEOUSLY'};
+  document.getElementById('searchLabel').textContent=labels[n]||'// ENTER_PRODUCTS';
+  document.getElementById('goBtn').textContent=n===1?'ANALYZE →':'COMPARE →';
+}
+
+function buildInputs(n){
+  var c=document.getElementById('multiInputs');c.innerHTML='';
+  var ph=['Product 1 (e.g. DeWalt DCD800)','Product 2 (e.g. Milwaukee M18)','Product 3 (e.g. Makita XFD131)','Product 4 (e.g. Ryobi PCL206)'];
+  for(var i=0;i<n;i++){
+    var row=document.createElement('div');row.className='multi-row';
+    row.innerHTML='<div class="multi-num">'+(i+1)+'</div><input class="search-inp" type="text" id="inp'+(i+1)+'" placeholder="'+ph[i]+'" style="flex:1;">';
+    c.appendChild(row);
   }
+  var f=document.getElementById('inp1');
+  if(f)f.addEventListener('keydown',function(e){if(e.key==='Enter')runCompare();});
 }
 
-function openModal(tab) {
-  document.getElementById('authModal').classList.add('open');
-  switchTab(tab);
-}
-
-function closeModal() {
-  document.getElementById('authModal').classList.remove('open');
-}
-
-document.getElementById('authModal').addEventListener('click', function(e) {
-  if (e.target === this) closeModal();
-});
-
-function switchTab(tab) {
-  document.getElementById('loginForm').style.display = tab === 'login' ? 'block' : 'none';
-  document.getElementById('regForm').style.display = tab === 'register' ? 'block' : 'none';
-  document.getElementById('t1').className = 'tab' + (tab === 'login' ? ' on' : '');
-  document.getElementById('t2').className = 'tab' + (tab === 'register' ? ' on' : '');
-  document.getElementById('mttl').textContent = tab === 'login' ? 'Welcome back' : 'Create your account';
-  document.getElementById('msub').textContent = tab === 'login' ? 'Sign in to track deals' : 'Get notified when items go on sale';
-}
-
-function doLogin() {
-  var email = document.getElementById('le').value.trim();
-  var pass = document.getElementById('lp').value;
-  if (!email || !pass) { toast('Please fill in all fields'); return; }
-  var users = JSON.parse(localStorage.getItem('nc_users') || '[]');
-  var found = null;
-  for (var i = 0; i < users.length; i++) {
-    if (users[i].email === email && users[i].password === pass) { found = users[i]; break; }
+function loadTrend(q){
+  var parts=q.split(' vs ');
+  var n=Math.min(Math.max(parts.length,1),4);
+  var tabs=document.querySelectorAll('.mode-tab');
+  setMode(n,tabs[n-1]);
+  for(var i=0;i<Math.min(parts.length,4);i++){
+    var inp=document.getElementById('inp'+(i+1));
+    if(inp)inp.value=parts[i].trim();
   }
-  if (!found) { toast('Invalid email or password'); return; }
-  user = found;
-  localStorage.setItem('nc_user', JSON.stringify(user));
-  closeModal();
-  refreshNav();
-  toast('Welcome back ' + (user.name || user.email));
+  window.scrollTo({top:0,behavior:'smooth'});
 }
 
-function doRegister() {
-  var name = document.getElementById('rn').value.trim();
-  var email = document.getElementById('re').value.trim();
-  var pass = document.getElementById('rp').value;
-  var alerts = document.getElementById('eal').checked;
-  if (!name || !email || !pass) { toast('Please fill in all fields'); return; }
-  if (pass.length < 6) { toast('Password must be at least 6 characters'); return; }
-  var users = JSON.parse(localStorage.getItem('nc_users') || '[]');
-  for (var i = 0; i < users.length; i++) {
-    if (users[i].email === email) { toast('Email already registered'); return; }
+function sq(q){loadTrend(q);}
+
+function getInputs(){
+  var items=[];
+  for(var i=1;i<=cmpMode;i++){
+    var inp=document.getElementById('inp'+i);
+    if(inp&&inp.value.trim())items.push(inp.value.trim());
   }
-  var newUser = { name: name, email: email, password: pass, alerts: alerts, joined: new Date().toISOString() };
-  users.push(newUser);
-  localStorage.setItem('nc_users', JSON.stringify(users));
-  user = newUser;
-  localStorage.setItem('nc_user', JSON.stringify(user));
-  closeModal();
-  refreshNav();
-  toast('Account created! Welcome ' + name);
+  return items;
 }
 
-function doLogout() {
-  user = null;
-  localStorage.removeItem('nc_user');
-  refreshNav();
-  toast('Signed out');
-}
-
-function toggleWL() {
-  var panel = document.getElementById('wlPanel');
-  panel.style.display = panel.style.display === 'block' ? 'none' : 'block';
-  renderWL();
-}
-
-function renderWL() {
-  var el = document.getElementById('wlItems');
-  if (wl.length === 0) {
-    el.innerHTML = '<div class="wl-empty">No products yet. Compare products and click Watch for deals.</div>';
-    return;
-  }
-  var html = '';
-  for (var i = 0; i < wl.length; i++) {
-    html += '<div class="wl-item"><div><div class="wl-name">' + wl[i].name + '</div><div class="wl-date">Added ' + new Date(wl[i].added).toLocaleDateString() + '</div></div><button class="wl-rm" onclick="rmWL(' + i + ')">x</button></div>';
-  }
-  el.innerHTML = html;
-}
-
-function addWL(name, search) {
-  if (!user) { openModal('register'); toast('Create an account to track deals!'); return; }
-  for (var i = 0; i < wl.length; i++) {
-    if (wl[i].name === name) { toast('Already on your watchlist!'); return; }
-  }
-  wl.push({ name: name, search: search, added: new Date().toISOString() });
-  localStorage.setItem('nc_wl', JSON.stringify(wl));
-  toast(name + ' added to watchlist!');
-  var btns = document.querySelectorAll('.watch-btn');
-  for (var i = 0; i < btns.length; i++) {
-    if (btns[i].getAttribute('data-p') === name) {
-      btns[i].textContent = 'Watching for deals';
-      btns[i].className = 'watch-btn added';
-    }
-  }
-}
-
-function rmWL(idx) {
-  wl.splice(idx, 1);
-  localStorage.setItem('nc_wl', JSON.stringify(wl));
-  renderWL();
-  toast('Removed from watchlist');
-}
-
-function toast(msg) {
-  var el = document.getElementById('toast');
-  el.textContent = msg;
-  el.classList.add('show');
-  setTimeout(function() { el.classList.remove('show'); }, 3000);
-}
-
-function setQ(q) {
-  document.getElementById('q').value = q;
-}
-
-document.getElementById('q').addEventListener('keydown', function(e) {
-  if (e.key === 'Enter') runSearch();
-});
-
-function stars(n) {
-  var s = '';
-  for (var i = 0; i < 5; i++) s += i < Math.round(n) ? '★' : '☆';
-  return s;
-}
-
-function runSearch() {
-  var query = document.getElementById('q').value.trim();
-  if (!query) return;
-  var btn = document.getElementById('goBtn');
-  btn.disabled = true;
-  document.getElementById('emptyState').style.display = 'none';
-  document.getElementById('cardsGrid').innerHTML = '';
-  document.getElementById('errBox').style.display = 'none';
-  document.getElementById('resHdr').style.display = 'none';
-  document.getElementById('winnerBox').style.display = 'none';
-  document.getElementById('tblWrap').style.display = 'none';
-  document.getElementById('aiBox').style.display = 'none';
-  document.getElementById('wlPanel').style.display = 'none';
-  document.getElementById('loader').style.display = 'block';
+function runCompare(){
+  var items=getInputs();
+  if(!items.length){toast('// ERROR: enter at least one product');return;}
+  var btn=document.getElementById('goBtn');btn.disabled=true;
+  document.getElementById('emptyState').style.display='none';
+  document.getElementById('dealSections').style.display='none';
+  document.getElementById('resultZone').style.display='none';
+  document.getElementById('errBox').style.display='none';
+  document.getElementById('wlPanel').style.display='none';
+  document.getElementById('loader').style.display='block';
   animSteps();
-
-  var prompt = 'You are an expert product reviewer who has read thousands of real customer reviews. Compare: "' + query + '". Analyze as if you read hundreds of Amazon and Reddit reviews. Return ONLY valid JSON with no markdown or backticks:\n{"query":"short title","products":[{"name":"Product Name","category":"type","overallScore":87,"reviewSummary":"one sentence summary","avgRating":4.3,"totalReviews":2847,"ratings":{"Performance":88,"Value":75,"Build Quality":90,"Ease of Use":82,"Reliability":85},"pros":["pro 1","pro 2","pro 3"],"cons":["con 1","con 2"],"sampleReviews":[{"stars":5,"text":"positive review quote","author":"Verified Buyer"},{"stars":2,"text":"critical review quote","author":"Verified Buyer"}],"verdict":"2-3 sentence verdict based on reviews","bestFor":"who this is best for","affiliateSearch":"amazon search query"}],"winner":"winning product name","winnerReason":"one sentence why","specsTable":[{"spec":"Price Range","values":["$X","$Y"]},{"spec":"Avg Rating","values":["4.3/5","4.1/5"]},{"spec":"Warranty","values":["val","val"]},{"spec":"Best For","values":["val","val"]}],"summary":"3-4 sentence verdict based on review analysis with buying advice"}';
-
-  fetch('https://icy-hill-1036.neocaleband.workers.dev', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ model: 'claude-sonnet-4-20250514', max_tokens: 1000, messages: [{ role: 'user', content: prompt }] })
+  var q=items.join(' vs ');
+  var prompt='You are an expert product reviewer who has read thousands of verified customer reviews. Analyze: "'+q+'". Return ONLY valid JSON with no markdown:\n{"query":"short title","products":[{"name":"Exact Product Name","category":"type","asin":"B0XXXXXXXXX","overallScore":87,"reviewSummary":"one sentence","avgRating":4.3,"totalReviews":2847,"ratings":{"Performance":88,"Value":75,"Build Quality":90,"Ease of Use":82,"Reliability":85},"pros":["pro 1","pro 2","pro 3"],"cons":["con 1","con 2"],"sampleReviews":[{"stars":5,"text":"positive review"},{"stars":2,"text":"critical review"}],"verdict":"2-3 honest sentences","affiliateSearch":"exact amazon search"}],"winner":"winning product or null","winnerReason":"one sentence","pointDiffs":[{"label":"Performance","diff":8,"winner":0},{"label":"Value","diff":5,"winner":1}],"specsTable":[{"spec":"Price Range","values":["$X","$Y"]},{"spec":"Avg Rating","values":["4.3/5","4.1/5"]},{"spec":"Best For","values":["val","val"]},{"spec":"Warranty","values":["val","val"]}],"summary":"3-4 sentence final verdict with buying advice"}';
+  fetch('https://icy-hill-1036.neocaleband.workers.dev',{
+    method:'POST',headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({model:'deepseek/deepseek-chat-v3-0324:free',max_tokens:4000,messages:[{role:'user',content:prompt}]})
   })
-  .then(function(res) { return res.json(); })
-  .then(function(data) {
-    var raw = '';console.log('API response:', JSON.stringify(data));
-    if (!data.content) { throw new Error('No content in response. Raw: ' + JSON.stringify(data)); }
-    for (var i = 0; i < data.content.length; i++) {
-      if (data.content[i].text) raw += data.content[i].text;
-    }
-    raw = raw.replace(/```json/g, '').replace(/```/g, '').trim();
-    var result = JSON.parse(raw);
-    document.getElementById('loader').style.display = 'none';
-    btn.disabled = false;
-    showResults(result);
+  .then(function(r){return r.json();})
+  .then(function(data){
+    var raw='';
+    for(var i=0;i<data.content.length;i++){if(data.content[i].text)raw+=data.content[i].text;}
+    raw=raw.split('```json').join('').split('```').join('').trim();
+    var js=raw.indexOf('{'),je=raw.lastIndexOf('}');
+    if(js!==-1&&je!==-1)raw=raw.substring(js,je+1);
+    var r=JSON.parse(raw);
+    document.getElementById('loader').style.display='none';
+    btn.disabled=false;showResult(r);
   })
-  .catch(function(err) {
-    document.getElementById('loader').style.display = 'none';
-    btn.disabled = false;
-    var eb = document.getElementById('errBox');
-    eb.style.display = 'block';
-    eb.textContent = 'Error: ' + err.message + '. Please check the console for details.';
-    document.getElementById('emptyState').style.display = 'block';
+  .catch(function(err){
+    document.getElementById('loader').style.display='none';btn.disabled=false;
+    document.getElementById('errBox').style.display='block';
+    document.getElementById('errBox').textContent='// ERROR: '+err.message+' — please retry';
+    document.getElementById('dealSections').style.display='block';
   });
 }
 
-function animSteps() {
-  var ids = ['s1','s2','s3','s4'];
-  var i = 0;
-  var iv = setInterval(function() {
-    if (i > 0) {
-      document.getElementById(ids[i-1]).className = 'step ok';
-      document.getElementById(ids[i-1]).textContent = '✓ ' + document.getElementById(ids[i-1]).textContent;
-    }
-    if (i < ids.length) {
-      document.getElementById(ids[i]).className = 'step on';
-      i++;
-    } else {
-      clearInterval(iv);
-    }
-  }, 800);
+function animSteps(){
+  var ids=['ls1','ls2','ls3','ls4'];var i=0;
+  var iv=setInterval(function(){
+    if(i>0&&document.getElementById(ids[i-1])){document.getElementById(ids[i-1]).className='lstep ok';}
+    if(i<ids.length){document.getElementById(ids[i]).className='lstep on';i++;}
+    else clearInterval(iv);
+  },700);
 }
 
-function showResults(data) {
-  if (!data || !data.products || !data.products.length) {
-    var eb = document.getElementById("errBox");
-    eb.style.display = "block";
-    eb.textContent = "Could not parse results. Please try again.";
-    document.getElementById("emptyState").style.display = "block";
-    return;
+function stars(n){var s='';for(var i=0;i<5;i++)s+=i<Math.round(n)?'★':'☆';return s;}
+
+function showResult(data){
+  if(!data||!data.products||!data.products.length){
+    document.getElementById('errBox').style.display='block';
+    document.getElementById('errBox').textContent='// ERROR: could not parse results — retry';
+    document.getElementById('dealSections').style.display='block';return;
   }
-  document.getElementById('resHdr').style.display = 'flex';
-  document.getElementById('resTtl').textContent = data.query || 'Results';
-  document.getElementById('resMeta').textContent = data.products.length + ' products analyzed';
-  if (data.winner) {
-    document.getElementById('winnerBox').style.display = 'flex';
-    document.getElementById('winName').textContent = data.winner;
-    document.getElementById('winWhy').textContent = data.winnerReason || '';
+  document.getElementById('resultZone').style.display='block';
+  document.getElementById('resTitle').textContent=data.query||'COMPARISON';
+  document.getElementById('resMeta').textContent='// '+data.products.length+'_products_analyzed';
+  if(data.winner&&data.winner!=='null'&&data.winner!==null){
+    document.getElementById('winBar').style.display='flex';
+    document.getElementById('winName').textContent=data.winner;
+    document.getElementById('winReason').textContent=data.winnerReason||'';
   }
-  var grid = document.getElementById('cardsGrid');
-  grid.innerHTML = '';
-  for (var pi = 0; pi < data.products.length; pi++) {
-    var p = data.products[pi];
-    var isWin = p.name === data.winner;
-    var card = document.createElement('div');
-    card.className = 'card' + (isWin ? ' top' : '');
-    var barHtml = '';
-    var rkeys = Object.keys(p.ratings || {});
-    for (var ri = 0; ri < rkeys.length; ri++) {
-      var k = rkeys[ri];
-      var v = p.ratings[k];
-      barHtml += '<div class="bar-row"><span class="bar-lbl">' + k + '</span><div class="bar-bg"><div class="bar-fill' + (v >= 80 ? ' g' : '') + '" style="width:' + v + '%"></div></div><span class="bar-val">' + v + '</span></div>';
+  var grid=document.getElementById('vsGrid');grid.innerHTML='';
+  var n=data.products.length;
+  var cls=n===1?'one':n===2?'two':n===3?'three':'four';
+  var wrapper=document.createElement('div');wrapper.className='vs-grid '+cls;grid.appendChild(wrapper);
+  for(var i=0;i<n;i++){
+    var c=document.createElement('div');wrapper.appendChild(c);
+    buildCard(c,data.products[i],data.products[i].name===data.winner,data,i);
+  }
+  if(data.specsTable&&data.specsTable.length){
+    document.getElementById('specBox').style.display='block';
+    var hdrs=['SPEC'];for(var i=0;i<n;i++)hdrs.push(data.products[i].name);
+    var html='<thead><tr>'+hdrs.map(function(h){return '<th>'+h+'</th>';}).join('')+'</tr></thead><tbody>';
+    for(var i=0;i<data.specsTable.length;i++){
+      var row=data.specsTable[i];
+      html+='<tr><td>'+row.spec+'</td>'+(row.values||[]).map(function(v){return '<td>'+v+'</td>';}).join('')+'</tr>';
     }
-    var prosHtml = '';
-    for (var xi = 0; xi < (p.pros || []).length; xi++) prosHtml += '<div class="pc-item">+ ' + p.pros[xi] + '</div>';
-    var consHtml = '';
-    for (var xi = 0; xi < (p.cons || []).length; xi++) consHtml += '<div class="pc-item">- ' + p.cons[xi] + '</div>';
-    var revHtml = '';
-    for (var xi = 0; xi < (p.sampleReviews || []).length; xi++) {
-      var r = p.sampleReviews[xi];
-      revHtml += '<div class="review"><div class="r-stars">' + stars(r.stars) + ' ' + r.stars + '/5</div><div class="r-txt">"' + r.text + '"</div><div class="r-auth">- ' + r.author + '</div></div>';
+    html+='</tbody>';
+    document.getElementById('specTable').innerHTML=html;
+  }
+  if(data.summary){
+    document.getElementById('aiVerdict').style.display='block';
+    document.getElementById('aiBody').textContent=data.summary;
+  }
+}
+
+function buildCard(el,p,isWin,data,idx){
+  el.className='pcard'+(isWin?' win':'');
+  var bars='';var rkeys=Object.keys(p.ratings||{});
+  for(var i=0;i<rkeys.length;i++){
+    var k=rkeys[i],v=p.ratings[k];
+    bars+='<div class="statrow"><span class="stat-k">'+k+'</span><div class="stat-track"><div class="stat-fill'+(v>=80?' hi':'')+'" style="width:'+v+'%"></div></div><span class="stat-v">'+v+'</span></div>';
+  }
+  var pdHtml='';
+  if(data.pointDiffs&&data.pointDiffs.length&&data.products.length>1){
+    pdHtml='<div class="pdiffs"><div class="pdiffs-title">// POINT_DIFFERENCES_VS_OPPONENTS</div>';
+    for(var i=0;i<data.pointDiffs.length;i++){
+      var pd=data.pointDiffs[i];var amW=(pd.winner===idx);
+      pdHtml+='<div class="pdrow"><span class="pd-k">'+pd.label+'</span><span class="pd-v '+(amW?'up':'dn')+'">'+(amW?'+':'-')+Math.abs(pd.diff)+' PTS</span></div>';
     }
-    var amzLink = p.asin ? 'https://www.amazon.com/dp/' + p.asin + '?tag=neocomparison-20' : 'https://www.amazon.com/s?tag=neocomparison-20&k=' + encodeURIComponent(p.affiliateSearch || p.name);
-    var alreadyWatching = false;
-    for (var xi = 0; xi < wl.length; xi++) { if (wl[xi].name === p.name) { alreadyWatching = true; break; } }
-    var pname = p.name.replace(/'/g, "\\'");
-    var psearch = (p.affiliateSearch || p.name).replace(/'/g, "\\'");
-    card.innerHTML = '<div class="card-top"><div><div class="pname">' + p.name + '</div><div class="pcat">' + (p.category || '') + ' - ' + stars(Math.round(p.avgRating || 4)) + ' ' + (p.avgRating || '') + ' (' + ((p.totalReviews || 0).toLocaleString()) + ' reviews)</div></div><div class="badge' + (isWin ? ' win' : '') + '">' + p.overallScore + '/100</div></div><div style="font-size:0.8rem;color:var(--text2);margin-bottom:1rem;font-style:italic;">' + (p.reviewSummary || '') + '</div><div class="bars">' + barHtml + '</div><div class="pc"><div class="pros"><div class="pc-lbl">Pros</div>' + prosHtml + '</div><div class="cons"><div class="pc-lbl">Cons</div>' + consHtml + '</div></div><div class="verdict' + (isWin ? ' g' : '') + '">' + p.verdict + '</div><div style="margin-bottom:1rem;"><div class="reviews-lbl">What reviewers say</div>' + revHtml + '</div><a class="amz-btn" href="' + amzLink + '" target="_blank" rel="noopener noreferrer nofollow">View on Amazon</a><button class="watch-btn' + (alreadyWatching ? ' added' : '') + '" data-p="' + p.name + '" onclick="addWL(\'' + pname + '\',\'' + psearch + '\')">' + (alreadyWatching ? 'Watching for deals' : 'Watch for deals') + '</button>';
-    grid.appendChild(card);
+    pdHtml+='</div>';
   }
-  if (data.specsTable && data.specsTable.length) {
-    document.getElementById('tblWrap').style.display = 'block';
-    var headers = ['Spec'];
-    for (var i = 0; i < data.products.length; i++) headers.push(data.products[i].name);
-    var thtml = '<thead><tr>';
-    for (var i = 0; i < headers.length; i++) thtml += '<th>' + headers[i] + '</th>';
-    thtml += '</tr></thead><tbody>';
-    for (var i = 0; i < data.specsTable.length; i++) {
-      var row = data.specsTable[i];
-      thtml += '<tr><td>' + row.spec + '</td>';
-      for (var j = 0; j < (row.values || []).length; j++) thtml += '<td>' + row.values[j] + '</td>';
-      thtml += '</tr>';
-    }
-    thtml += '</tbody>';
-    document.getElementById('specsTable').innerHTML = thtml;
+  var pros=(p.pros||[]).map(function(x){return '<div class="pc-li">+ '+x+'</div>';}).join('');
+  var cons=(p.cons||[]).map(function(x){return '<div class="pc-li">- '+x+'</div>';}).join('');
+  var revs=(p.sampleReviews||[]).map(function(r){return '<div class="rev-card"><div class="rev-stars">'+stars(r.stars)+' '+r.stars+'/5</div><div class="rev-body">"'+r.text+'"</div></div>';}).join('');
+  var link=p.asin&&p.asin!=='B0XXXXXXXXX'&&p.asin.length===10?'https://www.amazon.com/dp/'+p.asin+'?tag='+TAG:'https://www.amazon.com/s?tag='+TAG+'&k='+encodeURIComponent(p.affiliateSearch||p.name);
+  var watching=false;for(var i=0;i<wl.length;i++){if(wl[i].name===p.name){watching=true;break;}}
+  var pnEsc=p.name.replace(/'/g,"\\'");var psEsc=(p.affiliateSearch||p.name).replace(/'/g,"\\'");
+  el.innerHTML='<div class="pcard-inner">'+
+    '<div class="pcard-top">'+
+      '<div class="pcard-img">'+(p.asin&&p.asin!=='B0XXXXXXXXX'&&p.asin.length===10?'<img src="https://m.media-amazon.com/images/I/'+p.asin+'._AC_SL200_.jpg" alt="'+p.name+'" onerror="this.parentNode.innerHTML=\'<div class=pcard-img-ph>◈</div>\'">':'<div class="pcard-img-ph">◈</div>')+'</div>'+
+      '<div class="pcard-info"><div class="pcard-name">'+p.name+'</div><div class="pcard-cat">'+(p.category||'')+'</div><div class="pcard-rating">'+stars(Math.round(p.avgRating||4))+' '+(p.avgRating||'?')+' ('+(p.totalReviews||0).toLocaleString()+')</div></div>'+
+      '<div class="score-box"><div class="score-n '+(isWin?'top':'bot')+'">'+p.overallScore+'</div><div class="score-l">SCORE</div></div>'+
+    '</div>'+
+    '<div class="pcard-summary">"'+(p.reviewSummary||'')+'"</div>'+
+    '<div class="statlist">'+bars+'</div>'+
+    pdHtml+
+    '<div class="pc"><div class="pc-col pros"><div class="pc-hd">++ PROS</div>'+pros+'</div><div class="pc-col cons"><div class="pc-hd">-- CONS</div>'+cons+'</div></div>'+
+    '<div class="verdict'+(isWin?' win':'')+'">'+p.verdict+'</div>'+
+    '<div class="rev-hd">// REVIEWER_QUOTES</div>'+revs+
+    '<a class="btn-amz" href="'+link+'" target="_blank" rel="noopener noreferrer nofollow">◈ VIEW ON AMAZON</a>'+
+    '<button class="btn-watch'+(watching?' saved':'')+'" data-p="'+p.name+'" onclick="addWL(\''+pnEsc+'\',\''+psEsc+'\')">'+
+      (watching?'◈ WATCHING_FOR_DEALS':'◈ WATCH_FOR_DEALS')+
+    '</button></div>';
+}
+
+// DEALS DATA
+var PRODUCTS={
+  all:[
+    {cat:'POWER_TOOLS',name:'DeWalt 20V MAX XR Drill Driver',asin:'B07BHC7TZK',rating:4.8,rev:12400,price:'$149',was:'$219',save:'32%',flag:'sale',img:'https://m.media-amazon.com/images/I/71zyMhNYI7L._AC_SL200_.jpg'},
+    {cat:'LAWN_GARDEN',name:'Ego 56V Cordless Mower 21"',asin:'B09NQYT38F',rating:4.7,rev:8200,price:'$449',was:'$599',save:'25%',flag:'sale',img:'https://m.media-amazon.com/images/I/71j4fKQtSBL._AC_SL200_.jpg'},
+    {cat:'STORAGE',name:'Samsung 990 Pro 2TB NVMe SSD',asin:'B0BHJJ9Y77',rating:4.9,rev:23100,price:'$119',was:'$189',save:'37%',flag:'hot',img:'https://m.media-amazon.com/images/I/71KDtSzVEBL._AC_SL200_.jpg'},
+    {cat:'BBQ_OUTDOOR',name:'Traeger Pro 575 Pellet Grill',asin:'B08QNQV44J',rating:4.6,rev:6800,price:'$649',was:'$799',save:'19%',flag:'sale',img:'https://m.media-amazon.com/images/I/71ZBLhxHfUL._AC_SL200_.jpg'},
+    {cat:'GAMING',name:'PS5 DualSense Controller',asin:'B08FC6C75Y',rating:4.8,rev:45000,price:'$59',was:'$69',save:'14%',flag:'sale',img:'https://m.media-amazon.com/images/I/61HMLVfLbUL._AC_SL200_.jpg'},
+    {cat:'HOME_KITCHEN',name:'Instant Pot Duo 7-in-1 8Qt',asin:'B00FLYWNYQ',rating:4.7,rev:98000,price:'$79',was:'$129',save:'39%',flag:'hot',img:'https://m.media-amazon.com/images/I/71V1GQXzHqL._AC_SL200_.jpg'},
+    {cat:'POWER_TOOLS',name:'Milwaukee M18 FUEL Circular Saw',asin:'B00IXVTUS4',rating:4.9,rev:7600,price:'$179',was:'$249',save:'28%',flag:'sale',img:'https://m.media-amazon.com/images/I/71BbBhGHPaL._AC_SL200_.jpg'},
+    {cat:'PERIPHERALS',name:'Logitech MX Master 3S Mouse',asin:'B09HM94VDS',rating:4.8,rev:31000,price:'$89',was:'$99',save:'10%',flag:'new',img:'https://m.media-amazon.com/images/I/61ni3t1ryQL._AC_SL200_.jpg'},
+  ],
+  gpu:[
+    {cat:'GRAPHICS_CARD',name:'NVIDIA GeForce RTX 4070 Super',asin:'B0CQSQC7GD',rating:4.8,rev:4200,price:'$599',was:'$699',save:'14%',flag:'hot',img:'https://m.media-amazon.com/images/I/71W7s5OjGlL._AC_SL200_.jpg'},
+    {cat:'GRAPHICS_CARD',name:'AMD Radeon RX 7800 XT',asin:'B0CGT8C5Q7',rating:4.7,rev:2800,price:'$449',was:'$499',save:'10%',flag:'sale',img:'https://m.media-amazon.com/images/I/71OACL9JWTL._AC_SL200_.jpg'},
+    {cat:'PROCESSOR',name:'AMD Ryzen 7 7700X',asin:'B0BBJ9H4S6',rating:4.8,rev:8900,price:'$249',was:'$399',save:'38%',flag:'hot',img:'https://m.media-amazon.com/images/I/51iBXFEIpWL._AC_SL200_.jpg'},
+    {cat:'PROCESSOR',name:'Intel Core i7-14700K',asin:'B0CGJ41N9T',rating:4.7,rev:5600,price:'$299',was:'$409',save:'27%',flag:'sale',img:'https://m.media-amazon.com/images/I/51jMqVMrGGL._AC_SL200_.jpg'},
+    {cat:'MEMORY',name:'Corsair Vengeance 32GB DDR5',asin:'B09NNVR6JP',rating:4.7,rev:9400,price:'$89',was:'$139',save:'36%',flag:'sale',img:'https://m.media-amazon.com/images/I/71EWFGFXAOL._AC_SL200_.jpg'},
+    {cat:'STORAGE',name:'WD Black SN850X 2TB NVMe',asin:'B0B7CKVCCV',rating:4.8,rev:14200,price:'$129',was:'$199',save:'35%',flag:'hot',img:'https://m.media-amazon.com/images/I/61Zr6Q4SNXL._AC_SL200_.jpg'},
+    {cat:'MOTHERBOARD',name:'ASUS ROG Strix B650E-F WiFi',asin:'B0BFTYYXC9',rating:4.7,rev:3800,price:'$249',was:'$329',save:'24%',flag:'sale',img:'https://m.media-amazon.com/images/I/81qM7O-KZAL._AC_SL200_.jpg'},
+    {cat:'PC_CASE',name:'Lian Li PC-O11 Dynamic EVO',asin:'B09KTHVPZT',rating:4.9,rev:12100,price:'$149',was:'$179',save:'17%',flag:'new',img:'https://m.media-amazon.com/images/I/61p5WNbJZ3L._AC_SL200_.jpg'},
+  ],
+  tech:[
+    {cat:'STORAGE',name:'Samsung 990 Pro 2TB NVMe SSD',asin:'B0BHJJ9Y77',rating:4.9,rev:23100,price:'$119',was:'$189',save:'37%',flag:'hot',img:'https://m.media-amazon.com/images/I/71KDtSzVEBL._AC_SL200_.jpg'},
+    {cat:'PERIPHERALS',name:'Logitech MX Master 3S Mouse',asin:'B09HM94VDS',rating:4.8,rev:31000,price:'$89',was:'$99',save:'10%',flag:'new',img:'https://m.media-amazon.com/images/I/61ni3t1ryQL._AC_SL200_.jpg'},
+    {cat:'STORAGE',name:'Samsung T7 1TB Portable SSD',asin:'B0874YJP92',rating:4.8,rev:67000,price:'$69',was:'$109',save:'37%',flag:'hot',img:'https://m.media-amazon.com/images/I/61rX6hb5j9L._AC_SL200_.jpg'},
+    {cat:'MONITOR',name:'LG 34" UltraWide Curved Monitor',asin:'B09BR5WNXQ',rating:4.6,rev:8900,price:'$349',was:'$499',save:'30%',flag:'sale',img:'https://m.media-amazon.com/images/I/71GbdLLY4QL._AC_SL200_.jpg'},
+    {cat:'KEYBOARD',name:'Keychron K2 Mechanical Keyboard',asin:'B07ZGB7Y43',rating:4.7,rev:22000,price:'$89',was:'$99',save:'10%',flag:'new',img:'https://m.media-amazon.com/images/I/71Hh4RQPBFL._AC_SL200_.jpg'},
+    {cat:'MONITOR',name:'ASUS ROG Strix 27" 4K Monitor',asin:'B09NRP2JRN',rating:4.8,rev:5600,price:'$399',was:'$549',save:'27%',flag:'sale',img:'https://m.media-amazon.com/images/I/81kOGeHfPuL._AC_SL200_.jpg'},
+  ],
+  tools:[
+    {cat:'POWER_TOOLS',name:'DeWalt 20V MAX XR Drill Driver',asin:'B07BHC7TZK',rating:4.8,rev:12400,price:'$149',was:'$219',save:'32%',flag:'sale',img:'https://m.media-amazon.com/images/I/71zyMhNYI7L._AC_SL200_.jpg'},
+    {cat:'POWER_TOOLS',name:'Milwaukee M18 FUEL Circular Saw',asin:'B00IXVTUS4',rating:4.9,rev:7600,price:'$179',was:'$249',save:'28%',flag:'sale',img:'https://m.media-amazon.com/images/I/71BbBhGHPaL._AC_SL200_.jpg'},
+    {cat:'POWER_TOOLS',name:'Makita 18V LXT 2-Piece Combo',asin:'B008LKVLBS',rating:4.8,rev:9800,price:'$199',was:'$279',save:'29%',flag:'sale',img:'https://m.media-amazon.com/images/I/71IZfVr-iiL._AC_SL200_.jpg'},
+    {cat:'PRESSURE_WASHER',name:'Simpson 3400 PSI Pressure Washer',asin:'B00R1DV74U',rating:4.6,rev:4200,price:'$349',was:'$449',save:'22%',flag:'sale',img:'https://m.media-amazon.com/images/I/71vDmpLq-QL._AC_SL200_.jpg'},
+  ],
+  lawn:[
+    {cat:'LAWN_GARDEN',name:'Ego 56V Cordless Mower 21"',asin:'B09NQYT38F',rating:4.7,rev:8200,price:'$449',was:'$599',save:'25%',flag:'sale',img:'https://m.media-amazon.com/images/I/71j4fKQtSBL._AC_SL200_.jpg'},
+    {cat:'LAWN_GARDEN',name:'Greenworks 40V String Trimmer',asin:'B07VCMT5L4',rating:4.5,rev:6100,price:'$89',was:'$129',save:'31%',flag:'sale',img:'https://m.media-amazon.com/images/I/71L9a7dGRfL._AC_SL200_.jpg'},
+    {cat:'LAWN_GARDEN',name:'Husqvarna 450 Rancher Chainsaw',asin:'B01MCXRUJX',rating:4.8,rev:3900,price:'$399',was:'$499',save:'20%',flag:'sale',img:'https://m.media-amazon.com/images/I/71c10zWDRxL._AC_SL200_.jpg'},
+    {cat:'LAWN_GARDEN',name:'Rain Bird 6-Station Timer',asin:'B006EHKLXQ',rating:4.6,rev:14200,price:'$39',was:'$55',save:'29%',flag:'sale',img:'https://m.media-amazon.com/images/I/61Td3jxEgFL._AC_SL200_.jpg'},
+  ],
+  home:[
+    {cat:'HOME_KITCHEN',name:'Instant Pot Duo 7-in-1 8Qt',asin:'B00FLYWNYQ',rating:4.7,rev:98000,price:'$79',was:'$129',save:'39%',flag:'hot',img:'https://m.media-amazon.com/images/I/71V1GQXzHqL._AC_SL200_.jpg'},
+    {cat:'HOME_KITCHEN',name:'Ninja DZ401 10Qt Air Fryer',asin:'B08DV4JC88',rating:4.8,rev:41000,price:'$149',was:'$199',save:'25%',flag:'sale',img:'https://m.media-amazon.com/images/I/71pS4A-P4ZL._AC_SL200_.jpg'},
+    {cat:'HOME_KITCHEN',name:'Dyson V15 Detect Vacuum',asin:'B09PRGQHTW',rating:4.7,rev:22000,price:'$549',was:'$749',save:'27%',flag:'sale',img:'https://m.media-amazon.com/images/I/71-Z2HiGNiL._AC_SL200_.jpg'},
+    {cat:'HOME_KITCHEN',name:'iRobot Roomba j7+ Robot Vacuum',asin:'B09BT7FKSD',rating:4.5,rev:18900,price:'$399',was:'$599',save:'33%',flag:'sale',img:'https://m.media-amazon.com/images/I/71dB4FHuGtL._AC_SL200_.jpg'},
+  ],
+  bbq:[
+    {cat:'BBQ_OUTDOOR',name:'Traeger Pro 575 Pellet Grill',asin:'B08QNQV44J',rating:4.6,rev:6800,price:'$649',was:'$799',save:'19%',flag:'sale',img:'https://m.media-amazon.com/images/I/71ZBLhxHfUL._AC_SL200_.jpg'},
+    {cat:'BBQ_OUTDOOR',name:'Weber Spirit E-310 Gas Grill',asin:'B07GZDPCZT',rating:4.7,rev:9200,price:'$499',was:'$599',save:'17%',flag:'sale',img:'https://m.media-amazon.com/images/I/71Jb+7bLteL._AC_SL200_.jpg'},
+    {cat:'BBQ_OUTDOOR',name:'Blackstone 36" Griddle Station',asin:'B0758ZNJ88',rating:4.8,rev:28000,price:'$297',was:'$397',save:'25%',flag:'hot',img:'https://m.media-amazon.com/images/I/71JeMMeEYKL._AC_SL200_.jpg'},
+    {cat:'BBQ_OUTDOOR',name:'Oklahoma Joe Longhorn Smoker',asin:'B001CXYMR4',rating:4.5,rev:5600,price:'$349',was:'$499',save:'30%',flag:'sale',img:'https://m.media-amazon.com/images/I/71EULz9o+VL._AC_SL200_.jpg'},
+  ],
+  gaming:[
+    {cat:'GAMING',name:'PS5 DualSense Controller',asin:'B08FC6C75Y',rating:4.8,rev:45000,price:'$59',was:'$69',save:'14%',flag:'sale',img:'https://m.media-amazon.com/images/I/61HMLVfLbUL._AC_SL200_.jpg'},
+    {cat:'GAMING',name:'Xbox Wireless Controller',asin:'B08DF26MLL',rating:4.8,rev:32000,price:'$49',was:'$59',save:'17%',flag:'sale',img:'https://m.media-amazon.com/images/I/61GVxvd5O9L._AC_SL200_.jpg'},
+    {cat:'GAMING',name:'SteelSeries Arctis Nova Pro',asin:'B09ZXNT98Y',rating:4.7,rev:12000,price:'$179',was:'$249',save:'28%',flag:'sale',img:'https://m.media-amazon.com/images/I/61kHhGidTCL._AC_SL200_.jpg'},
+    {cat:'GAMING',name:'LG 27" UltraGear 4K Monitor',asin:'B09NK4Q3QJ',rating:4.8,rev:8900,price:'$349',was:'$499',save:'30%',flag:'hot',img:'https://m.media-amazon.com/images/I/81TDr8XFBEL._AC_SL200_.jpg'},
+  ]
+};
+var BESTS=[
+  {cat:'POWER_TOOLS',name:'Milwaukee M18 FUEL Hammer Drill',asin:'B00Y5XSQJ0',rating:4.9,rev:18400,price:'$199',flag:'top',img:'https://m.media-amazon.com/images/I/71gfX6HJQZL._AC_SL200_.jpg'},
+  {cat:'LAPTOP',name:'Apple MacBook Air M3 13"',asin:'B0CX22DK2R',rating:4.9,rev:54000,price:'$1,099',flag:'top',img:'https://m.media-amazon.com/images/I/71jG+e7roXL._AC_SL200_.jpg'},
+  {cat:'GRAPHICS_CARD',name:'NVIDIA RTX 4070 Super',asin:'B0CQSQC7GD',rating:4.8,rev:4200,price:'$599',flag:'top',img:'https://m.media-amazon.com/images/I/71W7s5OjGlL._AC_SL200_.jpg'},
+  {cat:'BBQ',name:'Weber Genesis E-325s Grill',asin:'B09BKRDL1F',rating:4.8,rev:5400,price:'$849',flag:'top',img:'https://m.media-amazon.com/images/I/71I0xwBbW-L._AC_SL200_.jpg'},
+  {cat:'HOME_KITCHEN',name:'Vitamix 5200 Blender',asin:'B008H4SLV6',rating:4.8,rev:29000,price:'$349',flag:'top',img:'https://m.media-amazon.com/images/I/71p3cZfKXRL._AC_SL200_.jpg'},
+  {cat:'AUDIO',name:'Sony WH-1000XM5 Headphones',asin:'B09XS7JWHH',rating:4.8,rev:67000,price:'$279',flag:'top',img:'https://m.media-amazon.com/images/I/61vRendFt2L._AC_SL200_.jpg'},
+  {cat:'PROCESSOR',name:'AMD Ryzen 9 7950X',asin:'B0BBHHT8LY',rating:4.9,rev:7800,price:'$549',flag:'top',img:'https://m.media-amazon.com/images/I/51iBXFEIpWL._AC_SL200_.jpg'},
+  {cat:'LAWN_GARDEN',name:'Honda HRX217VKA Mower',asin:'B07K3CBPQ3',rating:4.8,rev:7800,price:'$599',flag:'top',img:'https://m.media-amazon.com/images/I/71VdqD9aqJL._AC_SL200_.jpg'},
+];
+var PC_PICKS=[
+  {cat:'GRAPHICS_CARD',name:'NVIDIA GeForce RTX 4090',asin:'B0BG94TQLZ',rating:4.9,rev:3200,price:'$1,599',was:'$1,999',save:'20%',flag:'hot',img:'https://m.media-amazon.com/images/I/71W7s5OjGlL._AC_SL200_.jpg'},
+  {cat:'GRAPHICS_CARD',name:'AMD Radeon RX 7900 XTX',asin:'B0BPS9BKSX',rating:4.8,rev:2100,price:'$749',was:'$999',save:'25%',flag:'sale',img:'https://m.media-amazon.com/images/I/71OACL9JWTL._AC_SL200_.jpg'},
+  {cat:'GRAPHICS_CARD',name:'NVIDIA RTX 4070 Ti Super',asin:'B0CQFGGR5L',rating:4.8,rev:3800,price:'$749',was:'$799',save:'6%',flag:'new',img:'https://m.media-amazon.com/images/I/71W7s5OjGlL._AC_SL200_.jpg'},
+  {cat:'PROCESSOR',name:'Intel Core i9-14900K',asin:'B0CGJ41N9T',rating:4.8,rev:6200,price:'$399',was:'$589',save:'32%',flag:'hot',img:'https://m.media-amazon.com/images/I/51jMqVMrGGL._AC_SL200_.jpg'},
+  {cat:'PROCESSOR',name:'AMD Ryzen 9 7900X3D',asin:'B0BTRH9NQJ',rating:4.9,rev:4100,price:'$349',was:'$449',save:'22%',flag:'sale',img:'https://m.media-amazon.com/images/I/51iBXFEIpWL._AC_SL200_.jpg'},
+  {cat:'MEMORY',name:'G.Skill Trident Z5 32GB DDR5',asin:'B09NXCBDPR',rating:4.8,rev:7600,price:'$79',was:'$129',save:'39%',flag:'hot',img:'https://m.media-amazon.com/images/I/71EWFGFXAOL._AC_SL200_.jpg'},
+  {cat:'STORAGE',name:'Samsung 990 Pro 4TB NVMe',asin:'B0BHJJ9Y77',rating:4.9,rev:8900,price:'$249',was:'$399',save:'38%',flag:'hot',img:'https://m.media-amazon.com/images/I/71KDtSzVEBL._AC_SL200_.jpg'},
+  {cat:'CPU_COOLING',name:'Noctua NH-D15 CPU Cooler',asin:'B00L7UZMAK',rating:4.9,rev:21000,price:'$99',was:'$109',save:'9%',flag:'top',img:'https://m.media-amazon.com/images/I/81eDGQrxBoL._AC_SL200_.jpg'},
+];
+
+function amzLink(asin,search){
+  if(asin&&asin.length===10)return 'https://www.amazon.com/dp/'+asin+'?tag='+TAG;
+  return 'https://www.amazon.com/s?tag='+TAG+'&k='+encodeURIComponent(search||'');
+}
+function flagCls(f){return f==='hot'?'hot':f==='top'?'top':f==='new'?'new':'sale';}
+function flagTxt(f){return f==='hot'?'HOT':f==='top'?'BEST':f==='new'?'NEW':'SALE';}
+
+function dealCard(d){
+  var link=amzLink(d.asin,d.name);
+  return '<div class="deal">'+
+    '<div class="deal-img"><img src="'+d.img+'" alt="'+d.name+'" loading="lazy" onerror="this.style.display=\'none\'"><span class="deal-flag '+flagCls(d.flag)+'">'+flagTxt(d.flag)+'</span></div>'+
+    '<div class="deal-body">'+
+      '<div class="deal-cat">'+d.cat+'</div>'+
+      '<div class="deal-name">'+d.name+'</div>'+
+      '<div class="deal-stars">'+stars(d.rating)+' '+d.rating+' ('+d.rev.toLocaleString()+')</div>'+
+      '<div class="deal-pricing"><span class="deal-now">'+d.price+'</span>'+(d.was?'<span class="deal-was">'+d.was+'</span>':'')+(d.save?'<span class="deal-pct">-'+d.save+'</span>':'')+'</div>'+
+      '<a class="deal-amz" href="'+link+'" target="_blank" rel="noopener noreferrer nofollow">◈ VIEW_ON_AMAZON</a>'+
+      '<button class="deal-cmp" onclick="quickCompare(\''+d.name.replace(/'/g,"\\'")+'\')">⚡ COMPARE_THIS</button>'+
+    '</div></div>';
+}
+
+function renderDeals(cat){
+  var items=PRODUCTS[cat]||PRODUCTS.all;
+  document.getElementById('dealsGrid').innerHTML=items.map(dealCard).join('');
+  document.getElementById('bestsGrid').innerHTML=BESTS.map(dealCard).join('');
+  document.getElementById('pcGrid').innerHTML=PC_PICKS.map(dealCard).join('');
+}
+
+function quickCompare(name){
+  var tabs=document.querySelectorAll('.mode-tab');
+  setMode(2,tabs[1]);
+  var inp=document.getElementById('inp1');
+  if(inp){inp.value=name;document.getElementById('inp2').focus();}
+  window.scrollTo({top:0,behavior:'smooth'});
+  toast('// enter second product to compare with: '+name);
+}
+
+function setCat(cat,el){
+  document.querySelectorAll('.catbtn,.nav-links a').forEach(function(b){b.classList.remove('on');});
+  if(el)el.classList.add('on');
+  renderDeals(cat);
+}
+
+// AUTH
+function openM(tab){document.getElementById('authOverlay').classList.add('open');switchTab(tab);}
+function closeOverlay(id){document.getElementById(id).classList.remove('open');}
+document.getElementById('authOverlay').addEventListener('click',function(e){if(e.target===this)closeOverlay('authOverlay');});
+function switchTab(t){
+  document.getElementById('loginF').style.display=t==='login'?'block':'none';
+  document.getElementById('regF').style.display=t==='register'?'block':'none';
+  document.getElementById('mt1').className='mtab'+(t==='login'?' on':'');
+  document.getElementById('mt2').className='mtab'+(t==='register'?' on':'');
+  document.getElementById('mTitle').textContent=t==='login'?'WELCOME_BACK':'CREATE_ACCOUNT';
+  document.getElementById('mSub').textContent=t==='login'?'// sign in to save and track deals':'// get notified when items go on sale';
+}
+function doLogin(){
+  var e=document.getElementById('le').value.trim(),p=document.getElementById('lp').value;
+  if(!e||!p){toast('// ERROR: fill in all fields');return;}
+  var users=JSON.parse(localStorage.getItem('nc_users')||'[]'),found=null;
+  for(var i=0;i<users.length;i++){if(users[i].email===e&&users[i].password===p){found=users[i];break;}}
+  if(!found){toast('// ERROR: invalid credentials');return;}
+  user=found;localStorage.setItem('nc_u',JSON.stringify(user));
+  closeOverlay('authOverlay');refreshNav();toast('// WELCOME_BACK: '+(user.name||user.email));
+}
+function doRegister(){
+  var n=document.getElementById('rn').value.trim(),e=document.getElementById('re').value.trim(),p=document.getElementById('rp').value;
+  if(!n||!e||!p){toast('// ERROR: fill in all fields');return;}
+  if(p.length<6){toast('// ERROR: password must be 6+ chars');return;}
+  var users=JSON.parse(localStorage.getItem('nc_users')||'[]');
+  for(var i=0;i<users.length;i++){if(users[i].email===e){toast('// ERROR: email already registered');return;}}
+  var u={name:n,email:e,password:p,alerts:document.getElementById('ea').checked,joined:new Date().toISOString()};
+  users.push(u);localStorage.setItem('nc_users',JSON.stringify(users));
+  user=u;localStorage.setItem('nc_u',JSON.stringify(u));
+  closeOverlay('authOverlay');refreshNav();toast('// ACCOUNT_CREATED: welcome '+n);
+}
+function logout(){user=null;localStorage.removeItem('nc_u');refreshNav();toast('// SIGNED_OUT');}
+function refreshNav(){
+  if(user){
+    document.getElementById('navGuest').style.display='none';
+    document.getElementById('navUser').style.display='flex';
+    document.getElementById('navUser').style.alignItems='center';
+    document.getElementById('uname').textContent=user.name||user.email;
+  } else {
+    document.getElementById('navGuest').style.display='flex';
+    document.getElementById('navUser').style.display='none';
   }
-  if (data.summary) {
-    document.getElementById('aiBox').style.display = 'block';
-    document.getElementById('aiTxt').textContent = data.summary;
+}
+function toggleWL(){
+  var p=document.getElementById('wlPanel');
+  p.style.display=p.style.display==='block'?'none':'block';renderWL();
+}
+function renderWL(){
+  var el=document.getElementById('wlItems');
+  if(!wl.length){el.innerHTML='<div class="wl-empty">// NO_ITEMS — add products from any comparison</div>';return;}
+  var h='';
+  for(var i=0;i<wl.length;i++){
+    h+='<div class="wl-row"><div><div class="wl-name">'+wl[i].name+'</div><div class="wl-date">// added_'+new Date(wl[i].added).toLocaleDateString()+'</div></div><button class="wl-del" onclick="rmWL('+i+')">✕</button></div>';
   }
+  el.innerHTML=h;
+}
+function addWL(name,search){
+  if(!user){openM('register');toast('// create account to track deals');return;}
+  for(var i=0;i<wl.length;i++){if(wl[i].name===name){toast('// already on watchlist');return;}}
+  wl.push({name:name,search:search,added:new Date().toISOString()});
+  localStorage.setItem('nc_wl',JSON.stringify(wl));
+  toast('// ADDED: '+name);
+  document.querySelectorAll('.btn-watch').forEach(function(b){
+    if(b.getAttribute('data-p')===name){b.textContent='◈ WATCHING_FOR_DEALS';b.className='btn-watch saved';}
+  });
+}
+function rmWL(i){wl.splice(i,1);localStorage.setItem('nc_wl',JSON.stringify(wl));renderWL();toast('// REMOVED from watchlist');}
+function sendContact(){
+  var n=document.getElementById('cName').value.trim();
+  var e=document.getElementById('cEmail').value.trim();
+  var m=document.getElementById('cMsg').value.trim();
+  if(!n||!e||!m){toast('// ERROR: fill in all fields');return;}
+  var subject=encodeURIComponent('NeoComparison Message from '+n);
+  var body=encodeURIComponent('Name: '+n+'\nEmail: '+e+'\n\nMessage:\n'+m);
+  window.location.href='mailto:nesichtechnologies@gmail.com?subject='+subject+'&body='+body;
+  toast('// OPENING_EMAIL_CLIENT...');
+  document.getElementById('cName').value='';document.getElementById('cEmail').value='';document.getElementById('cMsg').value='';
+}
+function toast(msg){
+  var el=document.getElementById('toast');el.textContent=msg;el.classList.add('show');
+  setTimeout(function(){el.classList.remove('show');},3000);
 }
 </script>
 </body>

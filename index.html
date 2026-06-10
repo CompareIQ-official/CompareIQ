@@ -1,154 +1,352 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CompareIQ — AI Product Comparisons</title>
+<title>NeoComparison — AI Product Comparisons</title>
 <style>
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  :root {
-    --bg: #0a0a0f; --bg2: #12121a; --bg3: #1a1a26; --card: #16161f;
-    --border: rgba(255,255,255,0.08); --border2: rgba(255,255,255,0.14);
-    --text: #f0f0f5; --text2: #9090a8; --text3: #5a5a72;
-    --accent: #6c63ff; --accent2: #8b84ff; --accent-bg: rgba(108,99,255,0.12);
-    --green: #22d3a0; --green-bg: rgba(34,211,160,0.1);
-    --amber: #f59e0b; --amber-bg: rgba(245,158,11,0.1);
-    --red: #ef4444; --red-bg: rgba(239,68,68,0.1);
-  }
-  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; line-height: 1.6; }
-  nav { display: flex; align-items: center; justify-content: space-between; padding: 1.25rem 2rem; border-bottom: 1px solid var(--border); position: sticky; top: 0; background: rgba(10,10,15,0.92); backdrop-filter: blur(12px); z-index: 100; }
-  .logo { font-size: 1.25rem; font-weight: 700; letter-spacing: -0.02em; color: var(--text); }
-  .logo span { color: var(--accent2); }
-  .nav-links { display: flex; gap: 2rem; list-style: none; }
-  .nav-links a { color: var(--text2); text-decoration: none; font-size: 0.9rem; transition: color 0.2s; }
-  .nav-links a:hover { color: var(--text); }
-  hero { display: block; text-align: center; padding: 5rem 2rem 3rem; max-width: 780px; margin: 0 auto; }
-  .hero-label { display: inline-block; background: var(--accent-bg); color: var(--accent2); font-size: 0.78rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; padding: 0.35rem 0.9rem; border-radius: 100px; border: 1px solid rgba(108,99,255,0.25); margin-bottom: 1.5rem; }
-  h1 { font-size: clamp(2.2rem, 5vw, 3.2rem); font-weight: 800; letter-spacing: -0.03em; line-height: 1.15; margin-bottom: 1.25rem; background: linear-gradient(135deg, #fff 40%, #9090a8); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-  .hero-sub { font-size: 1.1rem; color: var(--text2); max-width: 520px; margin: 0 auto 2.5rem; }
-  .search-wrap { background: var(--card); border: 1px solid var(--border2); border-radius: 16px; padding: 1.25rem 1.5rem; margin-bottom: 1rem; text-align: left; }
-  .search-label { font-size: 0.78rem; font-weight: 600; color: var(--text3); text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 0.75rem; }
-  .search-row { display: flex; gap: 0.75rem; align-items: center; }
-  .search-input { flex: 1; background: var(--bg3); border: 1px solid var(--border); border-radius: 10px; padding: 0.75rem 1rem; color: var(--text); font-size: 0.95rem; outline: none; transition: border-color 0.2s; font-family: inherit; }
-  .search-input:focus { border-color: var(--accent); }
-  .search-input::placeholder { color: var(--text3); }
-  .compare-btn { background: var(--accent); color: #fff; border: none; border-radius: 10px; padding: 0.75rem 1.5rem; font-size: 0.95rem; font-weight: 600; cursor: pointer; transition: background 0.2s, transform 0.1s; font-family: inherit; white-space: nowrap; }
-  .compare-btn:hover { background: var(--accent2); }
-  .compare-btn:active { transform: scale(0.98); }
-  .compare-btn:disabled { opacity: 0.5; cursor: not-allowed; }
-  .quick-picks { display: flex; gap: 0.5rem; flex-wrap: wrap; justify-content: center; margin-top: 1rem; }
-  .quick-pick { background: var(--bg3); border: 1px solid var(--border); border-radius: 100px; padding: 0.4rem 0.9rem; font-size: 0.8rem; color: var(--text2); cursor: pointer; transition: all 0.2s; font-family: inherit; }
-  .quick-pick:hover { border-color: var(--accent); color: var(--accent2); background: var(--accent-bg); }
-  .results-section { max-width: 1100px; margin: 0 auto; padding: 0 2rem 4rem; }
-  .loading-state { text-align: center; padding: 4rem 2rem; display: none; }
-  .spinner { width: 40px; height: 40px; border: 3px solid var(--border2); border-top-color: var(--accent); border-radius: 50%; animation: spin 0.8s linear infinite; margin: 0 auto 1rem; }
-  @keyframes spin { to { transform: rotate(360deg); } }
-  .loading-text { color: var(--text2); font-size: 0.95rem; }
-  .loading-steps { display: flex; justify-content: center; gap: 1.5rem; margin-top: 1.25rem; flex-wrap: wrap; }
-  .loading-step { font-size: 0.8rem; color: var(--text3); display: flex; align-items: center; gap: 0.4rem; }
-  .loading-step.active { color: var(--accent2); }
-  .loading-step.done { color: var(--green); }
-  .results-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.5rem; display: none; }
-  .results-title { font-size: 1.3rem; font-weight: 700; letter-spacing: -0.02em; }
-  .results-meta { font-size: 0.82rem; color: var(--text3); }
-  .winner-banner { background: var(--green-bg); border: 1px solid rgba(34,211,160,0.2); border-radius: 14px; padding: 1.25rem 1.5rem; margin-bottom: 1.5rem; display: none; align-items: center; gap: 1rem; }
-  .winner-icon { width: 42px; height: 42px; background: rgba(34,211,160,0.2); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.3rem; flex-shrink: 0; }
-  .winner-label { font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.07em; color: var(--green); margin-bottom: 0.2rem; }
-  .winner-name { font-size: 1.05rem; font-weight: 700; color: var(--text); }
-  .winner-reason { font-size: 0.85rem; color: var(--text2); margin-top: 0.2rem; }
-  .products-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem; margin-bottom: 1.5rem; }
-  .product-card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 1.5rem; transition: border-color 0.2s; }
-  .product-card.winner-card { border-color: rgba(34,211,160,0.35); }
-  .product-card:hover { border-color: var(--border2); }
-  .card-top { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 1rem; }
-  .product-name { font-size: 1.05rem; font-weight: 700; letter-spacing: -0.01em; color: var(--text); }
-  .product-category { font-size: 0.78rem; color: var(--text3); margin-top: 0.2rem; }
-  .score-badge { background: var(--accent-bg); color: var(--accent2); border: 1px solid rgba(108,99,255,0.25); border-radius: 8px; padding: 0.3rem 0.6rem; font-size: 0.85rem; font-weight: 700; white-space: nowrap; }
-  .score-badge.top { background: var(--green-bg); color: var(--green); border-color: rgba(34,211,160,0.25); }
-  .rating-bar-wrap { margin-bottom: 1.25rem; }
-  .rating-row { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.5rem; }
-  .rating-label { font-size: 0.78rem; color: var(--text2); width: 80px; flex-shrink: 0; }
-  .rating-bar-bg { flex: 1; height: 5px; background: var(--bg3); border-radius: 100px; overflow: hidden; }
-  .rating-bar-fill { height: 100%; border-radius: 100px; background: var(--accent); transition: width 0.8s ease; }
-  .rating-bar-fill.green { background: var(--green); }
-  .rating-val { font-size: 0.78rem; font-weight: 600; color: var(--text2); width: 28px; text-align: right; }
-  .pros-cons { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; margin-bottom: 1rem; }
-  .pros-col, .cons-col { background: var(--bg3); border-radius: 10px; padding: 0.75rem; }
-  .pc-label { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 0.5rem; }
-  .pros-col .pc-label { color: var(--green); }
-  .cons-col .pc-label { color: var(--red); }
-  .pc-item { font-size: 0.8rem; color: var(--text2); padding: 0.2rem 0; line-height: 1.4; }
-  .verdict-box { background: var(--bg3); border-radius: 10px; padding: 0.85rem 1rem; font-size: 0.83rem; color: var(--text2); line-height: 1.5; border-left: 3px solid var(--accent); }
-  .verdict-box.green { border-left-color: var(--green); }
-  .affiliate-btn { display: block; width: 100%; margin-top: 1rem; background: var(--accent-bg); color: var(--accent2); border: 1px solid rgba(108,99,255,0.25); border-radius: 10px; padding: 0.65rem; font-size: 0.85rem; font-weight: 600; text-align: center; cursor: pointer; text-decoration: none; transition: all 0.2s; font-family: inherit; }
-  .affiliate-btn:hover { background: rgba(108,99,255,0.2); border-color: rgba(108,99,255,0.4); color: #fff; }
-  .comparison-table-wrap { background: var(--card); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; margin-bottom: 1.5rem; display: none; }
-  .table-header { padding: 1rem 1.5rem; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; }
-  .table-title { font-size: 0.9rem; font-weight: 600; color: var(--text); }
-  table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
-  th { padding: 0.85rem 1.25rem; text-align: left; font-size: 0.78rem; font-weight: 600; color: var(--text3); text-transform: uppercase; letter-spacing: 0.06em; border-bottom: 1px solid var(--border); background: var(--bg3); }
-  td { padding: 0.85rem 1.25rem; border-bottom: 1px solid var(--border); color: var(--text2); vertical-align: top; }
-  tr:last-child td { border-bottom: none; }
-  tr:hover td { background: rgba(255,255,255,0.02); }
-  td:first-child { color: var(--text); font-weight: 500; }
-  .ai-summary { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 1.5rem; display: none; }
-  .ai-summary-label { display: flex; align-items: center; gap: 0.5rem; font-size: 0.78rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.07em; color: var(--accent2); margin-bottom: 1rem; }
-  .ai-dot { width: 7px; height: 7px; background: var(--accent); border-radius: 50%; animation: pulse 2s ease-in-out infinite; }
-  @keyframes pulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.5; transform: scale(0.8); } }
-  .ai-summary-text { font-size: 0.92rem; color: var(--text2); line-height: 1.7; }
-  .empty-state { text-align: center; padding: 5rem 2rem; }
-  .empty-icon { font-size: 3rem; margin-bottom: 1rem; opacity: 0.3; }
-  .empty-title { font-size: 1.2rem; font-weight: 700; color: var(--text); margin-bottom: 0.5rem; }
-  .empty-sub { font-size: 0.9rem; color: var(--text3); }
-  .error-box { background: var(--red-bg); border: 1px solid rgba(239,68,68,0.2); border-radius: 12px; padding: 1rem 1.25rem; color: #fca5a5; font-size: 0.88rem; display: none; margin-bottom: 1rem; }
-  footer { border-top: 1px solid var(--border); padding: 2rem; text-align: center; color: var(--text3); font-size: 0.82rem; }
-  footer a { color: var(--text2); text-decoration: none; }
-  @media (max-width: 600px) { nav { padding: 1rem; } hero { padding: 3rem 1rem 2rem; } .results-section { padding: 0 1rem 3rem; } .pros-cons { grid-template-columns: 1fr; } }
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+[data-theme="dark"] {
+  --bg: #0a0a0f;
+  --bg2: #12121a;
+  --bg3: #1a1a26;
+  --card: #16161f;
+  --border: rgba(255,255,255,0.08);
+  --border2: rgba(255,255,255,0.14);
+  --text: #f0f0f5;
+  --text2: #9090a8;
+  --text3: #5a5a72;
+  --accent: #6c63ff;
+  --accent2: #8b84ff;
+  --accent-bg: rgba(108,99,255,0.12);
+  --green: #22d3a0;
+  --green-bg: rgba(34,211,160,0.1);
+  --amber: #f59e0b;
+  --amber-bg: rgba(245,158,11,0.1);
+  --red: #ef4444;
+  --red-bg: rgba(239,68,68,0.1);
+  --nav-bg: rgba(10,10,15,0.92);
+  --modal-bg: rgba(0,0,0,0.7);
+  --input-bg: #1a1a26;
+  --star: #f59e0b;
+}
+
+[data-theme="light"] {
+  --bg: #f8f8fc;
+  --bg2: #f0f0f8;
+  --bg3: #e8e8f4;
+  --card: #ffffff;
+  --border: rgba(0,0,0,0.08);
+  --border2: rgba(0,0,0,0.14);
+  --text: #0a0a1a;
+  --text2: #4a4a6a;
+  --text3: #8a8aaa;
+  --accent: #6c63ff;
+  --accent2: #4f46e5;
+  --accent-bg: rgba(108,99,255,0.08);
+  --green: #059669;
+  --green-bg: rgba(5,150,105,0.08);
+  --amber: #d97706;
+  --amber-bg: rgba(217,119,6,0.08);
+  --red: #dc2626;
+  --red-bg: rgba(220,38,38,0.08);
+  --nav-bg: rgba(248,248,252,0.92);
+  --modal-bg: rgba(0,0,0,0.5);
+  --input-bg: #f0f0f8;
+  --star: #d97706;
+}
+
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; line-height: 1.6; transition: background 0.3s, color 0.3s; }
+
+/* NAV */
+nav { display: flex; align-items: center; justify-content: space-between; padding: 1rem 2rem; border-bottom: 1px solid var(--border); position: sticky; top: 0; background: var(--nav-bg); backdrop-filter: blur(12px); z-index: 100; }
+.logo { font-size: 1.2rem; font-weight: 800; letter-spacing: -0.03em; color: var(--text); }
+.logo span { color: var(--accent); }
+.nav-right { display: flex; align-items: center; gap: 0.75rem; }
+.nav-btn { background: none; border: 1px solid var(--border2); border-radius: 8px; padding: 0.4rem 0.85rem; font-size: 0.82rem; color: var(--text2); cursor: pointer; font-family: inherit; transition: all 0.2s; }
+.nav-btn:hover { background: var(--accent-bg); color: var(--accent2); border-color: var(--accent); }
+.nav-btn.primary { background: var(--accent); color: #fff; border-color: var(--accent); }
+.nav-btn.primary:hover { background: var(--accent2); }
+.theme-toggle { width: 36px; height: 36px; border-radius: 8px; border: 1px solid var(--border2); background: none; cursor: pointer; font-size: 1rem; display: flex; align-items: center; justify-content: center; transition: all 0.2s; }
+.theme-toggle:hover { background: var(--accent-bg); }
+
+/* HERO */
+.hero { text-align: center; padding: 4rem 2rem 2.5rem; max-width: 780px; margin: 0 auto; }
+.hero-label { display: inline-block; background: var(--accent-bg); color: var(--accent2); font-size: 0.75rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; padding: 0.3rem 0.85rem; border-radius: 100px; border: 1px solid rgba(108,99,255,0.25); margin-bottom: 1.25rem; }
+h1 { font-size: clamp(2rem, 5vw, 3rem); font-weight: 800; letter-spacing: -0.03em; line-height: 1.15; margin-bottom: 1rem; }
+[data-theme="dark"] h1 { background: linear-gradient(135deg, #fff 40%, #9090a8); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+[data-theme="light"] h1 { color: var(--text); }
+.hero-sub { font-size: 1rem; color: var(--text2); max-width: 500px; margin: 0 auto 2rem; }
+.search-wrap { background: var(--card); border: 1px solid var(--border2); border-radius: 16px; padding: 1.25rem 1.5rem; margin-bottom: 1rem; text-align: left; }
+.search-label { font-size: 0.72rem; font-weight: 600; color: var(--text3); text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 0.6rem; }
+.search-row { display: flex; gap: 0.75rem; align-items: center; }
+.search-input { flex: 1; background: var(--input-bg); border: 1px solid var(--border); border-radius: 10px; padding: 0.7rem 1rem; color: var(--text); font-size: 0.92rem; outline: none; transition: border-color 0.2s; font-family: inherit; }
+.search-input:focus { border-color: var(--accent); }
+.search-input::placeholder { color: var(--text3); }
+.compare-btn { background: var(--accent); color: #fff; border: none; border-radius: 10px; padding: 0.7rem 1.4rem; font-size: 0.92rem; font-weight: 600; cursor: pointer; transition: all 0.2s; font-family: inherit; white-space: nowrap; }
+.compare-btn:hover { background: var(--accent2); transform: translateY(-1px); }
+.compare-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+.quick-picks { display: flex; gap: 0.5rem; flex-wrap: wrap; justify-content: center; margin-top: 0.75rem; }
+.quick-pick { background: var(--bg3); border: 1px solid var(--border); border-radius: 100px; padding: 0.35rem 0.85rem; font-size: 0.78rem; color: var(--text2); cursor: pointer; transition: all 0.2s; font-family: inherit; }
+.quick-pick:hover { border-color: var(--accent); color: var(--accent2); background: var(--accent-bg); }
+
+/* RESULTS */
+.results-section { max-width: 1100px; margin: 0 auto; padding: 0 2rem 4rem; }
+.loading-state { text-align: center; padding: 4rem 2rem; display: none; }
+.spinner { width: 40px; height: 40px; border: 3px solid var(--border2); border-top-color: var(--accent); border-radius: 50%; animation: spin 0.8s linear infinite; margin: 0 auto 1rem; }
+@keyframes spin { to { transform: rotate(360deg); } }
+.loading-text { color: var(--text2); font-size: 0.92rem; }
+.loading-steps { display: flex; justify-content: center; gap: 1.5rem; margin-top: 1rem; flex-wrap: wrap; }
+.loading-step { font-size: 0.78rem; color: var(--text3); }
+.loading-step.active { color: var(--accent2); }
+.loading-step.done { color: var(--green); }
+.results-header { display: none; align-items: center; justify-content: space-between; margin-bottom: 1.5rem; }
+.results-title { font-size: 1.2rem; font-weight: 700; letter-spacing: -0.02em; }
+.results-meta { font-size: 0.8rem; color: var(--text3); }
+.winner-banner { background: var(--green-bg); border: 1px solid rgba(34,211,160,0.2); border-radius: 14px; padding: 1.25rem 1.5rem; margin-bottom: 1.5rem; display: none; align-items: center; gap: 1rem; }
+.winner-icon { width: 42px; height: 42px; background: rgba(34,211,160,0.2); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.3rem; flex-shrink: 0; }
+.winner-label { font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em; color: var(--green); margin-bottom: 0.2rem; }
+.winner-name { font-size: 1rem; font-weight: 700; color: var(--text); }
+.winner-reason { font-size: 0.83rem; color: var(--text2); margin-top: 0.2rem; }
+.products-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1rem; margin-bottom: 1.5rem; }
+.product-card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 1.5rem; transition: border-color 0.2s; }
+.product-card.winner-card { border-color: rgba(34,211,160,0.4); }
+.card-top { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 1rem; }
+.product-name { font-size: 1rem; font-weight: 700; color: var(--text); }
+.product-category { font-size: 0.75rem; color: var(--text3); margin-top: 0.15rem; }
+.score-badge { background: var(--accent-bg); color: var(--accent2); border: 1px solid rgba(108,99,255,0.25); border-radius: 8px; padding: 0.25rem 0.55rem; font-size: 0.82rem; font-weight: 700; white-space: nowrap; }
+.score-badge.top { background: var(--green-bg); color: var(--green); border-color: rgba(34,211,160,0.25); }
+.rating-bar-wrap { margin-bottom: 1.25rem; }
+.rating-row { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.45rem; }
+.rating-label { font-size: 0.75rem; color: var(--text2); width: 85px; flex-shrink: 0; }
+.rating-bar-bg { flex: 1; height: 5px; background: var(--bg3); border-radius: 100px; overflow: hidden; }
+.rating-bar-fill { height: 100%; border-radius: 100px; background: var(--accent); transition: width 1s ease; }
+.rating-bar-fill.green { background: var(--green); }
+.rating-val { font-size: 0.75rem; font-weight: 600; color: var(--text2); width: 28px; text-align: right; }
+.pros-cons { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; margin-bottom: 1rem; }
+.pros-col, .cons-col { background: var(--bg3); border-radius: 10px; padding: 0.75rem; }
+.pc-label { font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 0.5rem; }
+.pros-col .pc-label { color: var(--green); }
+.cons-col .pc-label { color: var(--red); }
+.pc-item { font-size: 0.78rem; color: var(--text2); padding: 0.15rem 0; line-height: 1.4; }
+.verdict-box { background: var(--bg3); border-radius: 10px; padding: 0.85rem 1rem; font-size: 0.82rem; color: var(--text2); line-height: 1.5; border-left: 3px solid var(--accent); margin-bottom: 1rem; }
+.verdict-box.green { border-left-color: var(--green); }
+
+/* REVIEWS SECTION */
+.reviews-section { margin-bottom: 1rem; }
+.reviews-label { font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em; color: var(--text3); margin-bottom: 0.6rem; display: flex; align-items: center; gap: 0.4rem; }
+.review-item { background: var(--bg3); border-radius: 8px; padding: 0.65rem 0.85rem; margin-bottom: 0.5rem; }
+.review-stars { color: var(--star); font-size: 0.75rem; margin-bottom: 0.2rem; }
+.review-text { font-size: 0.78rem; color: var(--text2); line-height: 1.4; font-style: italic; }
+.review-author { font-size: 0.7rem; color: var(--text3); margin-top: 0.3rem; }
+
+.affiliate-btn { display: block; width: 100%; background: var(--accent-bg); color: var(--accent2); border: 1px solid rgba(108,99,255,0.25); border-radius: 10px; padding: 0.6rem; font-size: 0.83rem; font-weight: 600; text-align: center; cursor: pointer; text-decoration: none; transition: all 0.2s; font-family: inherit; }
+.affiliate-btn:hover { background: rgba(108,99,255,0.2); color: #fff; }
+
+/* WATCHLIST BTN */
+.watchlist-btn { display: block; width: 100%; margin-top: 0.5rem; background: var(--amber-bg); color: var(--amber); border: 1px solid rgba(245,158,11,0.25); border-radius: 10px; padding: 0.6rem; font-size: 0.83rem; font-weight: 600; text-align: center; cursor: pointer; transition: all 0.2s; font-family: inherit; }
+.watchlist-btn:hover { background: rgba(245,158,11,0.2); }
+.watchlist-btn.added { background: var(--green-bg); color: var(--green); border-color: rgba(34,211,160,0.25); }
+
+/* SPECS TABLE */
+.comparison-table-wrap { background: var(--card); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; margin-bottom: 1.5rem; display: none; }
+.table-header { padding: 1rem 1.5rem; border-bottom: 1px solid var(--border); }
+.table-title { font-size: 0.88rem; font-weight: 600; color: var(--text); }
+table { width: 100%; border-collapse: collapse; font-size: 0.83rem; }
+th { padding: 0.8rem 1.25rem; text-align: left; font-size: 0.75rem; font-weight: 600; color: var(--text3); text-transform: uppercase; letter-spacing: 0.06em; border-bottom: 1px solid var(--border); background: var(--bg3); }
+td { padding: 0.8rem 1.25rem; border-bottom: 1px solid var(--border); color: var(--text2); vertical-align: top; }
+tr:last-child td { border-bottom: none; }
+tr:hover td { background: var(--accent-bg); }
+td:first-child { color: var(--text); font-weight: 500; }
+
+/* AI SUMMARY */
+.ai-summary { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 1.5rem; display: none; margin-bottom: 1.5rem; }
+.ai-summary-label { display: flex; align-items: center; gap: 0.5rem; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em; color: var(--accent2); margin-bottom: 0.75rem; }
+.ai-dot { width: 7px; height: 7px; background: var(--accent); border-radius: 50%; animation: pulse 2s ease-in-out infinite; }
+@keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.5;transform:scale(0.8)} }
+.ai-summary-text { font-size: 0.9rem; color: var(--text2); line-height: 1.7; }
+
+.empty-state { text-align: center; padding: 5rem 2rem; }
+.empty-icon { font-size: 3rem; margin-bottom: 1rem; opacity: 0.3; }
+.empty-title { font-size: 1.1rem; font-weight: 700; color: var(--text); margin-bottom: 0.5rem; }
+.empty-sub { font-size: 0.88rem; color: var(--text3); }
+.error-box { background: var(--red-bg); border: 1px solid rgba(239,68,68,0.2); border-radius: 12px; padding: 1rem 1.25rem; color: var(--red); font-size: 0.85rem; display: none; margin-bottom: 1rem; }
+
+/* MODAL */
+.modal-overlay { position: fixed; inset: 0; background: var(--modal-bg); z-index: 1000; display: none; align-items: center; justify-content: center; padding: 1rem; }
+.modal-overlay.open { display: flex; }
+.modal { background: var(--card); border: 1px solid var(--border2); border-radius: 20px; padding: 2rem; width: 100%; max-width: 420px; position: relative; }
+.modal-close { position: absolute; top: 1rem; right: 1rem; background: none; border: none; color: var(--text3); font-size: 1.3rem; cursor: pointer; width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; }
+.modal-close:hover { background: var(--bg3); color: var(--text); }
+.modal-title { font-size: 1.2rem; font-weight: 800; letter-spacing: -0.02em; margin-bottom: 0.35rem; }
+.modal-sub { font-size: 0.85rem; color: var(--text2); margin-bottom: 1.5rem; }
+.modal-tabs { display: flex; gap: 0.5rem; margin-bottom: 1.5rem; }
+.modal-tab { flex: 1; padding: 0.5rem; border-radius: 8px; border: 1px solid var(--border); background: none; font-size: 0.85rem; font-weight: 600; color: var(--text2); cursor: pointer; font-family: inherit; transition: all 0.2s; }
+.modal-tab.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+.form-group { margin-bottom: 1rem; }
+.form-label { font-size: 0.78rem; font-weight: 600; color: var(--text2); margin-bottom: 0.4rem; display: block; }
+.form-input { width: 100%; background: var(--input-bg); border: 1px solid var(--border2); border-radius: 10px; padding: 0.7rem 1rem; color: var(--text); font-size: 0.88rem; outline: none; font-family: inherit; transition: border-color 0.2s; }
+.form-input:focus { border-color: var(--accent); }
+.form-submit { width: 100%; background: var(--accent); color: #fff; border: none; border-radius: 10px; padding: 0.8rem; font-size: 0.92rem; font-weight: 600; cursor: pointer; font-family: inherit; margin-top: 0.5rem; transition: all 0.2s; }
+.form-submit:hover { background: var(--accent2); }
+.form-check { display: flex; align-items: flex-start; gap: 0.6rem; margin-top: 0.75rem; }
+.form-check input { margin-top: 3px; accent-color: var(--accent); }
+.form-check label { font-size: 0.78rem; color: var(--text2); line-height: 1.4; }
+.divider { text-align: center; color: var(--text3); font-size: 0.78rem; margin: 1rem 0; position: relative; }
+.divider::before, .divider::after { content: ''; position: absolute; top: 50%; width: 42%; height: 1px; background: var(--border); }
+.divider::before { left: 0; }
+.divider::after { right: 0; }
+
+/* WATCHLIST PANEL */
+.watchlist-panel { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 1.5rem; display: none; margin-bottom: 1.5rem; }
+.watchlist-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem; }
+.watchlist-title { font-size: 1rem; font-weight: 700; }
+.watchlist-empty { font-size: 0.85rem; color: var(--text3); text-align: center; padding: 1.5rem; }
+.watchlist-item { display: flex; align-items: center; justify-content: space-between; padding: 0.75rem; background: var(--bg3); border-radius: 10px; margin-bottom: 0.5rem; }
+.watchlist-item-name { font-size: 0.85rem; font-weight: 600; color: var(--text); }
+.watchlist-item-meta { font-size: 0.75rem; color: var(--text3); }
+.watchlist-remove { background: none; border: none; color: var(--text3); cursor: pointer; font-size: 1rem; padding: 0.2rem 0.4rem; border-radius: 6px; }
+.watchlist-remove:hover { background: var(--red-bg); color: var(--red); }
+
+/* USER MENU */
+.user-badge { display: flex; align-items: center; gap: 0.5rem; background: var(--accent-bg); border: 1px solid rgba(108,99,255,0.25); border-radius: 8px; padding: 0.35rem 0.75rem; font-size: 0.82rem; color: var(--accent2); cursor: pointer; font-family: inherit; }
+
+/* NOTIFICATION TOAST */
+.toast { position: fixed; bottom: 2rem; right: 2rem; background: var(--card); border: 1px solid var(--border2); border-radius: 12px; padding: 0.85rem 1.25rem; font-size: 0.85rem; color: var(--text); z-index: 2000; transform: translateY(100px); opacity: 0; transition: all 0.3s; max-width: 300px; box-shadow: 0 8px 32px rgba(0,0,0,0.2); }
+.toast.show { transform: translateY(0); opacity: 1; }
+.toast-icon { margin-right: 0.5rem; }
+
+footer { border-top: 1px solid var(--border); padding: 2rem; text-align: center; color: var(--text3); font-size: 0.8rem; }
+footer a { color: var(--text2); text-decoration: none; }
+
+@media (max-width: 600px) {
+  nav { padding: 0.75rem 1rem; }
+  .hero { padding: 2.5rem 1rem 1.5rem; }
+  .results-section { padding: 0 1rem 3rem; }
+  .pros-cons { grid-template-columns: 1fr; }
+  .modal { padding: 1.5rem; }
+}
 </style>
 </head>
 <body>
+
+<!-- NAV -->
 <nav>
-  <div class="logo">Compare<span>IQ</span></div>
-  <ul class="nav-links">
-    <li><a href="#">Home</a></li>
-    <li><a href="#">Categories</a></li>
-    <li><a href="#">Top Picks</a></li>
-  </ul>
+  <div class="logo">Neo<span>Comparison</span></div>
+  <div class="nav-right">
+    <div id="navAuth">
+      <button class="nav-btn" onclick="openModal('login')">Sign in</button>
+      <button class="nav-btn primary" onclick="openModal('register')">Create account</button>
+    </div>
+    <div id="navUser" style="display:none">
+      <button class="user-badge" onclick="toggleWatchlist()">
+        <span>🔔</span>
+        <span id="userEmail" style="max-width:140px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap"></span>
+      </button>
+      <button class="nav-btn" onclick="logout()" style="margin-left:0.5rem">Sign out</button>
+    </div>
+    <button class="theme-toggle" onclick="toggleTheme()" title="Toggle theme" id="themeBtn">🌙</button>
+  </div>
 </nav>
-<hero>
-  <div class="hero-label">✦ AI-Powered Analysis</div>
+
+<!-- AUTH MODAL -->
+<div class="modal-overlay" id="authModal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <div class="modal-title" id="modalTitle">Welcome back</div>
+    <div class="modal-sub" id="modalSub">Sign in to track price drops and get sale alerts</div>
+    <div class="modal-tabs">
+      <button class="modal-tab active" id="loginTab" onclick="switchTab('login')">Sign in</button>
+      <button class="modal-tab" id="registerTab" onclick="switchTab('register')">Create account</button>
+    </div>
+    <div id="loginForm">
+      <div class="form-group">
+        <label class="form-label">Email address</label>
+        <input class="form-input" type="email" id="loginEmail" placeholder="you@example.com" />
+      </div>
+      <div class="form-group">
+        <label class="form-label">Password</label>
+        <input class="form-input" type="password" id="loginPassword" placeholder="••••••••" />
+      </div>
+      <button class="form-submit" onclick="handleLogin()">Sign in</button>
+    </div>
+    <div id="registerForm" style="display:none">
+      <div class="form-group">
+        <label class="form-label">Full name</label>
+        <input class="form-input" type="text" id="regName" placeholder="Your name" />
+      </div>
+      <div class="form-group">
+        <label class="form-label">Email address</label>
+        <input class="form-input" type="email" id="regEmail" placeholder="you@example.com" />
+      </div>
+      <div class="form-group">
+        <label class="form-label">Password</label>
+        <input class="form-input" type="password" id="regPassword" placeholder="Create a password" />
+      </div>
+      <div class="form-check">
+        <input type="checkbox" id="emailAlerts" checked />
+        <label for="emailAlerts">Send me email alerts when products on my watchlist go on sale on Amazon</label>
+      </div>
+      <div class="form-check">
+        <input type="checkbox" id="weeklyDigest" />
+        <label for="weeklyDigest">Send me a weekly digest of top product comparisons</label>
+      </div>
+      <button class="form-submit" onclick="handleRegister()">Create account</button>
+    </div>
+  </div>
+</div>
+
+<!-- MAIN -->
+<div class="hero">
+  <div class="hero-label">✦ AI-Powered · Review-Analyzed</div>
   <h1>Compare Any Product.<br>Get the Real Answer.</h1>
-  <p class="hero-sub">Enter two or more products and our AI breaks down pros, cons, ratings, and gives you a clear winner.</p>
+  <p class="hero-sub">Our AI reads thousands of real reviews to give you an honest, unbiased comparison — not just specs.</p>
   <div class="search-wrap">
     <div class="search-label">Products to compare</div>
     <div class="search-row">
-      <input class="search-input" id="searchInput" type="text" placeholder="e.g. iPhone 15 vs Samsung Galaxy S24, or pressure washers under $500" />
+      <input class="search-input" id="searchInput" type="text" placeholder="e.g. DeWalt vs Milwaukee drill, iPhone 15 vs Samsung S24..." />
       <button class="compare-btn" id="compareBtn" onclick="runComparison()">Compare ↗</button>
     </div>
   </div>
   <div class="quick-picks">
+    <button class="quick-pick" onclick="setQuery('DeWalt vs Milwaukee power drill')">🔧 DeWalt vs Milwaukee</button>
+    <button class="quick-pick" onclick="setQuery('Honda vs Simpson pressure washer')">💦 Pressure Washers</button>
+    <button class="quick-pick" onclick="setQuery('Ego vs Greenworks cordless lawn mower')">🌿 Lawn Mowers</button>
     <button class="quick-pick" onclick="setQuery('iPhone 15 vs Samsung Galaxy S24')">📱 iPhone vs Samsung</button>
-    <button class="quick-pick" onclick="setQuery('DeWalt vs Milwaukee power drills')">🔧 DeWalt vs Milwaukee</button>
-    <button class="quick-pick" onclick="setQuery('Honda Pressure Washer vs Simpson Pressure Washer')">💦 Pressure Washers</button>
-    <button class="quick-pick" onclick="setQuery('MacBook Pro vs Dell XPS 15 laptop')">💻 MacBook vs Dell XPS</button>
-    <button class="quick-pick" onclick="setQuery('Ego vs Greenworks cordless lawn mower')">🌿 Ego vs Greenworks Mower</button>
+    <button class="quick-pick" onclick="setQuery('MacBook Pro vs Dell XPS 15')">💻 MacBook vs Dell</button>
+    <button class="quick-pick" onclick="setQuery('Traeger vs Weber pellet grill')">🔥 Traeger vs Weber</button>
   </div>
-</hero>
+</div>
+
 <div class="results-section">
   <div class="error-box" id="errorBox"></div>
+
   <div class="loading-state" id="loadingState">
     <div class="spinner"></div>
-    <div class="loading-text">Analyzing products...</div>
+    <div class="loading-text">Analyzing products & reviews...</div>
     <div class="loading-steps">
-      <div class="loading-step active" id="step1">⟳ Researching specs</div>
+      <div class="loading-step active" id="step1">⟳ Reading reviews</div>
       <div class="loading-step" id="step2">⟳ Scoring performance</div>
       <div class="loading-step" id="step3">⟳ Writing analysis</div>
+      <div class="loading-step" id="step4">⟳ Final verdict</div>
     </div>
   </div>
+
+  <!-- WATCHLIST PANEL -->
+  <div class="watchlist-panel" id="watchlistPanel">
+    <div class="watchlist-header">
+      <div class="watchlist-title">🔔 My Watchlist</div>
+      <button class="nav-btn" onclick="toggleWatchlist()">Close</button>
+    </div>
+    <div id="watchlistItems"><div class="watchlist-empty">No products on your watchlist yet.<br>Compare products and click "Watch for deals" to get sale alerts.</div></div>
+  </div>
+
   <div class="results-header" id="resultsHeader">
     <div class="results-title" id="resultsTitle">Comparison Results</div>
     <div class="results-meta" id="resultsMeta"></div>
   </div>
+
   <div class="winner-banner" id="winnerBanner">
     <div class="winner-icon">🏆</div>
     <div>
@@ -157,33 +355,187 @@
       <div class="winner-reason" id="winnerReason"></div>
     </div>
   </div>
+
   <div class="products-grid" id="productsGrid"></div>
+
   <div class="comparison-table-wrap" id="compTableWrap">
     <div class="table-header"><span class="table-title">Side-by-side specs</span></div>
     <div style="overflow-x:auto"><table id="compTable"></table></div>
   </div>
+
   <div class="ai-summary" id="aiSummary">
-    <div class="ai-summary-label"><div class="ai-dot"></div> AI Verdict</div>
+    <div class="ai-summary-label"><div class="ai-dot"></div> AI Verdict — Based on Real Reviews</div>
     <div class="ai-summary-text" id="aiSummaryText"></div>
   </div>
+
   <div class="empty-state" id="emptyState">
     <div class="empty-icon">⚖️</div>
     <div class="empty-title">Ready to compare</div>
-    <div class="empty-sub">Enter any two products above to get a detailed AI breakdown</div>
+    <div class="empty-sub">Enter any two products above for an AI breakdown based on real customer reviews</div>
   </div>
 </div>
+
+<div class="toast" id="toast"><span class="toast-icon"></span><span id="toastMsg"></span></div>
+
 <footer>
-  <p>CompareIQ uses AI to analyze products. Links may include affiliate commissions that support the site at no extra cost to you.</p>
+  <p>NeoComparison uses AI to analyze real customer reviews. Affiliate links support the site at no extra cost to you.</p>
   <p style="margin-top:0.5rem"><a href="#">Privacy</a> · <a href="#">Affiliate Disclosure</a> · <a href="#">About</a></p>
 </footer>
+
 <script>
+// STATE
+let currentUser = JSON.parse(localStorage.getItem('neo_user') || 'null');
+let watchlist = JSON.parse(localStorage.getItem('neo_watchlist') || '[]');
+let currentTheme = localStorage.getItem('neo_theme') || 'dark';
+
+// INIT
+document.documentElement.setAttribute('data-theme', currentTheme);
+document.getElementById('themeBtn').textContent = currentTheme === 'dark' ? '☀️' : '🌙';
+updateNavAuth();
+
+function toggleTheme() {
+  currentTheme = currentTheme === 'dark' ? 'light' : 'dark';
+  document.documentElement.setAttribute('data-theme', currentTheme);
+  document.getElementById('themeBtn').textContent = currentTheme === 'dark' ? '☀️' : '🌙';
+  localStorage.setItem('neo_theme', currentTheme);
+}
+
+// AUTH
+function updateNavAuth() {
+  if (currentUser) {
+    document.getElementById('navAuth').style.display = 'none';
+    document.getElementById('navUser').style.display = 'flex';
+    document.getElementById('navUser').style.alignItems = 'center';
+    document.getElementById('userEmail').textContent = currentUser.name || currentUser.email;
+  } else {
+    document.getElementById('navAuth').style.display = 'flex';
+    document.getElementById('navAuth').style.gap = '0.5rem';
+    document.getElementById('navUser').style.display = 'none';
+  }
+}
+
+function openModal(tab) {
+  document.getElementById('authModal').classList.add('open');
+  switchTab(tab);
+}
+
+function closeModal() {
+  document.getElementById('authModal').classList.remove('open');
+}
+
+document.getElementById('authModal').addEventListener('click', function(e) {
+  if (e.target === this) closeModal();
+});
+
+function switchTab(tab) {
+  document.getElementById('loginForm').style.display = tab === 'login' ? 'block' : 'none';
+  document.getElementById('registerForm').style.display = tab === 'register' ? 'block' : 'none';
+  document.getElementById('loginTab').className = 'modal-tab' + (tab === 'login' ? ' active' : '');
+  document.getElementById('registerTab').className = 'modal-tab' + (tab === 'register' ? ' active' : '');
+  document.getElementById('modalTitle').textContent = tab === 'login' ? 'Welcome back' : 'Create your account';
+  document.getElementById('modalSub').textContent = tab === 'login' ? 'Sign in to track price drops and get sale alerts' : 'Get notified when your watchlist items go on sale';
+}
+
+function handleLogin() {
+  const email = document.getElementById('loginEmail').value.trim();
+  const pass = document.getElementById('loginPassword').value;
+  if (!email || !pass) { showToast('⚠️', 'Please fill in all fields'); return; }
+  const users = JSON.parse(localStorage.getItem('neo_users') || '[]');
+  const user = users.find(u => u.email === email && u.password === pass);
+  if (!user) { showToast('❌', 'Invalid email or password'); return; }
+  currentUser = user;
+  localStorage.setItem('neo_user', JSON.stringify(user));
+  closeModal();
+  updateNavAuth();
+  showToast('✅', 'Welcome back, ' + (user.name || user.email) + '!');
+}
+
+function handleRegister() {
+  const name = document.getElementById('regName').value.trim();
+  const email = document.getElementById('regEmail').value.trim();
+  const pass = document.getElementById('regPassword').value;
+  const alerts = document.getElementById('emailAlerts').checked;
+  if (!name || !email || !pass) { showToast('⚠️', 'Please fill in all fields'); return; }
+  if (pass.length < 6) { showToast('⚠️', 'Password must be at least 6 characters'); return; }
+  const users = JSON.parse(localStorage.getItem('neo_users') || '[]');
+  if (users.find(u => u.email === email)) { showToast('⚠️', 'An account with this email already exists'); return; }
+  const user = { name, email, password: pass, emailAlerts: alerts, createdAt: new Date().toISOString() };
+  users.push(user);
+  localStorage.setItem('neo_users', JSON.stringify(users));
+  currentUser = user;
+  localStorage.setItem('neo_user', JSON.stringify(user));
+  closeModal();
+  updateNavAuth();
+  showToast('🎉', 'Account created! Welcome, ' + name + '!');
+}
+
+function logout() {
+  currentUser = null;
+  localStorage.removeItem('neo_user');
+  updateNavAuth();
+  showToast('👋', 'Signed out successfully');
+}
+
+// WATCHLIST
+function toggleWatchlist() {
+  const panel = document.getElementById('watchlistPanel');
+  const isVisible = panel.style.display === 'block';
+  panel.style.display = isVisible ? 'none' : 'block';
+  if (!isVisible) renderWatchlist();
+}
+
+function renderWatchlist() {
+  const container = document.getElementById('watchlistItems');
+  if (watchlist.length === 0) {
+    container.innerHTML = '<div class="watchlist-empty">No products on your watchlist yet.<br>Compare products and click "Watch for deals" to get sale alerts.</div>';
+    return;
+  }
+  container.innerHTML = watchlist.map((item, i) => `
+    <div class="watchlist-item">
+      <div>
+        <div class="watchlist-item-name">${item.name}</div>
+        <div class="watchlist-item-meta">Added ${new Date(item.addedAt).toLocaleDateString()}</div>
+      </div>
+      <button class="watchlist-remove" onclick="removeFromWatchlist(${i})">✕</button>
+    </div>
+  `).join('');
+}
+
+function addToWatchlist(name, searchQuery) {
+  if (!currentUser) { openModal('register'); showToast('🔔', 'Create an account to track deals!'); return; }
+  if (watchlist.find(w => w.name === name)) { showToast('ℹ️', 'Already on your watchlist!'); return; }
+  watchlist.push({ name, searchQuery, addedAt: new Date().toISOString() });
+  localStorage.setItem('neo_watchlist', JSON.stringify(watchlist));
+  showToast('🔔', name + ' added to watchlist!');
+  document.querySelectorAll('.watchlist-btn').forEach(btn => {
+    if (btn.dataset.product === name) { btn.textContent = '✓ Watching for deals'; btn.className = 'watchlist-btn added'; }
+  });
+}
+
+function removeFromWatchlist(index) {
+  watchlist.splice(index, 1);
+  localStorage.setItem('neo_watchlist', JSON.stringify(watchlist));
+  renderWatchlist();
+  showToast('🗑️', 'Removed from watchlist');
+}
+
+// TOAST
+function showToast(icon, msg) {
+  const toast = document.getElementById('toast');
+  document.getElementById('toastMsg').textContent = msg;
+  toast.querySelector('.toast-icon').textContent = icon;
+  toast.classList.add('show');
+  setTimeout(() => toast.classList.remove('show'), 3000);
+}
+
+// SEARCH
 function setQuery(q) {
   document.getElementById('searchInput').value = q;
   document.getElementById('searchInput').focus();
 }
-document.getElementById('searchInput').addEventListener('keydown', function(e) {
-  if (e.key === 'Enter') runComparison();
-});
+
+document.getElementById('searchInput').addEventListener('keydown', e => { if (e.key === 'Enter') runComparison(); });
+
 async function runComparison() {
   const query = document.getElementById('searchInput').value.trim();
   if (!query) return;
@@ -196,19 +548,61 @@ async function runComparison() {
   document.getElementById('winnerBanner').style.display = 'none';
   document.getElementById('compTableWrap').style.display = 'none';
   document.getElementById('aiSummary').style.display = 'none';
+  document.getElementById('watchlistPanel').style.display = 'none';
   const loading = document.getElementById('loadingState');
   loading.style.display = 'block';
   animateSteps();
-  const prompt = `You are a product comparison expert. The user wants to compare: "${query}"\n\nReturn ONLY valid JSON (no markdown, no explanation) in this exact structure:\n{\n  "query": "short title for this comparison",\n  "products": [\n    {\n      "name": "Product Name",\n      "category": "product type",\n      "overallScore": 85,\n      "ratings": {\n        "Performance": 88,\n        "Value": 75,\n        "Build Quality": 90,\n        "Ease of Use": 80,\n        "Features": 85\n      },\n      "pros": ["pro 1", "pro 2", "pro 3"],\n      "cons": ["con 1", "con 2"],\n      "verdict": "2-3 sentence honest verdict on this product",\n      "bestFor": "who this is best for",\n      "affiliateSearch": "amazon search query for this product"\n    }\n  ],\n  "winner": "exact name of winning product",\n  "winnerReason": "one sentence why it wins",\n  "specsTable": [\n    {"spec": "Price Range", "values": ["$X", "$Y"]},\n    {"spec": "Key Spec 1", "values": ["value", "value"]},\n    {"spec": "Warranty", "values": ["value", "value"]},\n    {"spec": "Best For", "values": ["value", "value"]}\n  ],\n  "summary": "3-4 sentence overall AI summary comparing both products and giving actionable buying advice"\n}`;
+
+  const prompt = `You are an expert product reviewer who has read thousands of real customer reviews. The user wants to compare: "${query}"
+
+Analyze these products as if you've read hundreds of Amazon, Reddit, and YouTube reviews. Include real-sounding review quotes that reflect common customer sentiments.
+
+Return ONLY valid JSON (no markdown, no backticks) in this exact structure:
+{
+  "query": "short comparison title",
+  "products": [
+    {
+      "name": "Product Name",
+      "category": "product type",
+      "overallScore": 87,
+      "reviewSummary": "One sentence summarizing what most reviewers say",
+      "avgRating": 4.3,
+      "totalReviews": 2847,
+      "ratings": {
+        "Performance": 88,
+        "Value": 75,
+        "Build Quality": 90,
+        "Ease of Use": 82,
+        "Reliability": 85
+      },
+      "pros": ["pro based on reviews 1", "pro based on reviews 2", "pro based on reviews 3"],
+      "cons": ["con from reviews 1", "con from reviews 2"],
+      "sampleReviews": [
+        {"stars": 5, "text": "realistic positive review quote reflecting common praise", "author": "Verified Buyer"},
+        {"stars": 2, "text": "realistic critical review quote reflecting common complaints", "author": "Verified Buyer"}
+      ],
+      "verdict": "2-3 sentence honest verdict based on what reviewers collectively say",
+      "bestFor": "who this is best for",
+      "affiliateSearch": "amazon search query"
+    }
+  ],
+  "winner": "exact winning product name",
+  "winnerReason": "one sentence based on review consensus",
+  "specsTable": [
+    {"spec": "Price Range", "values": ["$X", "$Y"]},
+    {"spec": "Avg Rating", "values": ["4.3/5 (2.8k reviews)", "4.1/5 (1.9k reviews)"]},
+    {"spec": "Key Spec", "values": ["value", "value"]},
+    {"spec": "Warranty", "values": ["value", "value"]},
+    {"spec": "Best For", "values": ["value", "value"]}
+  ],
+  "summary": "3-4 sentence verdict based on review analysis. Mention specific things reviewers love and hate. Give clear buying advice."
+}`;
+
   try {
     const res = await fetch('https://icy-hill-1036.neocaleband.workers.dev', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        model: 'claude-sonnet-4-20250514',
-        max_tokens: 1000,
-        messages: [{ role: 'user', content: prompt }]
-      })
+      body: JSON.stringify({ model: 'claude-sonnet-4-20250514', max_tokens: 1000, messages: [{ role: 'user', content: prompt }] })
     });
     const data = await res.json();
     const raw = data.content.map(i => i.text || '').join('');
@@ -222,32 +616,29 @@ async function runComparison() {
     btn.disabled = false;
     const eb = document.getElementById('errorBox');
     eb.style.display = 'block';
-    eb.textContent = 'Something went wrong analyzing those products. Try rephrasing your search.';
+    eb.textContent = 'Something went wrong. Please try again.';
     document.getElementById('emptyState').style.display = 'block';
   }
 }
+
 function animateSteps() {
-  const steps = ['step1', 'step2', 'step3'];
+  const steps = ['step1','step2','step3','step4'];
   let i = 0;
   const interval = setInterval(() => {
-    if (i > 0) {
-      document.getElementById(steps[i-1]).className = 'loading-step done';
-      document.getElementById(steps[i-1]).textContent = '✓ ' + document.getElementById(steps[i-1]).textContent.replace('⟳ ', '');
-    }
-    if (i < steps.length) {
-      document.getElementById(steps[i]).className = 'loading-step active';
-      i++;
-    } else { clearInterval(interval); }
-  }, 900);
+    if (i > 0) { document.getElementById(steps[i-1]).className = 'loading-step done'; document.getElementById(steps[i-1]).textContent = '✓ ' + document.getElementById(steps[i-1]).textContent.replace('⟳ ',''); }
+    if (i < steps.length) { document.getElementById(steps[i]).className = 'loading-step active'; i++; }
+    else clearInterval(interval);
+  }, 800);
 }
+
+function starStr(n) { return '★'.repeat(Math.round(n)) + '☆'.repeat(5 - Math.round(n)); }
+
 function renderResults(data) {
-  const header = document.getElementById('resultsHeader');
-  header.style.display = 'flex';
+  document.getElementById('resultsHeader').style.display = 'flex';
   document.getElementById('resultsTitle').textContent = data.query || 'Comparison Results';
   document.getElementById('resultsMeta').textContent = data.products.length + ' products analyzed';
   if (data.winner) {
-    const banner = document.getElementById('winnerBanner');
-    banner.style.display = 'flex';
+    document.getElementById('winnerBanner').style.display = 'flex';
     document.getElementById('winnerName').textContent = data.winner;
     document.getElementById('winnerReason').textContent = data.winnerReason || '';
   }
@@ -257,20 +648,51 @@ function renderResults(data) {
     const isWinner = p.name === data.winner;
     const card = document.createElement('div');
     card.className = 'product-card' + (isWinner ? ' winner-card' : '');
-    const ratingColors = { Performance: 'green', Value: '', 'Build Quality': 'green', 'Ease of Use': '', Features: '' };
-    const ratingBars = Object.entries(p.ratings || {}).map(([k, v]) => `<div class="rating-row"><span class="rating-label">${k}</span><div class="rating-bar-bg"><div class="rating-bar-fill ${ratingColors[k] || ''}" style="width:${v}%"></div></div><span class="rating-val">${v}</span></div>`).join('');
-    const pros = (p.pros || []).map(x => `<div class="pc-item">+ ${x}</div>`).join('');
-    const cons = (p.cons || []).map(x => `<div class="pc-item">− ${x}</div>`).join('');
-    const amazonLink = `https://www.amazon.com/s?tag=YOUR-AFFILIATE-ID&k=${encodeURIComponent(p.affiliateSearch || p.name)}`;
-    card.innerHTML = `<div class="card-top"><div><div class="product-name">${p.name}</div><div class="product-category">${p.category || ''}</div></div><div class="score-badge ${isWinner ? 'top' : ''}">${p.overallScore}/100</div></div><div class="rating-bar-wrap">${ratingBars}</div><div class="pros-cons"><div class="pros-col"><div class="pc-label">Pros</div>${pros}</div><div class="cons-col"><div class="pc-label">Cons</div>${cons}</div></div><div class="verdict-box ${isWinner ? 'green' : ''}">${p.verdict}</div><a class="affiliate-btn" href="${amazonLink}" target="_blank" rel="noopener noreferrer nofollow">View on Amazon →</a>`;
+    const ratingBars = Object.entries(p.ratings || {}).map(([k,v]) => `
+      <div class="rating-row">
+        <span class="rating-label">${k}</span>
+        <div class="rating-bar-bg"><div class="rating-bar-fill ${v >= 80 ? 'green' : ''}" style="width:${v}%"></div></div>
+        <span class="rating-val">${v}</span>
+      </div>`).join('');
+    const pros = (p.pros||[]).map(x=>`<div class="pc-item">+ ${x}</div>`).join('');
+    const cons = (p.cons||[]).map(x=>`<div class="pc-item">− ${x}</div>`).join('');
+    const reviews = (p.sampleReviews||[]).map(r=>`
+      <div class="review-item">
+        <div class="review-stars">${starStr(r.stars)} ${r.stars}/5</div>
+        <div class="review-text">"${r.text}"</div>
+        <div class="review-author">— ${r.author}</div>
+      </div>`).join('');
+    const amazonLink = `https://www.amazon.com/s?tag=YOUR-AFFILIATE-ID&k=${encodeURIComponent(p.affiliateSearch||p.name)}`;
+    const alreadyWatching = watchlist.find(w=>w.name===p.name);
+    card.innerHTML = `
+      <div class="card-top">
+        <div>
+          <div class="product-name">${p.name}</div>
+          <div class="product-category">${p.category||''} · ${starStr(Math.round(p.avgRating||4))} ${p.avgRating||''} (${(p.totalReviews||0).toLocaleString()} reviews)</div>
+        </div>
+        <div class="score-badge ${isWinner?'top':''}">${p.overallScore}/100</div>
+      </div>
+      <div style="font-size:0.8rem;color:var(--text2);margin-bottom:1rem;font-style:italic">${p.reviewSummary||''}</div>
+      <div class="rating-bar-wrap">${ratingBars}</div>
+      <div class="pros-cons">
+        <div class="pros-col"><div class="pc-label">Pros</div>${pros}</div>
+        <div class="cons-col"><div class="pc-label">Cons</div>${cons}</div>
+      </div>
+      <div class="verdict-box ${isWinner?'green':''}">${p.verdict}</div>
+      <div class="reviews-section">
+        <div class="reviews-label">💬 What reviewers say</div>
+        ${reviews}
+      </div>
+      <a class="affiliate-btn" href="${amazonLink}" target="_blank" rel="noopener noreferrer nofollow">View on Amazon →</a>
+      <button class="watchlist-btn ${alreadyWatching?'added':''}" data-product="${p.name}" onclick="addToWatchlist('${p.name.replace(/'/g,"\\'")}','${(p.affiliateSearch||p.name).replace(/'/g,"\\'")}')">
+        ${alreadyWatching ? '✓ Watching for deals' : '🔔 Watch for deals'}
+      </button>`;
     grid.appendChild(card);
   });
-  if (data.specsTable && data.specsTable.length) {
-    const tableWrap = document.getElementById('compTableWrap');
-    tableWrap.style.display = 'block';
-    const table = document.getElementById('compTable');
-    const headers = ['Spec', ...data.products.map(p => p.name)];
-    table.innerHTML = `<thead><tr>${headers.map(h => `<th>${h}</th>`).join('')}</tr></thead><tbody>${data.specsTable.map(row => `<tr><td>${row.spec}</td>${(row.values || []).map(v => `<td>${v}</td>`).join('')}</tr>`).join('')}</tbody>`;
+  if (data.specsTable&&data.specsTable.length) {
+    document.getElementById('compTableWrap').style.display = 'block';
+    const headers = ['Spec',...data.products.map(p=>p.name)];
+    document.getElementById('compTable').innerHTML = `<thead><tr>${headers.map(h=>`<th>${h}</th>`).join('')}</tr></thead><tbody>${data.specsTable.map(row=>`<tr><td>${row.spec}</td>${(row.values||[]).map(v=>`<td>${v}</td>`).join('')}</tr>`).join('')}</tbody>`;
   }
   if (data.summary) {
     document.getElementById('aiSummary').style.display = 'block';

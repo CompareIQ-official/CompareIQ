@@ -369,9 +369,12 @@ td:first-child{color:var(--text);font-family:'Share Tech Mono',monospace;font-si
 .deals-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(185px,1fr));gap:1px;background:var(--border);margin-bottom:2rem;}
 .deal{background:var(--card);transition:all 0.2s;position:relative;overflow:hidden;}
 .deal:hover{background:var(--card2);box-shadow:var(--glow);z-index:2;}
-.deal-img{width:100%;height:130px;background:var(--bg3);display:flex;align-items:center;justify-content:center;overflow:hidden;border-bottom:1px solid var(--border);position:relative;}
-.deal-img img{width:100%;height:100%;object-fit:contain;padding:10px;transition:transform 0.3s;}
-.deal:hover .deal-img img{transform:scale(1.05);}
+.deal-img-box{width:100%;height:130px;background:var(--bg3);display:flex;align-items:center;justify-content:center;border-bottom:1px solid var(--border2);position:relative;overflow:hidden;}
+.deal-icon{font-size:3.5rem;opacity:0.85;transition:transform 0.3s;}
+.deal:hover .deal-icon{transform:scale(1.1);}
+
+.deal-img-ph{display:flex;align-items:center;justify-content:center;width:100%;height:100%;font-size:2.5rem;color:var(--text3);background:var(--bg3);}
+
 .deal-flag{position:absolute;top:0;left:0;font-family:'Share Tech Mono',monospace;font-size:0.58rem;font-weight:700;padding:0.18rem 0.5rem;text-transform:uppercase;letter-spacing:0.06em;}
 .deal-flag.sale{background:var(--red);color:#fff;}
 .deal-flag.hot{background:var(--amber);color:#000;}
@@ -627,12 +630,12 @@ footer a:hover{color:var(--accent2);}
 
   <div id="dealSections" style="display:block;">
     <div class="sec-hdr">
-      <div><div class="sec-title">◈ TODAY'S BEST DEALS</div><div class="sec-sub">// biggest_savings — all_links_support_this_site</div></div>
+      <div><div class="sec-title">◈ EARLY PRIME DAY DEALS — JUNE 2026</div><div class="sec-sub">// prime_day_starts_june_23 — deals_live_now — prices_drop_fast</div></div>
     </div>
     <div class="deals-grid" id="dealsGrid"></div>
 
     <div class="sec-hdr">
-      <div><div class="sec-title">◈ GPU & PC COMPONENT DEALS</div><div class="sec-sub">// graphics_cards · processors · memory · storage</div></div>
+      <div><div class="sec-title">◈ GPU & PC PRIME DAY DEALS</div><div class="sec-sub">// rtx_5060_ti · rx_9070_xt · ryzen_9800x3d · ddr5_at_all_time_lows</div></div>
     </div>
     <div class="deals-grid" id="pcGrid"></div>
 
@@ -868,7 +871,7 @@ function buildCard(el,p,isWin,data,idx){
   var pnEsc=p.name.replace(/'/g,"\\'");var psEsc=(p.affiliateSearch||p.name).replace(/'/g,"\\'");
   el.innerHTML='<div class="pcard-inner">'+
     '<div class="pcard-top">'+
-      '<div class="pcard-img">'+(p.asin&&p.asin!=='B0XXXXXXXXX'&&p.asin.length===10?'<img src="https://m.media-amazon.com/images/I/'+p.asin+'._AC_SL200_.jpg" alt="'+p.name+'" onerror="this.parentNode.innerHTML=\'<div class=pcard-img-ph>◈</div>\'">':'<div class="pcard-img-ph">◈</div>')+'</div>'+
+      '<div class="pcard-img">'+(false ? '' :'<div class="pcard-img-ph">◈</div>')+'</div>'+
       '<div class="pcard-info"><div class="pcard-name">'+p.name+'</div><div class="pcard-cat">'+(p.category||'')+'</div><div class="pcard-rating">'+stars(Math.round(p.avgRating||4))+' '+(p.avgRating||'?')+' ('+(p.totalReviews||0).toLocaleString()+')</div></div>'+
       '<div class="score-box"><div class="score-n '+(isWin?'top':'bot')+'">'+p.overallScore+'</div><div class="score-l">SCORE</div></div>'+
     '</div>'+
@@ -887,84 +890,87 @@ function buildCard(el,p,isWin,data,idx){
 // DEALS DATA
 var PRODUCTS={
   all:[
-    {cat:'POWER_TOOLS',name:'DeWalt 20V MAX XR Drill Driver',asin:'B07BHC7TZK',rating:4.8,rev:12400,price:'$149',was:'$219',save:'32%',flag:'sale',img:'https://m.media-amazon.com/images/I/71zyMhNYI7L._AC_SL200_.jpg'},
-    {cat:'LAWN_GARDEN',name:'Ego 56V Cordless Mower 21"',asin:'B09NQYT38F',rating:4.7,rev:8200,price:'$449',was:'$599',save:'25%',flag:'sale',img:'https://m.media-amazon.com/images/I/71j4fKQtSBL._AC_SL200_.jpg'},
-    {cat:'STORAGE',name:'Samsung 990 Pro 2TB NVMe SSD',asin:'B0BHJJ9Y77',rating:4.9,rev:23100,price:'$119',was:'$189',save:'37%',flag:'hot',img:'https://m.media-amazon.com/images/I/71KDtSzVEBL._AC_SL200_.jpg'},
-    {cat:'BBQ_OUTDOOR',name:'Traeger Pro 575 Pellet Grill',asin:'B08QNQV44J',rating:4.6,rev:6800,price:'$649',was:'$799',save:'19%',flag:'sale',img:'https://m.media-amazon.com/images/I/71ZBLhxHfUL._AC_SL200_.jpg'},
-    {cat:'GAMING',name:'PS5 DualSense Controller',asin:'B08FC6C75Y',rating:4.8,rev:45000,price:'$59',was:'$69',save:'14%',flag:'sale',img:'https://m.media-amazon.com/images/I/61HMLVfLbUL._AC_SL200_.jpg'},
-    {cat:'HOME_KITCHEN',name:'Instant Pot Duo 7-in-1 8Qt',asin:'B00FLYWNYQ',rating:4.7,rev:98000,price:'$79',was:'$129',save:'39%',flag:'hot',img:'https://m.media-amazon.com/images/I/71V1GQXzHqL._AC_SL200_.jpg'},
-    {cat:'POWER_TOOLS',name:'Milwaukee M18 FUEL Circular Saw',asin:'B00IXVTUS4',rating:4.9,rev:7600,price:'$179',was:'$249',save:'28%',flag:'sale',img:'https://m.media-amazon.com/images/I/71BbBhGHPaL._AC_SL200_.jpg'},
-    {cat:'PERIPHERALS',name:'Logitech MX Master 3S Mouse',asin:'B09HM94VDS',rating:4.8,rev:31000,price:'$89',was:'$99',save:'10%',flag:'new',img:'https://m.media-amazon.com/images/I/61ni3t1ryQL._AC_SL200_.jpg'},
+    {cat:'POWER_TOOLS',name:'DeWalt 20V MAX 5-Tool Combo Kit',asin:'B01M0MVISE',rating:4.8,rev:9800,price:'$449',was:'$639',save:'30%',flag:'hot'},
+    {cat:'POWER_TOOLS',name:'Milwaukee M18 FUEL Hackzall Saw',asin:'B00IXVTUS4',rating:4.9,rev:6200,price:'$127',was:'$187',save:'32%',flag:'sale'},
+    {cat:'STORAGE',name:'Samsung 990 Pro 2TB NVMe SSD',asin:'B0BHJJ9Y77',rating:4.9,rev:23100,price:'$99',was:'$189',save:'48%',flag:'hot'},
+    {cat:'HOME_KITCHEN',name:'Instant Pot Duo 7-in-1 8Qt',asin:'B00FLYWNYQ',rating:4.7,rev:98000,price:'$69',was:'$129',save:'47%',flag:'hot'},
+    {cat:'SECURITY',name:'Ring Outdoor Stick Up Cam',asin:'B0B6G6GKJM',rating:4.6,rev:31000,price:'$39',was:'$79',save:'50%',flag:'hot'},
+    {cat:'GAMING',name:'PS5 DualSense Wireless Controller',asin:'B08FC6C75Y',rating:4.8,rev:45000,price:'$54',was:'$69',save:'22%',flag:'sale'},
+    {cat:'AUDIO',name:'Sony WH-1000XM5 Headphones',asin:'B09XS7JWHH',rating:4.8,rev:67000,price:'$229',was:'$349',save:'34%',flag:'hot'},
+    {cat:'HOME_KITCHEN',name:'Ninja DZ401 10Qt Dual Air Fryer',asin:'B08DV4JC88',rating:4.8,rev:41000,price:'$119',was:'$199',save:'40%',flag:'sale'},
   ],
   gpu:[
-    {cat:'GRAPHICS_CARD',name:'NVIDIA GeForce RTX 4070 Super',asin:'B0CQSQC7GD',rating:4.8,rev:4200,price:'$599',was:'$699',save:'14%',flag:'hot',img:'https://m.media-amazon.com/images/I/71W7s5OjGlL._AC_SL200_.jpg'},
-    {cat:'GRAPHICS_CARD',name:'AMD Radeon RX 7800 XT',asin:'B0CGT8C5Q7',rating:4.7,rev:2800,price:'$449',was:'$499',save:'10%',flag:'sale',img:'https://m.media-amazon.com/images/I/71OACL9JWTL._AC_SL200_.jpg'},
-    {cat:'PROCESSOR',name:'AMD Ryzen 7 7700X',asin:'B0BBJ9H4S6',rating:4.8,rev:8900,price:'$249',was:'$399',save:'38%',flag:'hot',img:'https://m.media-amazon.com/images/I/51iBXFEIpWL._AC_SL200_.jpg'},
-    {cat:'PROCESSOR',name:'Intel Core i7-14700K',asin:'B0CGJ41N9T',rating:4.7,rev:5600,price:'$299',was:'$409',save:'27%',flag:'sale',img:'https://m.media-amazon.com/images/I/51jMqVMrGGL._AC_SL200_.jpg'},
-    {cat:'MEMORY',name:'Corsair Vengeance 32GB DDR5',asin:'B09NNVR6JP',rating:4.7,rev:9400,price:'$89',was:'$139',save:'36%',flag:'sale',img:'https://m.media-amazon.com/images/I/71EWFGFXAOL._AC_SL200_.jpg'},
-    {cat:'STORAGE',name:'WD Black SN850X 2TB NVMe',asin:'B0B7CKVCCV',rating:4.8,rev:14200,price:'$129',was:'$199',save:'35%',flag:'hot',img:'https://m.media-amazon.com/images/I/61Zr6Q4SNXL._AC_SL200_.jpg'},
-    {cat:'MOTHERBOARD',name:'ASUS ROG Strix B650E-F WiFi',asin:'B0BFTYYXC9',rating:4.7,rev:3800,price:'$249',was:'$329',save:'24%',flag:'sale',img:'https://m.media-amazon.com/images/I/81qM7O-KZAL._AC_SL200_.jpg'},
-    {cat:'PC_CASE',name:'Lian Li PC-O11 Dynamic EVO',asin:'B09KTHVPZT',rating:4.9,rev:12100,price:'$149',was:'$179',save:'17%',flag:'new',img:'https://m.media-amazon.com/images/I/61p5WNbJZ3L._AC_SL200_.jpg'},
+    {cat:'GRAPHICS_CARD',name:'NVIDIA GeForce RTX 5060 Ti 16GB',asin:'B0DYMXQVNW',rating:4.8,rev:1200,price:'$499',was:'$599',save:'17%',flag:'new'},
+    {cat:'GRAPHICS_CARD',name:'AMD Radeon RX 9070 XT',asin:'B0DYN3QVMX',rating:4.7,rev:980,price:'$549',was:'$699',save:'21%',flag:'new'},
+    {cat:'GRAPHICS_CARD',name:'NVIDIA RTX 4070 Super',asin:'B0CQSQC7GD',rating:4.8,rev:4200,price:'$499',was:'$599',save:'17%',flag:'sale'},
+    {cat:'PROCESSOR',name:'AMD Ryzen 7 9800X3D',asin:'B0CQFTYPMW',rating:4.9,rev:5600,price:'$449',was:'$479',save:'6%',flag:'new'},
+    {cat:'PROCESSOR',name:'Intel Core Ultra 7 265K',asin:'B0CHJT4XSP',rating:4.7,rev:3200,price:'$299',was:'$394',save:'24%',flag:'sale'},
+    {cat:'MEMORY',name:'Corsair Vengeance 32GB DDR5 6000MHz',asin:'B09NNVR6JP',rating:4.8,rev:11400,price:'$79',was:'$139',save:'43%',flag:'hot'},
+    {cat:'STORAGE',name:'WD Black SN850X 2TB NVMe SSD',asin:'B0B7CKVCCV',rating:4.8,rev:14200,price:'$99',was:'$199',save:'50%',flag:'hot'},
+    {cat:'MOTHERBOARD',name:'ASUS ROG Strix B850-F WiFi',asin:'B0DFKBQVNP',rating:4.7,rev:1800,price:'$229',was:'$299',save:'23%',flag:'new'},
   ],
   tech:[
-    {cat:'STORAGE',name:'Samsung 990 Pro 2TB NVMe SSD',asin:'B0BHJJ9Y77',rating:4.9,rev:23100,price:'$119',was:'$189',save:'37%',flag:'hot',img:'https://m.media-amazon.com/images/I/71KDtSzVEBL._AC_SL200_.jpg'},
-    {cat:'PERIPHERALS',name:'Logitech MX Master 3S Mouse',asin:'B09HM94VDS',rating:4.8,rev:31000,price:'$89',was:'$99',save:'10%',flag:'new',img:'https://m.media-amazon.com/images/I/61ni3t1ryQL._AC_SL200_.jpg'},
-    {cat:'STORAGE',name:'Samsung T7 1TB Portable SSD',asin:'B0874YJP92',rating:4.8,rev:67000,price:'$69',was:'$109',save:'37%',flag:'hot',img:'https://m.media-amazon.com/images/I/61rX6hb5j9L._AC_SL200_.jpg'},
-    {cat:'MONITOR',name:'LG 34" UltraWide Curved Monitor',asin:'B09BR5WNXQ',rating:4.6,rev:8900,price:'$349',was:'$499',save:'30%',flag:'sale',img:'https://m.media-amazon.com/images/I/71GbdLLY4QL._AC_SL200_.jpg'},
-    {cat:'KEYBOARD',name:'Keychron K2 Mechanical Keyboard',asin:'B07ZGB7Y43',rating:4.7,rev:22000,price:'$89',was:'$99',save:'10%',flag:'new',img:'https://m.media-amazon.com/images/I/71Hh4RQPBFL._AC_SL200_.jpg'},
-    {cat:'MONITOR',name:'ASUS ROG Strix 27" 4K Monitor',asin:'B09NRP2JRN',rating:4.8,rev:5600,price:'$399',was:'$549',save:'27%',flag:'sale',img:'https://m.media-amazon.com/images/I/81kOGeHfPuL._AC_SL200_.jpg'},
+    {cat:'STORAGE',name:'Samsung 990 Pro 2TB NVMe SSD',asin:'B0BHJJ9Y77',rating:4.9,rev:23100,price:'$99',was:'$189',save:'48%',flag:'hot'},
+    {cat:'PERIPHERALS',name:'Logitech MX Master 3S Mouse',asin:'B09HM94VDS',rating:4.8,rev:31000,price:'$74',was:'$99',save:'25%',flag:'sale'},
+    {cat:'STORAGE',name:'Samsung T9 2TB Portable SSD',asin:'B0CG5RSSKL',rating:4.8,rev:18000,price:'$109',was:'$179',save:'39%',flag:'hot'},
+    {cat:'MONITOR',name:'LG 27" UltraGear 4K 144Hz OLED',asin:'B0CJWQH7J3',rating:4.9,rev:4200,price:'$499',was:'$799',save:'38%',flag:'hot'},
+    {cat:'KEYBOARD',name:'Keychron Q1 Pro QMK Keyboard',asin:'B0B3KPYLWP',rating:4.8,rev:8900,price:'$149',was:'$199',save:'25%',flag:'sale'},
+    {cat:'TABLET',name:'iPad Air 13" M2 WiFi 128GB',asin:'B0D3J9FSXW',rating:4.9,rev:12000,price:'$699',was:'$799',save:'13%',flag:'sale'},
   ],
   tools:[
-    {cat:'POWER_TOOLS',name:'DeWalt 20V MAX XR Drill Driver',asin:'B07BHC7TZK',rating:4.8,rev:12400,price:'$149',was:'$219',save:'32%',flag:'sale',img:'https://m.media-amazon.com/images/I/71zyMhNYI7L._AC_SL200_.jpg'},
-    {cat:'POWER_TOOLS',name:'Milwaukee M18 FUEL Circular Saw',asin:'B00IXVTUS4',rating:4.9,rev:7600,price:'$179',was:'$249',save:'28%',flag:'sale',img:'https://m.media-amazon.com/images/I/71BbBhGHPaL._AC_SL200_.jpg'},
-    {cat:'POWER_TOOLS',name:'Makita 18V LXT 2-Piece Combo',asin:'B008LKVLBS',rating:4.8,rev:9800,price:'$199',was:'$279',save:'29%',flag:'sale',img:'https://m.media-amazon.com/images/I/71IZfVr-iiL._AC_SL200_.jpg'},
-    {cat:'PRESSURE_WASHER',name:'Simpson 3400 PSI Pressure Washer',asin:'B00R1DV74U',rating:4.6,rev:4200,price:'$349',was:'$449',save:'22%',flag:'sale',img:'https://m.media-amazon.com/images/I/71vDmpLq-QL._AC_SL200_.jpg'},
+    {cat:'POWER_TOOLS',name:'DeWalt 20V MAX 5-Tool Combo Kit',asin:'B01M0MVISE',rating:4.8,rev:9800,price:'$449',was:'$639',save:'30%',flag:'hot'},
+    {cat:'POWER_TOOLS',name:'Milwaukee M18 FUEL Hackzall Saw',asin:'B00IXVTUS4',rating:4.9,rev:6200,price:'$127',was:'$187',save:'32%',flag:'sale'},
+    {cat:'POWER_TOOLS',name:'Milwaukee M12 FUEL 1/2" Drill',asin:'B01NAWVLBE',rating:4.9,rev:14200,price:'$74',was:'$111',save:'33%',flag:'sale'},
+    {cat:'POWER_TOOLS',name:'DeWalt 20V MAX SDS Rotary Hammer',asin:'B07BHC7TZK',rating:4.7,rev:5400,price:'$199',was:'$269',save:'26%',flag:'sale'},
+    {cat:'POWER_TOOLS',name:'Makita 18V LXT 2-Piece Combo',asin:'B008LKVLBS',rating:4.8,rev:9800,price:'$179',was:'$249',save:'28%',flag:'sale'},
+    {cat:'PRESSURE_WASHER',name:'Simpson 3400 PSI Gas Pressure Washer',asin:'B00R1DV74U',rating:4.6,rev:4200,price:'$329',was:'$449',save:'27%',flag:'sale'},
   ],
   lawn:[
-    {cat:'LAWN_GARDEN',name:'Ego 56V Cordless Mower 21"',asin:'B09NQYT38F',rating:4.7,rev:8200,price:'$449',was:'$599',save:'25%',flag:'sale',img:'https://m.media-amazon.com/images/I/71j4fKQtSBL._AC_SL200_.jpg'},
-    {cat:'LAWN_GARDEN',name:'Greenworks 40V String Trimmer',asin:'B07VCMT5L4',rating:4.5,rev:6100,price:'$89',was:'$129',save:'31%',flag:'sale',img:'https://m.media-amazon.com/images/I/71L9a7dGRfL._AC_SL200_.jpg'},
-    {cat:'LAWN_GARDEN',name:'Husqvarna 450 Rancher Chainsaw',asin:'B01MCXRUJX',rating:4.8,rev:3900,price:'$399',was:'$499',save:'20%',flag:'sale',img:'https://m.media-amazon.com/images/I/71c10zWDRxL._AC_SL200_.jpg'},
-    {cat:'LAWN_GARDEN',name:'Rain Bird 6-Station Timer',asin:'B006EHKLXQ',rating:4.6,rev:14200,price:'$39',was:'$55',save:'29%',flag:'sale',img:'https://m.media-amazon.com/images/I/61Td3jxEgFL._AC_SL200_.jpg'},
+    {cat:'LAWN_GARDEN',name:'Ego 56V Self-Propelled Mower 21"',asin:'B09NQYT38F',rating:4.7,rev:8200,price:'$399',was:'$599',save:'33%',flag:'hot'},
+    {cat:'LAWN_GARDEN',name:'Greenworks 60V Cordless Trimmer',asin:'B07VCMT5L4',rating:4.6,rev:7100,price:'$99',was:'$149',save:'34%',flag:'sale'},
+    {cat:'LAWN_GARDEN',name:'Husqvarna 450 Rancher Chainsaw',asin:'B01MCXRUJX',rating:4.8,rev:3900,price:'$349',was:'$499',save:'30%',flag:'sale'},
+    {cat:'LAWN_GARDEN',name:'Milwaukee M18 FUEL Blower',asin:'B07YFLPWVQ',rating:4.9,rev:8800,price:'$149',was:'$249',save:'40%',flag:'hot'},
   ],
   home:[
-    {cat:'HOME_KITCHEN',name:'Instant Pot Duo 7-in-1 8Qt',asin:'B00FLYWNYQ',rating:4.7,rev:98000,price:'$79',was:'$129',save:'39%',flag:'hot',img:'https://m.media-amazon.com/images/I/71V1GQXzHqL._AC_SL200_.jpg'},
-    {cat:'HOME_KITCHEN',name:'Ninja DZ401 10Qt Air Fryer',asin:'B08DV4JC88',rating:4.8,rev:41000,price:'$149',was:'$199',save:'25%',flag:'sale',img:'https://m.media-amazon.com/images/I/71pS4A-P4ZL._AC_SL200_.jpg'},
-    {cat:'HOME_KITCHEN',name:'Dyson V15 Detect Vacuum',asin:'B09PRGQHTW',rating:4.7,rev:22000,price:'$549',was:'$749',save:'27%',flag:'sale',img:'https://m.media-amazon.com/images/I/71-Z2HiGNiL._AC_SL200_.jpg'},
-    {cat:'HOME_KITCHEN',name:'iRobot Roomba j7+ Robot Vacuum',asin:'B09BT7FKSD',rating:4.5,rev:18900,price:'$399',was:'$599',save:'33%',flag:'sale',img:'https://m.media-amazon.com/images/I/71dB4FHuGtL._AC_SL200_.jpg'},
+    {cat:'HOME_KITCHEN',name:'Instant Pot Duo 7-in-1 8Qt',asin:'B00FLYWNYQ',rating:4.7,rev:98000,price:'$69',was:'$129',save:'47%',flag:'hot'},
+    {cat:'HOME_KITCHEN',name:'Ninja DZ401 10Qt Dual Air Fryer',asin:'B08DV4JC88',rating:4.8,rev:41000,price:'$119',was:'$199',save:'40%',flag:'sale'},
+    {cat:'HOME_KITCHEN',name:'Dyson V15 Detect Absolute Vacuum',asin:'B09PRGQHTW',rating:4.7,rev:22000,price:'$499',was:'$749',save:'33%',flag:'sale'},
+    {cat:'SMART_HOME',name:'Ring Battery Doorbell Plus',asin:'B09WZBPX7K',rating:4.6,rev:28000,price:'$59',was:'$99',save:'40%',flag:'hot'},
   ],
   bbq:[
-    {cat:'BBQ_OUTDOOR',name:'Traeger Pro 575 Pellet Grill',asin:'B08QNQV44J',rating:4.6,rev:6800,price:'$649',was:'$799',save:'19%',flag:'sale',img:'https://m.media-amazon.com/images/I/71ZBLhxHfUL._AC_SL200_.jpg'},
-    {cat:'BBQ_OUTDOOR',name:'Weber Spirit E-310 Gas Grill',asin:'B07GZDPCZT',rating:4.7,rev:9200,price:'$499',was:'$599',save:'17%',flag:'sale',img:'https://m.media-amazon.com/images/I/71Jb+7bLteL._AC_SL200_.jpg'},
-    {cat:'BBQ_OUTDOOR',name:'Blackstone 36" Griddle Station',asin:'B0758ZNJ88',rating:4.8,rev:28000,price:'$297',was:'$397',save:'25%',flag:'hot',img:'https://m.media-amazon.com/images/I/71JeMMeEYKL._AC_SL200_.jpg'},
-    {cat:'BBQ_OUTDOOR',name:'Oklahoma Joe Longhorn Smoker',asin:'B001CXYMR4',rating:4.5,rev:5600,price:'$349',was:'$499',save:'30%',flag:'sale',img:'https://m.media-amazon.com/images/I/71EULz9o+VL._AC_SL200_.jpg'},
+    {cat:'BBQ_OUTDOOR',name:'Traeger Ironwood 885 Pellet Grill',asin:'B08QNQV44J',rating:4.7,rev:5200,price:'$799',was:'$1,099',save:'27%',flag:'sale'},
+    {cat:'BBQ_OUTDOOR',name:'Weber Spirit E-310 Gas Grill',asin:'B07GZDPCZT',rating:4.7,rev:9200,price:'$449',was:'$599',save:'25%',flag:'sale'},
+    {cat:'BBQ_OUTDOOR',name:'Blackstone 36" Griddle Pro',asin:'B0758ZNJ88',rating:4.8,rev:28000,price:'$267',was:'$397',save:'33%',flag:'hot'},
+    {cat:'BBQ_OUTDOOR',name:'Oklahoma Joe Longhorn Smoker',asin:'B001CXYMR4',rating:4.5,rev:5600,price:'$299',was:'$499',save:'40%',flag:'hot'},
   ],
   gaming:[
-    {cat:'GAMING',name:'PS5 DualSense Controller',asin:'B08FC6C75Y',rating:4.8,rev:45000,price:'$59',was:'$69',save:'14%',flag:'sale',img:'https://m.media-amazon.com/images/I/61HMLVfLbUL._AC_SL200_.jpg'},
-    {cat:'GAMING',name:'Xbox Wireless Controller',asin:'B08DF26MLL',rating:4.8,rev:32000,price:'$49',was:'$59',save:'17%',flag:'sale',img:'https://m.media-amazon.com/images/I/61GVxvd5O9L._AC_SL200_.jpg'},
-    {cat:'GAMING',name:'SteelSeries Arctis Nova Pro',asin:'B09ZXNT98Y',rating:4.7,rev:12000,price:'$179',was:'$249',save:'28%',flag:'sale',img:'https://m.media-amazon.com/images/I/61kHhGidTCL._AC_SL200_.jpg'},
-    {cat:'GAMING',name:'LG 27" UltraGear 4K Monitor',asin:'B09NK4Q3QJ',rating:4.8,rev:8900,price:'$349',was:'$499',save:'30%',flag:'hot',img:'https://m.media-amazon.com/images/I/81TDr8XFBEL._AC_SL200_.jpg'},
+    {cat:'GAMING',name:'PS5 DualSense Wireless Controller',asin:'B08FC6C75Y',rating:4.8,rev:45000,price:'$54',was:'$69',save:'22%',flag:'sale'},
+    {cat:'GAMING',name:'Xbox Wireless Controller Carbon Black',asin:'B08DF26MLL',rating:4.8,rev:32000,price:'$44',was:'$59',save:'25%',flag:'sale'},
+    {cat:'GAMING',name:'SteelSeries Arctis Nova 7 Headset',asin:'B09ZXNT98Y',rating:4.7,rev:15000,price:'$99',was:'$149',save:'34%',flag:'sale'},
+    {cat:'GAMING',name:'LG 27" UltraGear 4K OLED Monitor',asin:'B0CJWQH7J3',rating:4.9,rev:4200,price:'$499',was:'$799',save:'38%',flag:'hot'},
   ]
 };
 var BESTS=[
-  {cat:'POWER_TOOLS',name:'Milwaukee M18 FUEL Hammer Drill',asin:'B00Y5XSQJ0',rating:4.9,rev:18400,price:'$199',flag:'top',img:'https://m.media-amazon.com/images/I/71gfX6HJQZL._AC_SL200_.jpg'},
-  {cat:'LAPTOP',name:'Apple MacBook Air M3 13"',asin:'B0CX22DK2R',rating:4.9,rev:54000,price:'$1,099',flag:'top',img:'https://m.media-amazon.com/images/I/71jG+e7roXL._AC_SL200_.jpg'},
-  {cat:'GRAPHICS_CARD',name:'NVIDIA RTX 4070 Super',asin:'B0CQSQC7GD',rating:4.8,rev:4200,price:'$599',flag:'top',img:'https://m.media-amazon.com/images/I/71W7s5OjGlL._AC_SL200_.jpg'},
-  {cat:'BBQ',name:'Weber Genesis E-325s Grill',asin:'B09BKRDL1F',rating:4.8,rev:5400,price:'$849',flag:'top',img:'https://m.media-amazon.com/images/I/71I0xwBbW-L._AC_SL200_.jpg'},
-  {cat:'HOME_KITCHEN',name:'Vitamix 5200 Blender',asin:'B008H4SLV6',rating:4.8,rev:29000,price:'$349',flag:'top',img:'https://m.media-amazon.com/images/I/71p3cZfKXRL._AC_SL200_.jpg'},
-  {cat:'AUDIO',name:'Sony WH-1000XM5 Headphones',asin:'B09XS7JWHH',rating:4.8,rev:67000,price:'$279',flag:'top',img:'https://m.media-amazon.com/images/I/61vRendFt2L._AC_SL200_.jpg'},
-  {cat:'PROCESSOR',name:'AMD Ryzen 9 7950X',asin:'B0BBHHT8LY',rating:4.9,rev:7800,price:'$549',flag:'top',img:'https://m.media-amazon.com/images/I/51iBXFEIpWL._AC_SL200_.jpg'},
-  {cat:'LAWN_GARDEN',name:'Honda HRX217VKA Mower',asin:'B07K3CBPQ3',rating:4.8,rev:7800,price:'$599',flag:'top',img:'https://m.media-amazon.com/images/I/71VdqD9aqJL._AC_SL200_.jpg'},
+  {cat:'POWER_TOOLS',name:'Milwaukee M18 FUEL Hammer Drill',asin:'B00Y5XSQJ0',rating:4.9,rev:18400,price:'$179',flag:'top'},
+  {cat:'LAPTOP',name:'Apple MacBook Air M4 13"',asin:'B0DJCMQCF7',rating:4.9,rev:8900,price:'$1,099',flag:'top'},
+  {cat:'GRAPHICS_CARD',name:'NVIDIA RTX 5060 Ti 16GB',asin:'B0DYMXQVNW',rating:4.8,rev:1200,price:'$499',flag:'top'},
+  {cat:'BBQ',name:'Weber Genesis E-325s Grill',asin:'B09BKRDL1F',rating:4.8,rev:5400,price:'$799',flag:'top'},
+  {cat:'HOME_KITCHEN',name:'Vitamix 5200 Professional Blender',asin:'B008H4SLV6',rating:4.8,rev:29000,price:'$349',flag:'top'},
+  {cat:'AUDIO',name:'Sony WH-1000XM5 Headphones',asin:'B09XS7JWHH',rating:4.8,rev:67000,price:'$229',flag:'top'},
+  {cat:'PROCESSOR',name:'AMD Ryzen 7 9800X3D',asin:'B0CQFTYPMW',rating:4.9,rev:5600,price:'$449',flag:'top'},
+  {cat:'LAWN_GARDEN',name:'Honda HRX217VKA Self-Propelled Mower',asin:'B07K3CBPQ3',rating:4.8,rev:7800,price:'$549',flag:'top'},
 ];
 var PC_PICKS=[
-  {cat:'GRAPHICS_CARD',name:'NVIDIA GeForce RTX 4090',asin:'B0BG94TQLZ',rating:4.9,rev:3200,price:'$1,599',was:'$1,999',save:'20%',flag:'hot',img:'https://m.media-amazon.com/images/I/71W7s5OjGlL._AC_SL200_.jpg'},
-  {cat:'GRAPHICS_CARD',name:'AMD Radeon RX 7900 XTX',asin:'B0BPS9BKSX',rating:4.8,rev:2100,price:'$749',was:'$999',save:'25%',flag:'sale',img:'https://m.media-amazon.com/images/I/71OACL9JWTL._AC_SL200_.jpg'},
-  {cat:'GRAPHICS_CARD',name:'NVIDIA RTX 4070 Ti Super',asin:'B0CQFGGR5L',rating:4.8,rev:3800,price:'$749',was:'$799',save:'6%',flag:'new',img:'https://m.media-amazon.com/images/I/71W7s5OjGlL._AC_SL200_.jpg'},
-  {cat:'PROCESSOR',name:'Intel Core i9-14900K',asin:'B0CGJ41N9T',rating:4.8,rev:6200,price:'$399',was:'$589',save:'32%',flag:'hot',img:'https://m.media-amazon.com/images/I/51jMqVMrGGL._AC_SL200_.jpg'},
-  {cat:'PROCESSOR',name:'AMD Ryzen 9 7900X3D',asin:'B0BTRH9NQJ',rating:4.9,rev:4100,price:'$349',was:'$449',save:'22%',flag:'sale',img:'https://m.media-amazon.com/images/I/51iBXFEIpWL._AC_SL200_.jpg'},
-  {cat:'MEMORY',name:'G.Skill Trident Z5 32GB DDR5',asin:'B09NXCBDPR',rating:4.8,rev:7600,price:'$79',was:'$129',save:'39%',flag:'hot',img:'https://m.media-amazon.com/images/I/71EWFGFXAOL._AC_SL200_.jpg'},
-  {cat:'STORAGE',name:'Samsung 990 Pro 4TB NVMe',asin:'B0BHJJ9Y77',rating:4.9,rev:8900,price:'$249',was:'$399',save:'38%',flag:'hot',img:'https://m.media-amazon.com/images/I/71KDtSzVEBL._AC_SL200_.jpg'},
-  {cat:'CPU_COOLING',name:'Noctua NH-D15 CPU Cooler',asin:'B00L7UZMAK',rating:4.9,rev:21000,price:'$99',was:'$109',save:'9%',flag:'top',img:'https://m.media-amazon.com/images/I/81eDGQrxBoL._AC_SL200_.jpg'},
+  {cat:'GRAPHICS_CARD',name:'NVIDIA GeForce RTX 5060 Ti 16GB',asin:'B0DYMXQVNW',rating:4.8,rev:1200,price:'$499',was:'$599',save:'17%',flag:'new'},
+  {cat:'GRAPHICS_CARD',name:'AMD Radeon RX 9070 XT 16GB',asin:'B0DYN3QVMX',rating:4.7,rev:980,price:'$549',was:'$699',save:'21%',flag:'new'},
+  {cat:'GRAPHICS_CARD',name:'NVIDIA RTX 4070 Super 12GB',asin:'B0CQSQC7GD',rating:4.8,rev:4200,price:'$499',was:'$599',save:'17%',flag:'sale'},
+  {cat:'PROCESSOR',name:'AMD Ryzen 7 9800X3D',asin:'B0CQFTYPMW',rating:4.9,rev:5600,price:'$449',was:'$479',save:'6%',flag:'new'},
+  {cat:'PROCESSOR',name:'Intel Core Ultra 7 265K',asin:'B0CHJT4XSP',rating:4.7,rev:3200,price:'$299',was:'$394',save:'24%',flag:'sale'},
+  {cat:'MEMORY',name:'Corsair Vengeance 32GB DDR5 6000MHz',asin:'B09NNVR6JP',rating:4.8,rev:11400,price:'$79',was:'$139',save:'43%',flag:'hot'},
+  {cat:'STORAGE',name:'WD Black SN850X 2TB NVMe SSD',asin:'B0B7CKVCCV',rating:4.8,rev:14200,price:'$99',was:'$199',save:'50%',flag:'hot'},
+  {cat:'PC_COOLING',name:'Noctua NH-D15 G2 CPU Cooler',asin:'B0CW45W9ZC',rating:4.9,rev:3200,price:'$109',was:'$149',save:'27%',flag:'sale'},
 ];
+
 
 function amzLink(asin,search){
   if(asin&&asin.length===10)return 'https://www.amazon.com/dp/'+asin+'?tag='+TAG;
@@ -973,17 +979,47 @@ function amzLink(asin,search){
 function flagCls(f){return f==='hot'?'hot':f==='top'?'top':f==='new'?'new':'sale';}
 function flagTxt(f){return f==='hot'?'HOT':f==='top'?'BEST':f==='new'?'NEW':'SALE';}
 
+function amzImg(asin){
+  return 'https://ws-na.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN='+asin+'&Format=_SL250_&ID=AsinImage&MarketPlace=US&ServiceVersion=20070822&WS=1&tag=neocomparison-20';
+}
+function catIcon(cat){
+  var c=(cat||'').toLowerCase();
+  if(c.indexOf('gpu')>-1||c.indexOf('graphic')>-1)return '🎮';
+  if(c.indexOf('cpu')>-1||c.indexOf('processor')>-1)return '⚡';
+  if(c.indexOf('storage')>-1||c.indexOf('ssd')>-1||c.indexOf('nvme')>-1)return '💾';
+  if(c.indexOf('memory')>-1||c.indexOf('ram')>-1||c.indexOf('ddr')>-1)return '🔩';
+  if(c.indexOf('motherboard')>-1)return '🖥';
+  if(c.indexOf('case')>-1)return '🖥';
+  if(c.indexOf('cool')>-1)return '❄';
+  if(c.indexOf('monitor')>-1)return '🖥';
+  if(c.indexOf('keyboard')>-1)return '⌨';
+  if(c.indexOf('mouse')>-1||c.indexOf('periph')>-1)return '🖱';
+  if(c.indexOf('laptop')>-1)return '💻';
+  if(c.indexOf('audio')>-1||c.indexOf('headphone')>-1)return '🎧';
+  if(c.indexOf('tool')>-1||c.indexOf('drill')>-1||c.indexOf('saw')>-1)return '🔧';
+  if(c.indexOf('washer')>-1)return '💦';
+  if(c.indexOf('lawn')>-1||c.indexOf('mow')>-1||c.indexOf('garden')>-1)return '🌿';
+  if(c.indexOf('bbq')>-1||c.indexOf('grill')>-1||c.indexOf('smoker')>-1)return '🔥';
+  if(c.indexOf('gaming')>-1||c.indexOf('console')>-1)return '🎮';
+  if(c.indexOf('kitchen')>-1||c.indexOf('home')>-1)return '🏠';
+  if(c.indexOf('vacuum')>-1)return '🏠';
+  return '📦';
+}
 function dealCard(d){
   var link=amzLink(d.asin,d.name);
+  var icon=catIcon(d.cat);
+  var safeName=d.name.replace(/'/g,'').replace(/"/g,'');
+  var imgUrl=d.asin?amzImg(d.asin):'';
+  var imgHtml=imgUrl?'<img src="'+imgUrl+'" alt="'+safeName+'" loading="lazy" style="width:100%;height:100%;object-fit:contain;padding:8px;" onerror="this.style.display=\'none\'">':'';
   return '<div class="deal">'+
-    '<div class="deal-img"><img src="'+d.img+'" alt="'+d.name+'" loading="lazy" onerror="this.style.display=\'none\'"><span class="deal-flag '+flagCls(d.flag)+'">'+flagTxt(d.flag)+'</span></div>'+
+    '<div class="deal-img-box">'+imgHtml+'<div class="deal-icon-bg">'+icon+'</div><span class="deal-flag '+flagCls(d.flag)+'">'+flagTxt(d.flag)+'</span></div>'+
     '<div class="deal-body">'+
       '<div class="deal-cat">'+d.cat+'</div>'+
       '<div class="deal-name">'+d.name+'</div>'+
       '<div class="deal-stars">'+stars(d.rating)+' '+d.rating+' ('+d.rev.toLocaleString()+')</div>'+
       '<div class="deal-pricing"><span class="deal-now">'+d.price+'</span>'+(d.was?'<span class="deal-was">'+d.was+'</span>':'')+(d.save?'<span class="deal-pct">-'+d.save+'</span>':'')+'</div>'+
-      '<a class="deal-amz" href="'+link+'" target="_blank" rel="noopener noreferrer nofollow">◈ VIEW_ON_AMAZON</a>'+
-      '<button class="deal-cmp" onclick="quickCompare(\''+d.name.replace(/'/g,"\\'")+'\')">⚡ COMPARE_THIS</button>'+
+      '<a class="deal-amz" href="'+link+'" target="_blank" rel="noopener noreferrer nofollow">View on Amazon</a>'+
+      '<button class="deal-cmp" onclick="quickCompare(this)" data-name="'+safeName+'">Compare This</button>'+
     '</div></div>';
 }
 
@@ -994,11 +1030,12 @@ function renderDeals(cat){
   document.getElementById('pcGrid').innerHTML=PC_PICKS.map(dealCard).join('');
 }
 
-function quickCompare(name){
+function quickCompare(btn){
+  var name = typeof btn === 'string' ? btn : btn.getAttribute('data-name');
   var tabs=document.querySelectorAll('.mode-tab');
   setMode(2,tabs[1]);
   var inp=document.getElementById('inp1');
-  if(inp){inp.value=name;document.getElementById('inp2').focus();}
+  if(inp){inp.value=name; var inp2=document.getElementById('inp2'); if(inp2)inp2.focus();}
   window.scrollTo({top:0,behavior:'smooth'});
   toast('// enter second product to compare with: '+name);
 }

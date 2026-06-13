@@ -541,9 +541,10 @@ function toggleTheme(){
   localStorage.setItem('nc_theme',theme);
 }
 
-function amzLink(asin,search){
-  if(asin&&asin.length>=10&&asin!=='B0XXXXXXXXX') return 'https://www.amazon.com/dp/'+asin+'?tag='+TAG;
-  return 'https://www.amazon.com/s?tag='+TAG+'&k='+encodeURIComponent(search||'');
+function amzLink(asin,search,name){
+  if(asin&&asin.length>=10&&asin!=='B0XXXXXXXXX'&&asin!=='') return 'https://www.amazon.com/dp/'+asin+'?tag='+TAG;
+  var q=search||name||'';
+  return 'https://www.amazon.com/s?tag='+TAG+'&k='+encodeURIComponent(q);
 }
 
 // Use Amazon's PA API image format - works with affiliate tag
@@ -583,32 +584,32 @@ function catEmoji(cat){
 // DEALS DATA - June 2026 Early Prime Day
 var PRODUCTS={
   all:[
-    {cat:'SECURITY',name:'Ring Stick Up Cam Battery HD',asin:'B0B6G6GKJM',rating:4.6,rev:31000,price:'$39',was:'$79',save:'51%',flag:'hot'},
+    {cat:'SECURITY',name:'Ring Stick Up Cam Battery HD',asin:'B07Q6ZZFLS',rating:4.6,rev:31000,price:'$39',was:'$79',save:'51%',flag:'hot'},
     {cat:'AUDIO',name:'Sony WH-1000XM5 Headphones',asin:'B09XS7JWHH',rating:4.8,rev:67000,price:'$229',was:'$349',save:'34%',flag:'hot'},
     {cat:'STORAGE',name:'Samsung 990 Pro 2TB NVMe SSD',asin:'B0BHJJ9Y77',rating:4.9,rev:23100,price:'$99',was:'$189',save:'48%',flag:'hot'},
     {cat:'HOME_KITCHEN',name:'Instant Pot Duo 7-in-1 8Qt',asin:'B00FLYWNYQ',rating:4.7,rev:98000,price:'$59',was:'$129',save:'54%',flag:'hot'},
     {cat:'POWER_TOOLS',name:'Milwaukee M12 FUEL 1/2" Drill Kit',asin:'B01NAWVLBE',rating:4.9,rev:14200,price:'$74',was:'$149',save:'50%',flag:'hot'},
     {cat:'HOME_KITCHEN',name:'Ninja DZ401 Dual Zone Air Fryer',asin:'B08DV4JC88',rating:4.8,rev:41000,price:'$99',was:'$199',save:'50%',flag:'hot'},
     {cat:'GAMING',name:'PS5 DualSense Wireless Controller',asin:'B08FC6C75Y',rating:4.8,rev:45000,price:'$49',was:'$69',save:'29%',flag:'sale'},
-    {cat:'FITNESS',name:'Fitbit Charge 6 Fitness Tracker',asin:'B0CDJ7ZHMV',rating:4.4,rev:28000,price:'$99',was:'$159',save:'38%',flag:'sale'},
+    {cat:'FITNESS',name:'Fitbit Charge 6 Fitness Tracker',asin:'',rating:4.4,rev:28000,price:'$99',was:'$159',save:'38%',flag:'sale'},
   ],
   gpu:[
-    {cat:'GRAPHICS_CARD',name:'NVIDIA GeForce RTX 5060 Ti 16GB',asin:'B0DYMXQVNW',rating:4.8,rev:1200,price:'$499',was:'$599',save:'17%',flag:'new'},
-    {cat:'GRAPHICS_CARD',name:'AMD Radeon RX 9070 XT 16GB',asin:'B0DYN3QVMX',rating:4.7,rev:980,price:'$549',was:'$699',save:'21%',flag:'new'},
+    {cat:'GRAPHICS_CARD',name:'NVIDIA GeForce RTX 5060 Ti 16GB',search:'NVIDIA RTX 5060 Ti 16GB graphics card',asin:'',rating:4.8,rev:1200,price:'$499',was:'$599',save:'17%',flag:'new'},
+    {cat:'GRAPHICS_CARD',name:'AMD Radeon RX 9070 XT 16GB',search:'AMD RX 9070 XT graphics card',asin:'',rating:4.7,rev:980,price:'$549',was:'$699',save:'21%',flag:'new'},
     {cat:'GRAPHICS_CARD',name:'NVIDIA RTX 4070 Super 12GB',asin:'B0CQSQC7GD',rating:4.8,rev:4200,price:'$499',was:'$599',save:'17%',flag:'sale'},
-    {cat:'PROCESSOR',name:'AMD Ryzen 7 9800X3D',asin:'B0CQFTYPMW',rating:4.9,rev:5600,price:'$449',was:'$479',save:'6%',flag:'new'},
-    {cat:'PROCESSOR',name:'Intel Core Ultra 7 265K',asin:'B0CHJT4XSP',rating:4.7,rev:3200,price:'$299',was:'$394',save:'24%',flag:'sale'},
+    {cat:'PROCESSOR',name:'AMD Ryzen 7 9800X3D',asin:'',rating:4.9,rev:5600,price:'$449',was:'$479',save:'6%',flag:'new'},
+    {cat:'PROCESSOR',name:'Intel Core Ultra 7 265K',asin:'',rating:4.7,rev:3200,price:'$299',was:'$394',save:'24%',flag:'sale'},
     {cat:'MEMORY',name:'Corsair Vengeance 32GB DDR5 6000',asin:'B09NNVR6JP',rating:4.8,rev:11400,price:'$79',was:'$139',save:'43%',flag:'hot'},
     {cat:'STORAGE',name:'WD Black SN850X 2TB NVMe SSD',asin:'B0B7CKVCCV',rating:4.8,rev:14200,price:'$99',was:'$199',save:'50%',flag:'hot'},
-    {cat:'MOTHERBOARD',name:'ASUS ROG Strix B850-F WiFi',asin:'B0DFKBQVNP',rating:4.7,rev:1800,price:'$229',was:'$299',save:'23%',flag:'new'},
+    {cat:'MOTHERBOARD',name:'ASUS ROG Strix B850-F WiFi',asin:'',rating:4.7,rev:1800,price:'$229',was:'$299',save:'23%',flag:'new'},
   ],
   tech:[
     {cat:'STORAGE',name:'Samsung 990 Pro 2TB NVMe SSD',asin:'B0BHJJ9Y77',rating:4.9,rev:23100,price:'$99',was:'$189',save:'48%',flag:'hot'},
     {cat:'PERIPHERALS',name:'Logitech MX Master 3S Mouse',asin:'B09HM94VDS',rating:4.8,rev:31000,price:'$74',was:'$99',save:'25%',flag:'sale'},
-    {cat:'STORAGE',name:'Samsung T9 2TB Portable SSD',asin:'B0CG5RSSKL',rating:4.8,rev:18000,price:'$109',was:'$179',save:'39%',flag:'hot'},
-    {cat:'MONITOR',name:'LG 27" UltraGear 4K 144Hz OLED',asin:'B0CJWQH7J3',rating:4.9,rev:4200,price:'$499',was:'$799',save:'38%',flag:'hot'},
-    {cat:'KEYBOARD',name:'Keychron Q1 Pro QMK Keyboard',asin:'B0B3KPYLWP',rating:4.8,rev:8900,price:'$149',was:'$199',save:'25%',flag:'sale'},
-    {cat:'TABLET',name:'iPad Air 13" M2 WiFi 128GB',asin:'B0D3J9FSXW',rating:4.9,rev:12000,price:'$699',was:'$799',save:'13%',flag:'sale'},
+    {cat:'STORAGE',name:'Samsung T9 2TB Portable SSD',asin:'',rating:4.8,rev:18000,price:'$109',was:'$179',save:'39%',flag:'hot'},
+    {cat:'MONITOR',name:'LG 27" UltraGear 4K 144Hz OLED',asin:'',rating:4.9,rev:4200,price:'$499',was:'$799',save:'38%',flag:'hot'},
+    {cat:'KEYBOARD',name:'Keychron Q1 Pro QMK Keyboard',asin:'',rating:4.8,rev:8900,price:'$149',was:'$199',save:'25%',flag:'sale'},
+    {cat:'TABLET',name:'iPad Air 13" M2 WiFi 128GB',asin:'',rating:4.9,rev:12000,price:'$699',was:'$799',save:'13%',flag:'sale'},
   ],
   tools:[
     {cat:'POWER_TOOLS',name:'DeWalt 20V MAX 5-Tool Combo Kit',asin:'B01M0MVISE',rating:4.8,rev:9800,price:'$449',was:'$639',save:'30%',flag:'hot'},
@@ -622,7 +623,7 @@ var PRODUCTS={
     {cat:'LAWN_GARDEN',name:'Ego 56V Self-Propelled Mower 21"',asin:'B09NQYT38F',rating:4.7,rev:8200,price:'$399',was:'$599',save:'33%',flag:'hot'},
     {cat:'LAWN_GARDEN',name:'Greenworks 60V Cordless Trimmer',asin:'B07VCMT5L4',rating:4.6,rev:7100,price:'$99',was:'$149',save:'34%',flag:'sale'},
     {cat:'LAWN_GARDEN',name:'Husqvarna 450 Rancher Chainsaw',asin:'B01MCXRUJX',rating:4.8,rev:3900,price:'$349',was:'$499',save:'30%',flag:'sale'},
-    {cat:'LAWN_GARDEN',name:'Milwaukee M18 FUEL Blower Tool',asin:'B07YFLPWVQ',rating:4.9,rev:8800,price:'$149',was:'$249',save:'40%',flag:'hot'},
+    {cat:'LAWN_GARDEN',name:'Milwaukee M18 FUEL Blower Tool',asin:'',rating:4.9,rev:8800,price:'$149',was:'$249',save:'40%',flag:'hot'},
   ],
   home:[
     {cat:'HOME_KITCHEN',name:'Instant Pot Duo 7-in-1 8Qt',asin:'B00FLYWNYQ',rating:4.7,rev:98000,price:'$69',was:'$129',save:'47%',flag:'hot'},
@@ -640,32 +641,32 @@ var PRODUCTS={
     {cat:'GAMING',name:'PS5 DualSense Wireless Controller',asin:'B08FC6C75Y',rating:4.8,rev:45000,price:'$54',was:'$69',save:'22%',flag:'sale'},
     {cat:'GAMING',name:'Xbox Wireless Controller Carbon Black',asin:'B08DF26MLL',rating:4.8,rev:32000,price:'$44',was:'$59',save:'25%',flag:'sale'},
     {cat:'GAMING',name:'SteelSeries Arctis Nova 7 Wireless',asin:'B09ZXNT98Y',rating:4.7,rev:15000,price:'$99',was:'$149',save:'34%',flag:'sale'},
-    {cat:'GAMING',name:'LG 27" UltraGear 4K OLED Monitor',asin:'B0CJWQH7J3',rating:4.9,rev:4200,price:'$499',was:'$799',save:'38%',flag:'hot'},
+    {cat:'GAMING',name:'LG 27" UltraGear 4K OLED Monitor',asin:'',rating:4.9,rev:4200,price:'$499',was:'$799',save:'38%',flag:'hot'},
   ]
 };
 var BESTS=[
   {cat:'POWER_TOOLS',name:'Milwaukee M18 FUEL Hammer Drill Kit',asin:'B00Y5XSQJ0',rating:4.9,rev:18400,price:'$179',flag:'top'},
-  {cat:'LAPTOP',name:'Apple MacBook Air M4 13"',asin:'B0DJCMQCF7',rating:4.9,rev:8900,price:'$1099',flag:'top'},
-  {cat:'GRAPHICS_CARD',name:'NVIDIA RTX 5060 Ti 16GB',asin:'B0DYMXQVNW',rating:4.8,rev:1200,price:'$499',flag:'top'},
-  {cat:'BBQ',name:'Weber Genesis E-325s Gas Grill',asin:'B09BKRDL1F',rating:4.8,rev:5400,price:'$799',flag:'top'},
+  {cat:'LAPTOP',name:'Apple MacBook Air M4 13"',asin:'',rating:4.9,rev:8900,price:'$1099',flag:'top'},
+  {cat:'GRAPHICS_CARD',name:'NVIDIA RTX 5060 Ti 16GB',asin:'',rating:4.8,rev:1200,price:'$499',flag:'top'},
+  {cat:'BBQ',name:'Weber Genesis E-325s Gas Grill',asin:'',rating:4.8,rev:5400,price:'$799',flag:'top'},
   {cat:'HOME_KITCHEN',name:'Vitamix 5200 Professional Blender',asin:'B008H4SLV6',rating:4.8,rev:29000,price:'$349',flag:'top'},
   {cat:'AUDIO',name:'Sony WH-1000XM5 Headphones',asin:'B09XS7JWHH',rating:4.8,rev:67000,price:'$229',flag:'top'},
-  {cat:'PROCESSOR',name:'AMD Ryzen 7 9800X3D Processor',asin:'B0CQFTYPMW',rating:4.9,rev:5600,price:'$449',flag:'top'},
+  {cat:'PROCESSOR',name:'AMD Ryzen 7 9800X3D Processor',asin:'',rating:4.9,rev:5600,price:'$449',flag:'top'},
   {cat:'LAWN_GARDEN',name:'Honda HRX217VKA Mower',asin:'B07K3CBPQ3',rating:4.8,rev:7800,price:'$549',flag:'top'},
 ];
 var PC_PICKS=[
-  {cat:'GRAPHICS_CARD',name:'NVIDIA GeForce RTX 5060 Ti 16GB',asin:'B0DYMXQVNW',rating:4.8,rev:1200,price:'$499',was:'$599',save:'17%',flag:'new'},
-  {cat:'GRAPHICS_CARD',name:'AMD Radeon RX 9070 XT 16GB',asin:'B0DYN3QVMX',rating:4.7,rev:980,price:'$549',was:'$699',save:'21%',flag:'new'},
+  {cat:'GRAPHICS_CARD',name:'NVIDIA GeForce RTX 5060 Ti 16GB',search:'NVIDIA RTX 5060 Ti 16GB graphics card',asin:'',rating:4.8,rev:1200,price:'$499',was:'$599',save:'17%',flag:'new'},
+  {cat:'GRAPHICS_CARD',name:'AMD Radeon RX 9070 XT 16GB',search:'AMD RX 9070 XT graphics card',asin:'',rating:4.7,rev:980,price:'$549',was:'$699',save:'21%',flag:'new'},
   {cat:'GRAPHICS_CARD',name:'NVIDIA RTX 4070 Super 12GB',asin:'B0CQSQC7GD',rating:4.8,rev:4200,price:'$499',was:'$599',save:'17%',flag:'sale'},
-  {cat:'PROCESSOR',name:'AMD Ryzen 7 9800X3D',asin:'B0CQFTYPMW',rating:4.9,rev:5600,price:'$449',was:'$479',save:'6%',flag:'new'},
-  {cat:'PROCESSOR',name:'Intel Core Ultra 7 265K',asin:'B0CHJT4XSP',rating:4.7,rev:3200,price:'$299',was:'$394',save:'24%',flag:'sale'},
+  {cat:'PROCESSOR',name:'AMD Ryzen 7 9800X3D',asin:'',rating:4.9,rev:5600,price:'$449',was:'$479',save:'6%',flag:'new'},
+  {cat:'PROCESSOR',name:'Intel Core Ultra 7 265K',asin:'',rating:4.7,rev:3200,price:'$299',was:'$394',save:'24%',flag:'sale'},
   {cat:'MEMORY',name:'Corsair Vengeance 32GB DDR5 6000',asin:'B09NNVR6JP',rating:4.8,rev:11400,price:'$79',was:'$139',save:'43%',flag:'hot'},
   {cat:'STORAGE',name:'WD Black SN850X 2TB NVMe SSD',asin:'B0B7CKVCCV',rating:4.8,rev:14200,price:'$99',was:'$199',save:'50%',flag:'hot'},
-  {cat:'CPU_COOLING',name:'Noctua NH-D15 G2 CPU Cooler',asin:'B0CW45W9ZC',rating:4.9,rev:3200,price:'$109',was:'$149',save:'27%',flag:'sale'},
+  {cat:'CPU_COOLING',name:'Noctua NH-D15 G2 CPU Cooler',asin:'',rating:4.9,rev:3200,price:'$109',was:'$149',save:'27%',flag:'sale'},
 ];
 
 function dealCard(d){
-  var link=amzLink(d.asin,d.name);
+  var link=amzLink(d.asin,d.search||null,d.name);
   var imgUrl=amzImg(d.asin);
   var emoji=catEmoji(d.cat);
   var safeName=d.name.replace(/"/g,'&quot;').replace(/'/g,'&#39;');

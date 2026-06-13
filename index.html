@@ -460,7 +460,7 @@ footer a:hover{color:var(--accent2);}
 
   <div id="dealSections" style="display:block;">
     <div class="sec-hdr">
-      <div><div class="sec-title">◈ EARLY PRIME DAY DEALS — JUNE 2026</div><div class="sec-sub">// prime_day_starts_june_23 — early_deals_live_now — prices_at_all_time_lows</div></div>
+      <div><div class="sec-title">◈ EARLY PRIME DAY DEALS — JUNE 13 2026</div><div class="sec-sub">// prime_day_june_23-26 — 50%_off_ring_cam · 54%_off_instant_pot · 50%_off_milwaukee — updated_daily</div></div>
     </div>
     <div class="deals-grid" id="dealsGrid"></div>
     <div class="sec-hdr">
@@ -542,7 +542,7 @@ function toggleTheme(){
 }
 
 function amzLink(asin,search){
-  if(asin&&asin.length>=10) return 'https://www.amazon.com/dp/'+asin+'?tag='+TAG;
+  if(asin&&asin.length>=10&&asin!=='B0XXXXXXXXX') return 'https://www.amazon.com/dp/'+asin+'?tag='+TAG;
   return 'https://www.amazon.com/s?tag='+TAG+'&k='+encodeURIComponent(search||'');
 }
 
@@ -583,14 +583,14 @@ function catEmoji(cat){
 // DEALS DATA - June 2026 Early Prime Day
 var PRODUCTS={
   all:[
-    {cat:'POWER_TOOLS',name:'DeWalt 20V MAX 5-Tool Combo Kit',asin:'B01M0MVISE',rating:4.8,rev:9800,price:'$449',was:'$639',save:'30%',flag:'hot'},
-    {cat:'POWER_TOOLS',name:'Milwaukee M18 FUEL Hackzall Saw',asin:'B00IXVTUS4',rating:4.9,rev:6200,price:'$127',was:'$187',save:'32%',flag:'sale'},
-    {cat:'STORAGE',name:'Samsung 990 Pro 2TB NVMe SSD',asin:'B0BHJJ9Y77',rating:4.9,rev:23100,price:'$99',was:'$189',save:'48%',flag:'hot'},
-    {cat:'HOME_KITCHEN',name:'Instant Pot Duo 7-in-1 8Qt',asin:'B00FLYWNYQ',rating:4.7,rev:98000,price:'$69',was:'$129',save:'47%',flag:'hot'},
-    {cat:'SECURITY',name:'Ring Stick Up Cam Battery',asin:'B0B6G6GKJM',rating:4.6,rev:31000,price:'$39',was:'$79',save:'51%',flag:'hot'},
-    {cat:'GAMING',name:'PS5 DualSense Wireless Controller',asin:'B08FC6C75Y',rating:4.8,rev:45000,price:'$54',was:'$69',save:'22%',flag:'sale'},
+    {cat:'SECURITY',name:'Ring Stick Up Cam Battery HD',asin:'B0B6G6GKJM',rating:4.6,rev:31000,price:'$39',was:'$79',save:'51%',flag:'hot'},
     {cat:'AUDIO',name:'Sony WH-1000XM5 Headphones',asin:'B09XS7JWHH',rating:4.8,rev:67000,price:'$229',was:'$349',save:'34%',flag:'hot'},
-    {cat:'HOME_KITCHEN',name:'Ninja DZ401 Dual Air Fryer 10Qt',asin:'B08DV4JC88',rating:4.8,rev:41000,price:'$119',was:'$199',save:'40%',flag:'sale'},
+    {cat:'STORAGE',name:'Samsung 990 Pro 2TB NVMe SSD',asin:'B0BHJJ9Y77',rating:4.9,rev:23100,price:'$99',was:'$189',save:'48%',flag:'hot'},
+    {cat:'HOME_KITCHEN',name:'Instant Pot Duo 7-in-1 8Qt',asin:'B00FLYWNYQ',rating:4.7,rev:98000,price:'$59',was:'$129',save:'54%',flag:'hot'},
+    {cat:'POWER_TOOLS',name:'Milwaukee M12 FUEL 1/2" Drill Kit',asin:'B01NAWVLBE',rating:4.9,rev:14200,price:'$74',was:'$149',save:'50%',flag:'hot'},
+    {cat:'HOME_KITCHEN',name:'Ninja DZ401 Dual Zone Air Fryer',asin:'B08DV4JC88',rating:4.8,rev:41000,price:'$99',was:'$199',save:'50%',flag:'hot'},
+    {cat:'GAMING',name:'PS5 DualSense Wireless Controller',asin:'B08FC6C75Y',rating:4.8,rev:45000,price:'$49',was:'$69',save:'29%',flag:'sale'},
+    {cat:'FITNESS',name:'Fitbit Charge 6 Fitness Tracker',asin:'B0CDJ7ZHMV',rating:4.4,rev:28000,price:'$99',was:'$159',save:'38%',flag:'sale'},
   ],
   gpu:[
     {cat:'GRAPHICS_CARD',name:'NVIDIA GeForce RTX 5060 Ti 16GB',asin:'B0DYMXQVNW',rating:4.8,rev:1200,price:'$499',was:'$599',save:'17%',flag:'new'},

@@ -3,490 +3,485 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-Content-Type-Options" content="nosniff">
+<meta name="referrer" content="strict-origin-when-cross-origin">
 <title>NeoComparison — Compare Anything. Know Before You Buy.</title>
-<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Rajdhani:wght@400;500;600;700&family=Orbitron:wght@400;600;700;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box;}
 [data-theme="dark"]{
-  --bg:#06080a;--bg2:#0a0d10;--bg3:#0e1318;--card:#0e1318;--card2:#141c22;
-  --border:rgba(0,200,120,0.12);--border2:rgba(0,200,120,0.22);
-  --text:#d0f0e0;--text2:#6a9a80;--text3:#2a4a38;
-  --accent:#00c878;--accent2:#00ff9a;--accent3:#80ffcc;
-  --accent-bg:rgba(0,200,120,0.07);--accent-border:rgba(0,200,120,0.2);
-  --red:#ff2244;--red-bg:rgba(255,34,68,0.07);--red-border:rgba(255,34,68,0.2);
-  --amber:#ffaa00;--amber-bg:rgba(255,170,0,0.07);
-  --nav:rgba(4,6,8,0.97);--shadow:0 20px 60px rgba(0,0,0,0.5);
-  --shadow-sm:0 4px 20px rgba(0,200,120,0.07);--star:#ffaa00;
+  --bg:#0f1117;--bg2:#161b27;--bg3:#1e2536;--card:#1a2035;--card2:#1f2740;
+  --border:rgba(255,255,255,0.07);--border2:rgba(255,255,255,0.11);--border3:rgba(255,255,255,0.18);
+  --text:#e8eaf0;--text2:#8892a4;--text3:#4a5568;
+  --accent:#4f8ef7;--accent2:#6ba3f8;--accent3:#a8c4fb;
+  --accent-bg:rgba(79,142,247,0.1);--accent-border:rgba(79,142,247,0.25);
+  --green:#22c55e;--green-bg:rgba(34,197,94,0.1);--green-border:rgba(34,197,94,0.25);
+  --red:#ef4444;--red-bg:rgba(239,68,68,0.1);--red-border:rgba(239,68,68,0.25);
+  --amber:#f59e0b;--amber-bg:rgba(245,158,11,0.1);--amber-border:rgba(245,158,11,0.25);
+  --prime:#00a8e0;--prime-bg:rgba(0,168,224,0.1);
+  --nav:rgba(15,17,23,0.95);--shadow:0 4px 24px rgba(0,0,0,0.4);
+  --shadow-lg:0 20px 60px rgba(0,0,0,0.5);--star:#f59e0b;
+  --radius:10px;--radius-sm:6px;--radius-lg:14px;
 }
 [data-theme="light"]{
-  --bg:#f5f7f5;--bg2:#edf2ee;--bg3:#e0eae2;--card:#ffffff;--card2:#f2f8f3;
-  --border:rgba(0,140,80,0.1);--border2:rgba(0,140,80,0.2);
-  --text:#0a1a10;--text2:#3a6a48;--text3:#8ab8a0;
-  --accent:#007a45;--accent2:#00aa60;--accent3:#00cc70;
-  --accent-bg:rgba(0,122,69,0.06);--accent-border:rgba(0,122,69,0.18);
-  --red:#cc1133;--red-bg:rgba(204,17,51,0.06);--red-border:rgba(204,17,51,0.2);
-  --amber:#aa7700;--amber-bg:rgba(170,119,0,0.07);
-  --nav:rgba(245,247,245,0.97);--shadow:0 20px 60px rgba(0,0,0,0.1);
-  --shadow-sm:0 4px 20px rgba(0,122,69,0.07);--star:#aa7700;
+  --bg:#f0f4f8;--bg2:#e8edf5;--bg3:#dde4ef;--card:#ffffff;--card2:#f7f9fc;
+  --border:rgba(0,0,0,0.07);--border2:rgba(0,0,0,0.11);--border3:rgba(0,0,0,0.18);
+  --text:#0f1117;--text2:#4a5568;--text3:#a0aec0;
+  --accent:#2563eb;--accent2:#3b82f6;--accent3:#60a5fa;
+  --accent-bg:rgba(37,99,235,0.08);--accent-border:rgba(37,99,235,0.2);
+  --green:#16a34a;--green-bg:rgba(22,163,74,0.08);--green-border:rgba(22,163,74,0.2);
+  --red:#dc2626;--red-bg:rgba(220,38,38,0.08);--red-border:rgba(220,38,38,0.2);
+  --amber:#d97706;--amber-bg:rgba(217,119,6,0.08);--amber-border:rgba(217,119,6,0.2);
+  --prime:#0077a8;--prime-bg:rgba(0,119,168,0.08);
+  --nav:rgba(240,244,248,0.95);--shadow:0 4px 24px rgba(0,0,0,0.08);
+  --shadow-lg:0 20px 60px rgba(0,0,0,0.12);--star:#d97706;
+  --radius:10px;--radius-sm:6px;--radius-lg:14px;
 }
 html{scroll-behavior:smooth;}
-body{font-family:'Rajdhani',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;line-height:1.6;-webkit-font-smoothing:antialiased;}
-[data-theme="dark"] body{background:radial-gradient(ellipse at top,#0a0f0c 0%,#06080a 60%);}
-[data-theme="dark"] body::before{content:'';position:fixed;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,200,120,0.012) 2px,rgba(0,200,120,0.012) 4px);pointer-events:none;z-index:0;}
+body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;line-height:1.6;-webkit-font-smoothing:antialiased;}
+.mono{font-family:'JetBrains Mono',monospace;}
 
-/* NAV */
-nav{height:54px;display:flex;align-items:center;justify-content:space-between;padding:0 1.5rem;border-bottom:1px solid var(--border2);position:sticky;top:0;background:var(--nav);backdrop-filter:blur(24px);z-index:300;}
-[data-theme="dark"] nav{box-shadow:0 1px 0 rgba(0,200,120,0.15),0 4px 20px rgba(0,0,0,0.4);}
-.logo{font-family:'Orbitron',sans-serif;font-size:1rem;font-weight:900;letter-spacing:0.04em;color:var(--accent2);text-decoration:none;display:flex;align-items:center;gap:0.5rem;}
-.logo-sq{width:26px;height:26px;background:var(--accent);display:flex;align-items:center;justify-content:center;font-size:0.7rem;font-weight:900;color:#000;clip-path:polygon(0 0,100% 0,100% 75%,75% 100%,0 100%);}
-.nav-links{display:flex;list-style:none;height:54px;}
-.nav-item{position:relative;height:54px;}
-.nav-item>a,.nav-item>button{color:var(--text3);text-decoration:none;font-family:'Rajdhani',sans-serif;font-size:0.76rem;font-weight:700;padding:0 0.9rem;height:54px;display:flex;align-items:center;gap:0.3rem;border:none;background:none;cursor:pointer;border-bottom:2px solid transparent;transition:all 0.2s;text-transform:uppercase;letter-spacing:0.06em;white-space:nowrap;}
-.nav-item>a:hover,.nav-item>button:hover,.nav-item>a.on{color:var(--accent2);border-bottom-color:var(--accent);background:var(--accent-bg);}
-.nav-arrow{font-size:0.55rem;transition:transform 0.2s;}
-.nav-item:hover .nav-arrow{transform:rotate(180deg);}
-.mega{position:absolute;top:54px;left:0;min-width:860px;background:var(--bg2);border:1px solid var(--border2);border-top:2px solid var(--accent);padding:1.75rem 2rem;display:none;z-index:400;box-shadow:0 20px 60px rgba(0,0,0,0.6);}
-.nav-item:hover .mega{display:block;}
-.mega-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:1.5rem;}
-.mega-col h4{font-family:'Orbitron',sans-serif;font-size:0.6rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--accent);margin-bottom:0.75rem;padding-bottom:0.5rem;border-bottom:1px solid var(--border2);}
-.mega-col a{display:block;font-size:0.78rem;color:var(--text2);text-decoration:none;padding:0.22rem 0;transition:all 0.15s;font-weight:500;}
-.mega-col a:hover{color:var(--accent2);padding-left:0.4rem;}
-.mega-all{display:inline-flex;align-items:center;gap:0.4rem;background:var(--accent);color:#000;font-family:'Orbitron',sans-serif;font-size:0.6rem;font-weight:700;padding:0.45rem 1.1rem;letter-spacing:0.06em;text-transform:uppercase;cursor:pointer;border:none;margin-top:1.25rem;transition:all 0.2s;text-decoration:none;}
-.mega-all:hover{background:var(--accent2);}
-.nav-r{display:flex;align-items:center;gap:0.45rem;}
-.nbtn{background:none;border:1px solid var(--border2);padding:0.34rem 0.8rem;font-family:'Rajdhani',sans-serif;font-size:0.72rem;font-weight:700;color:var(--text2);cursor:pointer;transition:all 0.2s;letter-spacing:0.06em;text-transform:uppercase;}
-.nbtn:hover{color:var(--accent2);border-color:var(--accent);background:var(--accent-bg);}
-.nbtn.pri{background:var(--accent);color:#000;border-color:var(--accent);}
-.nbtn.pri:hover{background:var(--accent2);}
-.icon-btn{width:32px;height:32px;border:1px solid var(--border2);background:none;cursor:pointer;font-size:0.85rem;display:flex;align-items:center;justify-content:center;transition:all 0.2s;color:var(--text2);}
-.icon-btn:hover{background:var(--accent-bg);border-color:var(--accent);color:var(--accent2);}
-.u-chip{display:flex;align-items:center;gap:0.35rem;background:var(--accent-bg);border:1px solid var(--accent-border);padding:0.34rem 0.75rem;font-family:'Rajdhani',sans-serif;font-size:0.72rem;color:var(--accent2);cursor:pointer;font-weight:700;text-transform:uppercase;letter-spacing:0.04em;}
+/* ── NAV ── */
+nav{height:60px;display:flex;align-items:center;justify-content:space-between;padding:0 2rem;border-bottom:1px solid var(--border2);position:sticky;top:0;background:var(--nav);backdrop-filter:blur(20px);z-index:200;}
+.logo{font-size:1.1rem;font-weight:800;color:var(--text);text-decoration:none;display:flex;align-items:center;gap:0.5rem;letter-spacing:-0.03em;}
+.logo-mark{width:28px;height:28px;background:var(--accent);border-radius:var(--radius-sm);display:flex;align-items:center;justify-content:center;font-size:0.75rem;font-weight:900;color:#fff;}
+.logo-sub{font-size:0.75rem;font-weight:500;color:var(--text3);letter-spacing:0;}
+.nav-center{display:flex;gap:0.25rem;}
+.nav-link{color:var(--text2);text-decoration:none;font-size:0.83rem;font-weight:500;padding:0.4rem 0.85rem;border-radius:var(--radius-sm);transition:all 0.15s;}
+.nav-link:hover,.nav-link.on{color:var(--text);background:var(--accent-bg);}
+.nav-right{display:flex;align-items:center;gap:0.5rem;}
+.nbtn{background:none;border:1px solid var(--border2);border-radius:var(--radius-sm);padding:0.4rem 0.9rem;font-size:0.8rem;font-weight:500;color:var(--text2);cursor:pointer;font-family:inherit;transition:all 0.15s;}
+.nbtn:hover{color:var(--text);border-color:var(--border3);background:var(--bg3);}
+.nbtn.pri{background:var(--accent);color:#fff;border-color:var(--accent);}
+.nbtn.pri:hover{background:var(--accent2);border-color:var(--accent2);}
+.tbtn{width:34px;height:34px;border-radius:var(--radius-sm);border:1px solid var(--border2);background:none;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:0.9rem;transition:all 0.15s;color:var(--text2);}
+.tbtn:hover{background:var(--bg3);color:var(--text);}
+.u-pill{display:flex;align-items:center;gap:0.4rem;background:var(--accent-bg);border:1px solid var(--accent-border);border-radius:var(--radius-sm);padding:0.4rem 0.85rem;font-size:0.8rem;font-weight:500;color:var(--accent2);cursor:pointer;}
 
-/* HERO */
-.hero{position:relative;overflow:hidden;padding:3.5rem 1.5rem 2.5rem;text-align:center;}
-[data-theme="dark"] .hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 50% -5%,rgba(0,200,120,0.08),transparent);pointer-events:none;}
-[data-theme="dark"] .hero::after{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(0,200,120,0.5),transparent);}
-.hero-content{position:relative;max-width:720px;margin:0 auto;}
-.hero-pill{display:inline-flex;align-items:center;gap:0.5rem;background:var(--accent-bg);border:1px solid var(--accent-border);padding:0.28rem 1rem;font-family:'Share Tech Mono',monospace;font-size:0.66rem;letter-spacing:0.08em;color:var(--accent2);margin-bottom:1.5rem;}
-.blink{width:5px;height:5px;background:var(--accent);animation:blink 1.5s ease-in-out infinite;}
-@keyframes blink{0%,100%{opacity:1;}50%{opacity:0.1;}}
-h1{font-family:'Orbitron',sans-serif;font-size:clamp(1.75rem,4vw,2.9rem);font-weight:900;letter-spacing:0.02em;line-height:1.1;margin-bottom:0.85rem;}
-[data-theme="dark"] h1{background:linear-gradient(135deg,#fff 0%,#80ffcc 40%,#00c878 80%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
-[data-theme="light"] h1{color:var(--text);}
-.hero-sub{font-size:1rem;color:var(--text2);max-width:500px;margin:0 auto 2rem;line-height:1.65;font-weight:500;}
-.mode-tabs{display:flex;gap:0;margin-bottom:0.85rem;border:1px solid var(--border2);}
-.mode-tab{flex:1;padding:0.55rem;background:none;border:none;border-right:1px solid var(--border2);font-family:'Share Tech Mono',monospace;font-size:0.68rem;color:var(--text3);cursor:pointer;transition:all 0.2s;text-transform:uppercase;letter-spacing:0.05em;}
-.mode-tab:last-child{border-right:none;}
-.mode-tab:hover{color:var(--text2);background:var(--accent-bg);}
-.mode-tab.on{background:var(--accent);color:#000;font-weight:700;}
-.search-card{background:var(--card);border:1px solid var(--border2);border-top:2px solid var(--accent);padding:1.25rem;box-shadow:var(--shadow-sm);}
-.search-lbl{font-family:'Share Tech Mono',monospace;font-size:0.63rem;letter-spacing:0.1em;color:var(--text3);margin-bottom:0.6rem;}
-.multi-inputs{display:flex;flex-direction:column;gap:0.45rem;margin-bottom:0.75rem;}
-.multi-row{display:flex;align-items:center;gap:0.5rem;}
-.multi-num{width:22px;height:22px;background:var(--accent);color:#000;font-family:'Share Tech Mono',monospace;font-size:0.65rem;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
-.search-inp{flex:1;background:var(--bg3);border:1px solid var(--border);padding:0.72rem 1rem;color:var(--text);font-size:0.88rem;outline:none;transition:all 0.2s;font-family:'Rajdhani',sans-serif;font-weight:500;}
-.search-inp:focus{border-color:var(--accent);box-shadow:0 0 0 2px var(--accent-bg);}
-.search-inp::placeholder{color:var(--text3);font-family:'Share Tech Mono',monospace;font-size:0.78rem;}
-.search-btn{width:100%;background:var(--accent);color:#000;border:none;padding:0.72rem;font-family:'Orbitron',sans-serif;font-size:0.72rem;font-weight:700;cursor:pointer;transition:all 0.2s;text-transform:uppercase;letter-spacing:0.06em;margin-top:0.5rem;}
-.search-btn:hover{background:var(--accent2);box-shadow:0 4px 20px rgba(0,200,120,0.25);}
-.search-btn:disabled{opacity:0.4;cursor:not-allowed;box-shadow:none;}
-.trending-row{display:flex;align-items:center;gap:0.4rem;flex-wrap:wrap;justify-content:center;margin-top:0.85rem;}
-.trend-lbl{font-family:'Share Tech Mono',monospace;font-size:0.62rem;color:var(--text3);letter-spacing:0.08em;}
-.chip{background:none;border:1px solid var(--border);padding:0.26rem 0.7rem;font-family:'Rajdhani',sans-serif;font-size:0.74rem;font-weight:600;color:var(--text2);cursor:pointer;transition:all 0.2s;}
-.chip:hover{border-color:var(--accent);color:var(--accent2);background:var(--accent-bg);}
-.catbar{display:flex;gap:0;overflow-x:auto;border-bottom:1px solid var(--border2);background:var(--bg2);scrollbar-width:none;}
-.catbar::-webkit-scrollbar{display:none;}
-.catbtn{display:inline-flex;align-items:center;gap:0.35rem;background:none;border:none;border-right:1px solid var(--border);border-bottom:2px solid transparent;padding:0.65rem 1.1rem;font-family:'Rajdhani',sans-serif;font-size:0.72rem;font-weight:700;color:var(--text3);cursor:pointer;white-space:nowrap;transition:all 0.2s;text-transform:uppercase;letter-spacing:0.05em;}
-.catbtn:hover,.catbtn.on{background:var(--accent-bg);color:var(--accent2);border-bottom-color:var(--accent);}
-.page{max-width:1280px;margin:0 auto;padding:2rem 1.5rem 4rem;position:relative;z-index:1;}
+/* ── HERO ── */
+.hero{text-align:center;padding:4rem 2rem 2.5rem;max-width:820px;margin:0 auto;}
+.hero-badge{display:inline-flex;align-items:center;gap:0.4rem;background:var(--accent-bg);border:1px solid var(--accent-border);border-radius:100px;padding:0.3rem 0.9rem;font-size:0.72rem;font-weight:600;color:var(--accent2);margin-bottom:1.25rem;letter-spacing:0.01em;}
+.badge-dot{width:5px;height:5px;background:var(--accent);border-radius:50%;animation:pulse-dot 2s ease-in-out infinite;}
+@keyframes pulse-dot{0%,100%{opacity:1;transform:scale(1);}50%{opacity:0.4;transform:scale(0.7);}}
+.hero h1{font-size:clamp(2rem,4.5vw,3.25rem);font-weight:900;letter-spacing:-0.04em;line-height:1.1;margin-bottom:1rem;color:var(--text);}
+.hero h1 span{color:var(--accent2);}
+.hero-sub{font-size:1rem;color:var(--text2);max-width:520px;margin:0 auto 2rem;line-height:1.7;}
+
+/* ── MODE SELECTOR ── */
+.mode-wrap{background:var(--card);border:1px solid var(--border2);border-radius:var(--radius-lg);padding:1.25rem;box-shadow:var(--shadow);margin-bottom:1rem;}
+.mode-tabs{display:flex;background:var(--bg3);border-radius:var(--radius-sm);padding:3px;gap:3px;margin-bottom:1rem;}
+.mode-tab{flex:1;padding:0.45rem;border-radius:calc(var(--radius-sm) - 2px);border:none;background:none;font-size:0.78rem;font-weight:500;color:var(--text3);cursor:pointer;font-family:inherit;transition:all 0.15s;}
+.mode-tab:hover{color:var(--text2);}
+.mode-tab.on{background:var(--card);color:var(--text);font-weight:600;box-shadow:var(--shadow);}
+.mode-lbl{font-size:0.72rem;font-weight:600;color:var(--text3);margin-bottom:0.5rem;letter-spacing:0.01em;}
+.inputs-wrap{display:flex;flex-direction:column;gap:0.4rem;margin-bottom:0.75rem;}
+.input-row{display:flex;align-items:center;gap:0.5rem;}
+.input-num{width:22px;height:22px;background:var(--accent);border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:0.65rem;font-weight:700;color:#fff;flex-shrink:0;}
+.s-inp{flex:1;background:var(--bg2);border:1px solid var(--border2);border-radius:var(--radius-sm);padding:0.65rem 0.9rem;color:var(--text);font-size:0.88rem;outline:none;font-family:inherit;transition:border-color 0.15s;}
+.s-inp:focus{border-color:var(--accent);}
+.s-inp::placeholder{color:var(--text3);}
+.go-btn{width:100%;background:var(--accent);color:#fff;border:none;border-radius:var(--radius-sm);padding:0.72rem;font-size:0.88rem;font-weight:600;cursor:pointer;font-family:inherit;transition:all 0.15s;display:flex;align-items:center;justify-content:center;gap:0.4rem;}
+.go-btn:hover{background:var(--accent2);box-shadow:0 4px 16px rgba(79,142,247,0.35);}
+.go-btn:disabled{opacity:0.45;cursor:not-allowed;box-shadow:none;}
+.trending{display:flex;align-items:center;gap:0.4rem;flex-wrap:wrap;justify-content:center;margin-top:0.85rem;}
+.t-lbl{font-size:0.72rem;font-weight:500;color:var(--text3);}
+.t-chip{background:var(--bg3);border:1px solid var(--border2);border-radius:100px;padding:0.25rem 0.7rem;font-size:0.75rem;font-weight:500;color:var(--text2);cursor:pointer;transition:all 0.15s;}
+.t-chip:hover{border-color:var(--accent-border);color:var(--accent2);background:var(--accent-bg);}
+
+/* ── FILTER BAR ── */
+.filter-bar{display:flex;align-items:center;gap:0.5rem;padding:0.75rem 2rem;border-bottom:1px solid var(--border);background:var(--bg2);overflow-x:auto;scrollbar-width:none;flex-wrap:nowrap;}
+.filter-bar::-webkit-scrollbar{display:none;}
+.f-btn{display:inline-flex;align-items:center;gap:0.3rem;background:var(--card);border:1px solid var(--border2);border-radius:100px;padding:0.35rem 0.85rem;font-size:0.77rem;font-weight:500;color:var(--text2);cursor:pointer;white-space:nowrap;transition:all 0.15s;font-family:inherit;}
+.f-btn:hover,.f-btn.on{background:var(--accent-bg);border-color:var(--accent-border);color:var(--accent2);font-weight:600;}
+.f-sep{width:1px;height:20px;background:var(--border2);flex-shrink:0;}
+.sort-select{background:var(--card);border:1px solid var(--border2);border-radius:var(--radius-sm);padding:0.35rem 0.7rem;font-size:0.77rem;color:var(--text2);cursor:pointer;font-family:inherit;outline:none;}
+.prime-toggle{display:inline-flex;align-items:center;gap:0.35rem;background:var(--prime-bg);border:1px solid var(--prime);border-radius:100px;padding:0.35rem 0.85rem;font-size:0.77rem;font-weight:600;color:var(--prime);cursor:pointer;white-space:nowrap;font-family:inherit;transition:all 0.15s;}
+.prime-toggle.on{background:var(--prime);color:#fff;}
+
+/* ── LAYOUT ── */
+.page{max-width:1300px;margin:0 auto;padding:2rem 2rem 5rem;}
+
+/* ── LOADER ── */
 .loader{text-align:center;padding:5rem 2rem;display:none;}
-.spinner{width:36px;height:36px;border:2px solid var(--border2);border-top-color:var(--accent);animation:spin 0.6s linear infinite;margin:0 auto 1rem;}
+.spin{width:38px;height:38px;border:3px solid var(--border2);border-top-color:var(--accent);border-radius:50%;animation:spin 0.7s linear infinite;margin:0 auto 1rem;}
 @keyframes spin{to{transform:rotate(360deg);}}
-.loader-msg{font-family:'Share Tech Mono',monospace;color:var(--text2);font-size:0.8rem;margin-bottom:1rem;letter-spacing:0.06em;}
-.loader-steps{display:flex;justify-content:center;gap:1.5rem;flex-wrap:wrap;}
-.lstep{font-family:'Share Tech Mono',monospace;font-size:0.68rem;color:var(--text3);letter-spacing:0.04em;}
+.load-txt{font-size:0.88rem;color:var(--text2);margin-bottom:1rem;}
+.load-steps{display:flex;justify-content:center;gap:1.5rem;flex-wrap:wrap;}
+.lstep{font-size:0.75rem;color:var(--text3);display:flex;align-items:center;gap:0.3rem;}
 .lstep.on{color:var(--accent2);}
-.lstep.ok{color:var(--accent);}
-.errbox{background:var(--red-bg);border:1px solid var(--red-border);border-left:2px solid var(--red);padding:0.8rem 1rem;color:var(--red);font-family:'Share Tech Mono',monospace;font-size:0.72rem;display:none;margin-bottom:1rem;letter-spacing:0.03em;}
+.lstep.ok{color:var(--green);}
+
+/* ── COMPARE RESULT ── */
 .result-zone{display:none;}
-.result-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.25rem;flex-wrap:wrap;gap:0.75rem;padding-bottom:0.85rem;border-bottom:1px solid var(--border2);}
-.result-title{font-family:'Orbitron',sans-serif;font-size:1rem;font-weight:700;letter-spacing:0.04em;text-transform:uppercase;}
-.result-meta{font-family:'Share Tech Mono',monospace;font-size:0.68rem;color:var(--text3);letter-spacing:0.06em;}
-.win-bar{display:flex;align-items:center;gap:1rem;background:var(--accent-bg);border:1px solid var(--accent-border);border-left:3px solid var(--accent);padding:1rem 1.25rem;margin-bottom:1.25rem;}
-.win-trophy{width:38px;height:38px;background:rgba(0,200,120,0.1);display:flex;align-items:center;justify-content:center;font-size:1.15rem;flex-shrink:0;border:1px solid var(--accent-border);}
-.win-tag{font-family:'Share Tech Mono',monospace;font-size:0.6rem;letter-spacing:0.1em;color:var(--accent);margin-bottom:0.1rem;}
-.win-nm{font-family:'Orbitron',sans-serif;font-size:0.88rem;font-weight:700;color:var(--text);}
-.win-rsn{font-size:0.8rem;color:var(--text2);margin-top:0.1rem;}
-.vs-grid{display:grid;gap:1px;margin-bottom:1.5rem;background:var(--border2);}
-.vs-grid.one{grid-template-columns:1fr;}
-.vs-grid.two{grid-template-columns:1fr 1fr;}
-.vs-grid.three{grid-template-columns:1fr 1fr 1fr;}
-.vs-grid.four{grid-template-columns:1fr 1fr 1fr 1fr;}
-.pcard{background:var(--bg2);position:relative;}
-.pcard.win::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--accent);}
-.pcard-inner{padding:1.15rem;}
-.pcard-top{display:flex;align-items:flex-start;gap:0.85rem;margin-bottom:0.85rem;padding-bottom:0.85rem;border-bottom:1px solid var(--border);}
-.pcard-img{width:72px;height:72px;background:var(--bg3);flex-shrink:0;border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;overflow:hidden;}
-.pcard-img img{width:100%;height:100%;object-fit:contain;padding:4px;}
-.pcard-img-ph{font-size:1.5rem;color:var(--text3);}
-.pcard-info{flex:1;min-width:0;}
-.pcard-name{font-family:'Rajdhani',sans-serif;font-size:0.9rem;font-weight:700;color:var(--text);line-height:1.3;margin-bottom:0.2rem;}
-.pcard-cat{font-family:'Share Tech Mono',monospace;font-size:0.6rem;color:var(--text3);letter-spacing:0.07em;text-transform:uppercase;}
-.pcard-rating{font-size:0.68rem;color:var(--star);margin-top:0.18rem;}
-.score-box{text-align:center;flex-shrink:0;}
-.score-n{font-family:'Orbitron',sans-serif;font-size:2rem;font-weight:900;line-height:1;}
-.score-n.top{color:var(--accent);}
-.score-n.bot{color:var(--text3);}
-.score-l{font-family:'Share Tech Mono',monospace;font-size:0.52rem;letter-spacing:0.1em;color:var(--text3);}
-.pcard-summary{font-size:0.78rem;color:var(--text2);font-style:italic;line-height:1.55;margin-bottom:1rem;}
+.res-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.25rem;padding-bottom:1rem;border-bottom:1px solid var(--border);}
+.res-title{font-size:1.1rem;font-weight:700;letter-spacing:-0.02em;}
+.res-meta{font-size:0.77rem;color:var(--text3);}
+.win-strip{display:flex;align-items:center;gap:1rem;background:var(--green-bg);border:1px solid var(--green-border);border-radius:var(--radius);padding:0.9rem 1.1rem;margin-bottom:1.25rem;}
+.win-ico{width:38px;height:38px;background:rgba(34,197,94,0.15);border-radius:var(--radius-sm);display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0;}
+.win-lbl{font-size:0.68rem;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:var(--green);margin-bottom:0.1rem;}
+.win-name{font-size:0.95rem;font-weight:700;color:var(--text);}
+.win-why{font-size:0.8rem;color:var(--text2);margin-top:0.1rem;}
 
-/* DESCRIPTION PATH */
-.desc-path{background:var(--bg3);border:1px solid var(--border);padding:0.85rem 1rem;margin-bottom:1rem;}
-.desc-path-title{font-family:'Share Tech Mono',monospace;font-size:0.6rem;letter-spacing:0.1em;color:var(--accent);margin-bottom:0.5rem;text-transform:uppercase;}
-.desc-path-text{font-size:0.8rem;color:var(--text2);line-height:1.6;font-weight:500;}
-.desc-specs{display:grid;grid-template-columns:1fr 1fr;gap:0.35rem;margin-top:0.6rem;}
-.desc-spec{display:flex;align-items:baseline;gap:0.4rem;font-size:0.72rem;}
-.desc-spec-k{font-family:'Share Tech Mono',monospace;color:var(--text3);font-size:0.62rem;letter-spacing:0.04em;white-space:nowrap;}
-.desc-spec-v{color:var(--text2);font-weight:600;}
+/* ── VS CARDS ── */
+.vs-grid{display:grid;gap:1rem;margin-bottom:1.25rem;}
+.vs-grid.g1{grid-template-columns:1fr;}
+.vs-grid.g2{grid-template-columns:1fr 1fr;}
+.vs-grid.g3{grid-template-columns:1fr 1fr 1fr;}
+.vs-grid.g4{grid-template-columns:1fr 1fr 1fr 1fr;}
+.pc{background:var(--card);border:1px solid var(--border2);border-radius:var(--radius-lg);overflow:hidden;transition:border-color 0.15s;}
+.pc.winner{border-color:var(--green-border);}
+.pc-img-wrap{position:relative;height:160px;background:var(--bg3);display:flex;align-items:center;justify-content:center;border-bottom:1px solid var(--border);}
+.pc-img{max-width:100%;max-height:140px;object-fit:contain;padding:10px;}
+.pc-img-fallback{font-size:3rem;color:var(--text3);}
+.pc-winner-bar{position:absolute;top:0;left:0;right:0;height:3px;background:var(--green);}
+.pc-score-badge{position:absolute;top:10px;right:10px;background:var(--card);border:1px solid var(--border2);border-radius:100px;padding:0.2rem 0.6rem;font-size:0.72rem;font-weight:700;color:var(--text);}
+.pc-score-badge.win{background:var(--green-bg);border-color:var(--green-border);color:var(--green);}
+.pc-prime{position:absolute;top:10px;left:10px;background:var(--prime);color:#fff;border-radius:4px;padding:0.15rem 0.45rem;font-size:0.62rem;font-weight:700;letter-spacing:0.02em;}
+.pc-body{padding:1.1rem;}
+.pc-name{font-size:0.9rem;font-weight:700;color:var(--text);line-height:1.3;margin-bottom:0.2rem;letter-spacing:-0.01em;}
+.pc-cat{font-size:0.7rem;color:var(--text3);margin-bottom:0.3rem;}
+.pc-rating{font-size:0.75rem;color:var(--star);margin-bottom:0.75rem;}
+.pc-price{font-size:1.3rem;font-weight:800;color:var(--text);letter-spacing:-0.02em;margin-bottom:0.2rem;}
+.pc-price-was{font-size:0.78rem;color:var(--text3);text-decoration:line-through;margin-right:0.3rem;}
+.pc-price-save{font-size:0.75rem;font-weight:600;color:var(--green);}
+.pc-summary{font-size:0.77rem;color:var(--text2);font-style:italic;line-height:1.5;margin-bottom:0.85rem;padding-bottom:0.85rem;border-bottom:1px solid var(--border);}
 
-/* STAT BARS */
-.statlist{margin-bottom:0.85rem;}
-.statrow{display:flex;align-items:center;gap:0.5rem;padding:0.26rem 0;border-bottom:1px solid var(--border);}
-.statrow:last-child{border-bottom:none;}
-.stat-k{font-family:'Share Tech Mono',monospace;font-size:0.62rem;color:var(--text2);width:88px;flex-shrink:0;letter-spacing:0.03em;text-transform:uppercase;}
-.stat-track{flex:1;height:3px;background:var(--bg3);}
-.stat-fill{height:100%;background:var(--accent2);transition:width 1s ease;opacity:0.7;}
-.stat-fill.hi{background:var(--accent);opacity:1;}
-.stat-v{font-family:'Share Tech Mono',monospace;font-size:0.65rem;font-weight:700;color:var(--text);width:22px;text-align:right;}
-.pdiffs{background:var(--bg3);border:1px solid var(--border);padding:0.8rem;margin-bottom:0.85rem;}
-.pdiffs-title{font-family:'Share Tech Mono',monospace;font-size:0.58rem;letter-spacing:0.1em;color:var(--text3);margin-bottom:0.55rem;text-transform:uppercase;}
-.pdrow{display:flex;align-items:center;justify-content:space-between;padding:0.18rem 0;}
-.pd-k{font-family:'Rajdhani',sans-serif;font-size:0.72rem;color:var(--text2);font-weight:600;text-transform:uppercase;}
-.pd-v{font-family:'Share Tech Mono',monospace;font-size:0.65rem;font-weight:700;padding:0.08rem 0.4rem;border:1px solid;}
-.pd-v.up{background:var(--accent-bg);color:var(--accent);border-color:var(--accent-border);}
-.pd-v.dn{background:var(--red-bg);color:var(--red);border-color:var(--red-border);}
-.pc{display:grid;grid-template-columns:1fr 1fr;gap:0.45rem;margin-bottom:0.85rem;}
-.pc-col{background:var(--bg3);border:1px solid var(--border);padding:0.65rem;}
-.pc-hd{font-family:'Share Tech Mono',monospace;font-size:0.58rem;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:0.4rem;}
-.pc-col.pros .pc-hd{color:var(--accent);}
-.pc-col.cons .pc-hd{color:var(--red);}
-.pc-li{font-size:0.75rem;color:var(--text2);padding:0.1rem 0;line-height:1.4;font-weight:500;}
+/* STATS */
+.stat-list{margin-bottom:0.85rem;}
+.stat-row{display:flex;align-items:center;gap:0.6rem;padding:0.28rem 0;border-bottom:1px solid var(--border);}
+.stat-row:last-child{border-bottom:none;}
+.stat-k{font-size:0.72rem;color:var(--text2);width:88px;flex-shrink:0;font-weight:500;}
+.stat-bar{flex:1;height:4px;background:var(--bg3);border-radius:100px;overflow:hidden;}
+.stat-fill{height:100%;border-radius:100px;background:var(--accent);transition:width 1s ease;}
+.stat-fill.hi{background:var(--green);}
+.stat-v{font-size:0.72rem;font-weight:600;color:var(--text);width:22px;text-align:right;}
 
-/* REVIEW PATH */
-.rev-section{margin-bottom:0.85rem;}
-.rev-hd{font-family:'Share Tech Mono',monospace;font-size:0.6rem;letter-spacing:0.1em;color:var(--text3);margin-bottom:0.6rem;text-transform:uppercase;display:flex;align-items:center;gap:0.5rem;}
-.rev-avg{display:flex;align-items:center;gap:0.75rem;background:var(--bg3);border:1px solid var(--border);padding:0.65rem 0.85rem;margin-bottom:0.5rem;}
-.rev-avg-score{font-family:'Orbitron',sans-serif;font-size:1.6rem;font-weight:900;color:var(--accent);line-height:1;}
-.rev-avg-stars{font-size:0.85rem;color:var(--star);}
-.rev-avg-count{font-family:'Share Tech Mono',monospace;font-size:0.62rem;color:var(--text3);}
-.rev-bars{margin-bottom:0.5rem;}
-.rev-bar-row{display:flex;align-items:center;gap:0.5rem;margin-bottom:0.2rem;}
-.rev-bar-lbl{font-family:'Share Tech Mono',monospace;font-size:0.58rem;color:var(--text3);width:30px;text-align:right;}
-.rev-bar-track{flex:1;height:5px;background:var(--bg3);}
-.rev-bar-fill{height:100%;background:var(--star);}
-.rev-card{background:var(--bg3);border-left:2px solid var(--border2);padding:0.6rem 0.8rem;margin-bottom:0.4rem;}
-.rev-card.pos{border-left-color:var(--accent);}
+/* POINT DIFFS */
+.pd-box{background:var(--bg3);border-radius:var(--radius-sm);padding:0.75rem;margin-bottom:0.85rem;}
+.pd-title{font-size:0.65rem;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:var(--text3);margin-bottom:0.5rem;}
+.pd-row{display:flex;align-items:center;justify-content:space-between;padding:0.18rem 0;}
+.pd-k{font-size:0.75rem;color:var(--text2);font-weight:500;}
+.pd-v{font-size:0.72rem;font-weight:700;padding:0.1rem 0.45rem;border-radius:100px;}
+.pd-v.up{background:var(--green-bg);color:var(--green);}
+.pd-v.dn{background:var(--red-bg);color:var(--red);}
+
+/* PROS CONS */
+.pc-grid{display:grid;grid-template-columns:1fr 1fr;gap:0.5rem;margin-bottom:0.85rem;}
+.pc-col{background:var(--bg3);border-radius:var(--radius-sm);padding:0.65rem;}
+.pc-hd{font-size:0.65rem;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:0.4rem;}
+.pros .pc-hd{color:var(--green);}
+.cons .pc-hd{color:var(--red);}
+.pc-li{font-size:0.75rem;color:var(--text2);padding:0.1rem 0;line-height:1.4;}
+
+/* REVIEWS */
+.rev-sec{margin-bottom:0.85rem;}
+.rev-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:0.5rem;}
+.rev-lbl{font-size:0.7rem;font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:0.05em;}
+.rev-avg-row{display:flex;align-items:center;gap:0.75rem;background:var(--bg3);border-radius:var(--radius-sm);padding:0.65rem;margin-bottom:0.4rem;}
+.rev-score{font-size:1.5rem;font-weight:800;color:var(--text);line-height:1;}
+.rev-stars-txt{font-size:0.85rem;color:var(--star);}
+.rev-count{font-size:0.68rem;color:var(--text3);margin-top:0.1rem;}
+.rev-card{background:var(--bg3);border-radius:var(--radius-sm);padding:0.6rem 0.75rem;margin-bottom:0.35rem;border-left:2px solid var(--border2);}
+.rev-card.pos{border-left-color:var(--green);}
 .rev-card.neg{border-left-color:var(--red);}
-.rev-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:0.2rem;}
-.rev-stars{color:var(--star);font-size:0.7rem;}
-.rev-type{font-family:'Share Tech Mono',monospace;font-size:0.58rem;color:var(--text3);}
-.rev-body{font-size:0.76rem;color:var(--text2);line-height:1.5;font-style:italic;}
-.rev-author{font-family:'Share Tech Mono',monospace;font-size:0.6rem;color:var(--text3);margin-top:0.2rem;}
-.verdict{padding:0.72rem 0.9rem;font-size:0.78rem;color:var(--text2);line-height:1.6;border-left:2px solid var(--accent2);background:var(--accent-bg);margin-bottom:0.85rem;font-weight:500;}
-.verdict.win{border-left-color:var(--accent);}
-.btn-amz{display:flex;align-items:center;justify-content:center;gap:0.5rem;width:100%;background:var(--accent);color:#000;border:none;padding:0.65rem;font-family:'Orbitron',sans-serif;font-size:0.68rem;font-weight:700;text-align:center;cursor:pointer;text-decoration:none;transition:all 0.2s;text-transform:uppercase;letter-spacing:0.06em;margin-top:0.65rem;}
-.btn-amz:hover{background:var(--accent2);box-shadow:0 4px 16px rgba(0,200,120,0.3);}
-.btn-watch{display:block;width:100%;background:none;color:var(--text3);border:1px solid var(--border);padding:0.5rem;font-family:'Share Tech Mono',monospace;font-size:0.63rem;font-weight:700;text-align:center;cursor:pointer;transition:all 0.2s;margin-top:0.3rem;text-transform:uppercase;}
-.btn-watch:hover{border-color:var(--amber);color:var(--amber);background:var(--amber-bg);}
-.btn-watch.saved{border-color:var(--accent);color:var(--accent);background:var(--accent-bg);}
-.spec-box{background:var(--card);border:1px solid var(--border2);margin-bottom:1.25rem;display:none;}
-.spec-hd{padding:0.72rem 1.25rem;border-bottom:1px solid var(--border2);font-family:'Orbitron',sans-serif;font-size:0.65rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--accent);}
-table{width:100%;border-collapse:collapse;font-size:0.76rem;}
-th{padding:0.62rem 1rem;text-align:left;font-family:'Share Tech Mono',monospace;font-size:0.6rem;color:var(--text3);text-transform:uppercase;letter-spacing:0.08em;border-bottom:1px solid var(--border2);background:var(--bg3);}
-td{padding:0.62rem 1rem;border-bottom:1px solid var(--border);color:var(--text2);font-weight:500;}
+.rev-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:0.15rem;}
+.rev-stars{font-size:0.68rem;color:var(--star);}
+.rev-type{font-size:0.62rem;color:var(--text3);font-weight:500;}
+.rev-txt{font-size:0.75rem;color:var(--text2);line-height:1.5;font-style:italic;}
+.rev-auth{font-size:0.65rem;color:var(--text3);margin-top:0.2rem;}
+
+/* VERDICT */
+.verdict-box{background:var(--accent-bg);border:1px solid var(--accent-border);border-radius:var(--radius-sm);padding:0.75rem 0.9rem;font-size:0.79rem;color:var(--text2);line-height:1.6;margin-bottom:0.75rem;}
+.verdict-box.win{background:var(--green-bg);border-color:var(--green-border);}
+
+/* BUTTONS */
+.amz-btn{display:flex;align-items:center;justify-content:center;gap:0.4rem;width:100%;background:var(--accent);color:#fff;border:none;border-radius:var(--radius-sm);padding:0.62rem;font-size:0.8rem;font-weight:600;text-decoration:none;cursor:pointer;transition:all 0.15s;margin-top:0.6rem;font-family:inherit;}
+.amz-btn:hover{background:var(--accent2);box-shadow:0 4px 12px rgba(79,142,247,0.3);}
+.watch-btn{display:block;width:100%;background:none;border:1px solid var(--border2);border-radius:var(--radius-sm);padding:0.55rem;font-size:0.75rem;font-weight:500;color:var(--text3);cursor:pointer;transition:all 0.15s;margin-top:0.3rem;font-family:inherit;text-align:center;}
+.watch-btn:hover{border-color:var(--amber-border);color:var(--amber);}
+.watch-btn.saved{border-color:var(--green-border);color:var(--green);background:var(--green-bg);}
+
+/* SPEC TABLE */
+.spec-card{background:var(--card);border:1px solid var(--border2);border-radius:var(--radius-lg);overflow:hidden;margin-bottom:1.25rem;display:none;}
+.spec-hd{padding:0.85rem 1.25rem;border-bottom:1px solid var(--border);font-size:0.82rem;font-weight:600;}
+table{width:100%;border-collapse:collapse;font-size:0.8rem;}
+th{padding:0.65rem 1rem;text-align:left;font-size:0.68rem;font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:0.05em;border-bottom:1px solid var(--border);background:var(--bg3);}
+td{padding:0.65rem 1rem;border-bottom:1px solid var(--border);color:var(--text2);}
 tr:last-child td{border-bottom:none;}
 tr:hover td{background:var(--accent-bg);}
-td:first-child{color:var(--text);font-family:'Share Tech Mono',monospace;font-size:0.65rem;}
-.ai-verdict{background:var(--card);border:1px solid var(--border2);border-top:2px solid var(--accent);padding:1.25rem;display:none;margin-bottom:1.25rem;}
-.ai-hd{display:flex;align-items:center;gap:0.5rem;font-family:'Share Tech Mono',monospace;font-size:0.62rem;letter-spacing:0.1em;color:var(--accent2);margin-bottom:0.65rem;text-transform:uppercase;}
-.ai-pulse{width:6px;height:6px;background:var(--accent);animation:pulse 2s ease-in-out infinite;}
-@keyframes pulse{0%,100%{opacity:1;}50%{opacity:0.2;}}
-.ai-body{font-size:0.86rem;color:var(--text2);line-height:1.75;font-weight:500;}
-.sec-hdr{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:1rem;margin-top:2.5rem;padding-bottom:0.7rem;border-bottom:1px solid var(--border2);}
-.sec-title{font-family:'Orbitron',sans-serif;font-size:0.82rem;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:var(--accent);}
-.sec-sub{font-family:'Share Tech Mono',monospace;font-size:0.62rem;color:var(--text3);margin-top:0.1rem;letter-spacing:0.04em;}
+td:first-child{color:var(--text);font-weight:500;}
 
-/* DEALS */
-.deals-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:1px;background:var(--border);margin-bottom:2rem;}
-.deal{background:var(--card);transition:all 0.2s;position:relative;overflow:hidden;}
-.deal:hover{background:var(--card2);z-index:2;}
-[data-theme="dark"] .deal:hover{box-shadow:0 0 20px rgba(0,200,120,0.1);}
-.deal-img{width:100%;height:160px;background:var(--bg3);display:flex;align-items:center;justify-content:justify;overflow:hidden;border-bottom:1px solid var(--border);position:relative;}
-.deal-img img{width:100%;height:100%;object-fit:contain;padding:12px;transition:transform 0.3s;}
-.deal:hover .deal-img img{transform:scale(1.05);}
-.deal-img-fallback{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:3rem;color:var(--text3);pointer-events:none;}
-.deal-flag{position:absolute;top:0;left:0;font-family:'Share Tech Mono',monospace;font-size:0.58rem;font-weight:700;padding:0.18rem 0.5rem;text-transform:uppercase;letter-spacing:0.06em;z-index:2;}
+/* AI VERDICT */
+.ai-card{background:var(--card);border:1px solid var(--border2);border-radius:var(--radius-lg);padding:1.25rem;display:none;margin-bottom:1.25rem;}
+.ai-hd{display:flex;align-items:center;gap:0.5rem;font-size:0.72rem;font-weight:600;text-transform:uppercase;letter-spacing:0.06em;color:var(--accent2);margin-bottom:0.65rem;}
+.ai-dot{width:6px;height:6px;background:var(--accent);border-radius:50%;animation:pulse-dot 2s ease-in-out infinite;}
+.ai-txt{font-size:0.87rem;color:var(--text2);line-height:1.75;}
+
+/* ── DEALS ── */
+.sec-head{display:flex;align-items:flex-end;justify-content:space-between;margin-top:2.5rem;margin-bottom:1rem;padding-bottom:0.75rem;border-bottom:1px solid var(--border);}
+.sec-title{font-size:1rem;font-weight:700;letter-spacing:-0.02em;}
+.sec-sub{font-size:0.75rem;color:var(--text3);margin-top:0.15rem;}
+.deals-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(195px,1fr));gap:0.85rem;margin-bottom:2rem;}
+.deal{background:var(--card);border:1px solid var(--border2);border-radius:var(--radius-lg);overflow:hidden;transition:all 0.15s;position:relative;}
+.deal:hover{border-color:var(--accent-border);box-shadow:var(--shadow);transform:translateY(-1px);}
+.deal-img-wrap{position:relative;height:150px;background:var(--bg3);display:flex;align-items:center;justify-content:center;overflow:hidden;border-bottom:1px solid var(--border);}
+.deal-img{width:100%;height:100%;object-fit:contain;padding:12px;transition:transform 0.2s;}
+.deal:hover .deal-img{transform:scale(1.04);}
+.deal-img-fb{font-size:2.8rem;color:var(--text3);}
+.deal-flag{position:absolute;top:8px;left:8px;font-size:0.63rem;font-weight:700;padding:0.2rem 0.5rem;border-radius:4px;text-transform:uppercase;letter-spacing:0.04em;z-index:2;}
 .deal-flag.sale{background:var(--red);color:#fff;}
 .deal-flag.hot{background:var(--amber);color:#000;}
-.deal-flag.top{background:var(--accent);color:#000;}
-.deal-flag.new{background:var(--accent2);color:#000;}
-.deal-body{padding:0.8rem;}
-.deal-cat{font-family:'Share Tech Mono',monospace;font-size:0.58rem;letter-spacing:0.08em;color:var(--text3);margin-bottom:0.2rem;text-transform:uppercase;}
-.deal-name{font-family:'Rajdhani',sans-serif;font-size:0.84rem;font-weight:700;color:var(--text);line-height:1.3;margin-bottom:0.28rem;}
-.deal-stars{font-size:0.66rem;color:var(--star);margin-bottom:0.38rem;}
-.deal-pricing{display:flex;align-items:baseline;gap:0.35rem;margin-bottom:0.55rem;flex-wrap:wrap;}
-.deal-now{font-family:'Orbitron',sans-serif;font-size:1.05rem;font-weight:700;color:var(--text);}
-.deal-was{font-size:0.7rem;color:var(--text3);text-decoration:line-through;}
-.deal-pct{font-family:'Share Tech Mono',monospace;font-size:0.65rem;font-weight:700;color:var(--accent);}
-.deal-amz{display:block;width:100%;background:var(--accent);color:#000;border:none;padding:0.5rem;font-family:'Orbitron',sans-serif;font-size:0.62rem;font-weight:700;text-align:center;text-decoration:none;transition:all 0.2s;text-transform:uppercase;letter-spacing:0.04em;cursor:pointer;}
+.deal-flag.top{background:var(--green);color:#fff;}
+.deal-flag.new{background:var(--accent);color:#fff;}
+.deal-prime{position:absolute;top:8px;right:8px;background:var(--prime);color:#fff;border-radius:4px;padding:0.15rem 0.45rem;font-size:0.6rem;font-weight:700;}
+.deal-body{padding:0.85rem;}
+.deal-cat{font-size:0.65rem;font-weight:600;text-transform:uppercase;letter-spacing:0.05em;color:var(--text3);margin-bottom:0.2rem;}
+.deal-name{font-size:0.82rem;font-weight:600;color:var(--text);line-height:1.3;margin-bottom:0.3rem;}
+.deal-stars{font-size:0.68rem;color:var(--star);margin-bottom:0.45rem;}
+.deal-price-row{display:flex;align-items:baseline;gap:0.35rem;flex-wrap:wrap;margin-bottom:0.6rem;}
+.deal-price{font-size:1.05rem;font-weight:800;color:var(--text);letter-spacing:-0.02em;}
+.deal-was{font-size:0.72rem;color:var(--text3);text-decoration:line-through;}
+.deal-save{font-size:0.7rem;font-weight:700;color:var(--green);}
+.deal-amz{display:block;width:100%;background:var(--accent);color:#fff;border:none;border-radius:var(--radius-sm);padding:0.48rem;font-size:0.77rem;font-weight:600;text-align:center;text-decoration:none;transition:all 0.15s;cursor:pointer;font-family:inherit;}
 .deal-amz:hover{background:var(--accent2);}
-.deal-cmp{display:block;width:100%;background:none;color:var(--text3);border:1px solid var(--border);padding:0.38rem;font-family:'Share Tech Mono',monospace;font-size:0.6rem;font-weight:700;text-align:center;cursor:pointer;transition:all 0.2s;margin-top:0.3rem;text-transform:uppercase;letter-spacing:0.04em;}
-.deal-cmp:hover{border-color:var(--accent);color:var(--accent2);background:var(--accent-bg);}
+.deal-cmp{display:block;width:100%;background:none;border:1px solid var(--border2);border-radius:var(--radius-sm);padding:0.42rem;font-size:0.72rem;font-weight:500;color:var(--text3);text-align:center;cursor:pointer;transition:all 0.15s;margin-top:0.3rem;font-family:inherit;}
+.deal-cmp:hover{border-color:var(--accent-border);color:var(--accent2);}
+
+/* EMPTY */
 .empty{text-align:center;padding:5rem 2rem;}
-.empty-icon{font-size:2.5rem;margin-bottom:0.75rem;opacity:0.15;}
-.empty-title{font-family:'Orbitron',sans-serif;font-size:0.88rem;font-weight:700;color:var(--text);margin-bottom:0.35rem;text-transform:uppercase;letter-spacing:0.06em;}
-.empty-sub{font-family:'Share Tech Mono',monospace;font-size:0.72rem;color:var(--text3);letter-spacing:0.04em;}
-.overlay{position:fixed;inset:0;background:rgba(0,0,0,0.8);z-index:1000;display:none;align-items:center;justify-content:center;padding:1rem;}
+.empty-ico{font-size:3rem;margin-bottom:0.75rem;opacity:0.15;}
+.empty-ttl{font-size:1rem;font-weight:700;margin-bottom:0.35rem;}
+.empty-sub{font-size:0.85rem;color:var(--text3);}
+.errbox{background:var(--red-bg);border:1px solid var(--red-border);border-radius:var(--radius-sm);padding:0.85rem 1rem;color:var(--red);font-size:0.82rem;display:none;margin-bottom:1rem;}
+
+/* WATCHLIST */
+.wl-panel{background:var(--card);border:1px solid var(--border2);border-radius:var(--radius-lg);padding:1.25rem;display:none;margin-bottom:1.25rem;}
+.wl-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:0.85rem;}
+.wl-ttl{font-size:0.9rem;font-weight:700;}
+.wl-empty{font-size:0.82rem;color:var(--text3);text-align:center;padding:1.25rem;}
+.wl-row{display:flex;align-items:center;justify-content:space-between;padding:0.55rem 0.8rem;background:var(--bg3);border-radius:var(--radius-sm);margin-bottom:0.3rem;}
+.wl-name{font-size:0.82rem;font-weight:600;}
+.wl-date{font-size:0.68rem;color:var(--text3);}
+.wl-del{background:none;border:none;color:var(--text3);cursor:pointer;padding:0.15rem 0.35rem;border-radius:4px;font-size:0.82rem;}
+.wl-del:hover{background:var(--red-bg);color:var(--red);}
+
+/* MODAL */
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,0.65);z-index:1000;display:none;align-items:center;justify-content:center;padding:1rem;}
 .overlay.open{display:flex;}
-.modal{background:var(--bg2);border:1px solid var(--border2);border-top:2px solid var(--accent);padding:1.75rem;width:100%;max-width:400px;position:relative;}
-.modal-x{position:absolute;top:0.85rem;right:0.85rem;background:none;border:1px solid var(--border);color:var(--text3);cursor:pointer;width:28px;height:28px;display:flex;align-items:center;justify-content:center;font-size:0.9rem;}
-.modal-x:hover{background:var(--red-bg);color:var(--red);border-color:var(--red);}
-.modal-title{font-family:'Orbitron',sans-serif;font-size:1rem;font-weight:700;letter-spacing:0.04em;text-transform:uppercase;margin-bottom:0.2rem;}
-.modal-sub{font-family:'Share Tech Mono',monospace;font-size:0.7rem;color:var(--text2);margin-bottom:1.1rem;letter-spacing:0.03em;}
-.mtabs{display:flex;gap:0;margin-bottom:1.1rem;border:1px solid var(--border2);}
-.mtab{flex:1;padding:0.45rem;background:none;border:none;border-right:1px solid var(--border2);font-family:'Share Tech Mono',monospace;font-size:0.68rem;font-weight:700;color:var(--text3);cursor:pointer;transition:all 0.2s;text-transform:uppercase;letter-spacing:0.06em;}
-.mtab:last-child{border-right:none;}
-.mtab.on{background:var(--accent);color:#000;}
-.fg{margin-bottom:0.8rem;}
-.fl{font-family:'Share Tech Mono',monospace;font-size:0.65rem;letter-spacing:0.08em;color:var(--text2);margin-bottom:0.3rem;display:block;text-transform:uppercase;}
-.fi{width:100%;background:var(--bg3);border:1px solid var(--border2);padding:0.62rem 0.9rem;color:var(--text);font-size:0.84rem;outline:none;font-family:'Rajdhani',sans-serif;font-weight:500;transition:border-color 0.2s;}
+.modal{background:var(--card);border:1px solid var(--border2);border-radius:var(--radius-lg);padding:2rem;width:100%;max-width:400px;position:relative;box-shadow:var(--shadow-lg);}
+.modal-x{position:absolute;top:1rem;right:1rem;background:none;border:none;color:var(--text3);cursor:pointer;width:28px;height:28px;border-radius:var(--radius-sm);display:flex;align-items:center;justify-content:center;font-size:1rem;}
+.modal-x:hover{background:var(--bg3);color:var(--text);}
+.modal-ttl{font-size:1.1rem;font-weight:700;letter-spacing:-0.02em;margin-bottom:0.2rem;}
+.modal-sub{font-size:0.8rem;color:var(--text2);margin-bottom:1.25rem;}
+.mtabs{display:flex;background:var(--bg3);border-radius:var(--radius-sm);padding:3px;gap:3px;margin-bottom:1.25rem;}
+.mtab{flex:1;padding:0.4rem;border-radius:calc(var(--radius-sm) - 2px);border:none;background:none;font-size:0.8rem;font-weight:500;color:var(--text3);cursor:pointer;font-family:inherit;transition:all 0.15s;}
+.mtab.on{background:var(--card);color:var(--text);font-weight:600;box-shadow:var(--shadow);}
+.fg{margin-bottom:0.85rem;}
+.fl{font-size:0.75rem;font-weight:500;color:var(--text2);margin-bottom:0.35rem;display:block;}
+.fi{width:100%;background:var(--bg2);border:1px solid var(--border2);border-radius:var(--radius-sm);padding:0.65rem 0.9rem;color:var(--text);font-size:0.85rem;outline:none;font-family:inherit;transition:border-color 0.15s;}
 .fi:focus{border-color:var(--accent);}
 textarea.fi{resize:vertical;min-height:90px;}
-.fsub{width:100%;background:var(--accent);color:#000;border:none;padding:0.72rem;font-family:'Orbitron',sans-serif;font-size:0.7rem;font-weight:700;cursor:pointer;margin-top:0.25rem;transition:all 0.2s;text-transform:uppercase;letter-spacing:0.06em;}
+.fsub{width:100%;background:var(--accent);color:#fff;border:none;border-radius:var(--radius-sm);padding:0.72rem;font-size:0.88rem;font-weight:600;cursor:pointer;font-family:inherit;margin-top:0.25rem;transition:all 0.15s;}
 .fsub:hover{background:var(--accent2);}
-.fchk{display:flex;align-items:flex-start;gap:0.5rem;margin-top:0.6rem;}
+.fchk{display:flex;align-items:flex-start;gap:0.5rem;margin-top:0.65rem;}
 .fchk input{margin-top:3px;accent-color:var(--accent);}
-.fchk label{font-family:'Rajdhani',sans-serif;font-size:0.78rem;color:var(--text2);line-height:1.4;font-weight:500;}
-.wl-panel{background:var(--card);border:1px solid var(--border2);border-top:2px solid var(--accent);padding:1.25rem;display:none;margin-bottom:1.25rem;}
-.wl-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:0.85rem;}
-.wl-title{font-family:'Orbitron',sans-serif;font-size:0.75rem;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;}
-.wl-empty{font-family:'Share Tech Mono',monospace;font-size:0.7rem;color:var(--text3);text-align:center;padding:1.25rem;letter-spacing:0.04em;}
-.wl-row{display:flex;align-items:center;justify-content:space-between;padding:0.55rem 0.8rem;background:var(--bg3);border:1px solid var(--border);margin-bottom:0.3rem;}
-.wl-name{font-family:'Rajdhani',sans-serif;font-size:0.8rem;font-weight:700;color:var(--text);}
-.wl-date{font-family:'Share Tech Mono',monospace;font-size:0.6rem;color:var(--text3);}
-.wl-del{background:none;border:1px solid transparent;color:var(--text3);cursor:pointer;font-size:0.8rem;padding:0.12rem 0.3rem;}
-.wl-del:hover{background:var(--red-bg);color:var(--red);border-color:var(--red);}
-.contact-section{background:var(--card);border:1px solid var(--border2);border-top:2px solid var(--accent);padding:2rem;margin-top:3rem;}
+.fchk label{font-size:0.78rem;color:var(--text2);line-height:1.4;}
+
+/* CONTACT */
+.contact-wrap{background:var(--card);border:1px solid var(--border2);border-radius:var(--radius-lg);padding:2rem;margin-top:3rem;}
 .contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:2.5rem;}
-.contact-info h3,.contact-form h3{font-family:'Orbitron',sans-serif;font-size:0.78rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--accent);margin-bottom:0.85rem;}
-.contact-info p{font-family:'Rajdhani',sans-serif;font-size:0.85rem;color:var(--text2);line-height:1.7;margin-bottom:0.5rem;font-weight:500;}
-.contact-detail{font-family:'Share Tech Mono',monospace;font-size:0.72rem;color:var(--text2);margin-top:0.5rem;letter-spacing:0.04em;}
-.toast{position:fixed;bottom:1.25rem;right:1.25rem;background:var(--bg2);border:1px solid var(--border2);border-left:2px solid var(--accent);padding:0.65rem 1rem;font-family:'Share Tech Mono',monospace;font-size:0.72rem;color:var(--text);z-index:9999;transform:translateY(60px);opacity:0;transition:all 0.22s;max-width:260px;box-shadow:var(--shadow-sm);}
+.contact-info h3,.contact-form h3{font-size:0.9rem;font-weight:700;margin-bottom:0.85rem;letter-spacing:-0.01em;}
+.contact-info p{font-size:0.83rem;color:var(--text2);line-height:1.7;margin-bottom:0.5rem;}
+.contact-detail{font-size:0.78rem;color:var(--text2);margin-top:0.5rem;display:flex;align-items:center;gap:0.4rem;}
+
+/* TOAST */
+.toast{position:fixed;bottom:1.5rem;right:1.5rem;background:var(--card);border:1px solid var(--border2);border-radius:var(--radius);padding:0.75rem 1.1rem;font-size:0.82rem;color:var(--text);z-index:9999;transform:translateY(70px);opacity:0;transition:all 0.25s;max-width:280px;box-shadow:var(--shadow-lg);}
 .toast.show{transform:translateY(0);opacity:1;}
-footer{border-top:1px solid var(--border2);padding:1.5rem;text-align:center;color:var(--text3);font-family:'Share Tech Mono',monospace;font-size:0.65rem;letter-spacing:0.06em;}
+
+footer{border-top:1px solid var(--border);padding:2rem;text-align:center;color:var(--text3);font-size:0.78rem;}
 footer a{color:var(--text2);text-decoration:none;}
 footer a:hover{color:var(--accent2);}
+
 @media(max-width:768px){
-  nav{padding:0 1rem;}.nav-links{display:none;}
+  nav{padding:0 1rem;}.nav-center{display:none;}
   .hero{padding:2.5rem 1rem 1.5rem;}
   .page{padding:1rem 1rem 3rem;}
-  .vs-grid.two,.vs-grid.three,.vs-grid.four{grid-template-columns:1fr;}
-  .pc{grid-template-columns:1fr;}
-  .deals-grid{grid-template-columns:repeat(auto-fill,minmax(155px,1fr));}
+  .vs-grid.g2,.vs-grid.g3,.vs-grid.g4{grid-template-columns:1fr;}
+  .pc-grid{grid-template-columns:1fr;}
+  .deals-grid{grid-template-columns:repeat(auto-fill,minmax(160px,1fr));}
   .contact-grid{grid-template-columns:1fr;}
-  .mega{min-width:100vw;left:-1.5rem;}
-  .mega-grid{grid-template-columns:repeat(2,1fr);}
-  .desc-specs{grid-template-columns:1fr;}
 }
 </style>
 </head>
 <body>
 
 <nav>
-  <a class="logo" href="#"><div class="logo-sq">N</div>Neo<span style="color:var(--text2);">Comparison</span></a>
-  <ul class="nav-links">
-    <li class="nav-item">
-      <button>CATEGORIES <span class="nav-arrow">▾</span></button>
-      <div class="mega">
-        <div class="mega-grid">
-          <div class="mega-col">
-            <h4>Mobile Devices</h4>
-            <a href="#" onclick="loadT('iPhone 16 vs Samsung Galaxy S25');return false;">Smartphones</a>
-            <a href="#" onclick="loadT('iPad Pro M4 vs Samsung Galaxy Tab S10');return false;">Tablets</a>
-            <a href="#" onclick="loadT('Apple Watch Series 10 vs Samsung Galaxy Watch 7');return false;">Smartwatches</a>
-            <a href="#" onclick="loadT('MacBook Air M4 vs Dell XPS 13');return false;">Laptops</a>
-            <a href="#" onclick="loadT('AirPods Pro 2 vs Sony WF-1000XM5');return false;">Earbuds</a>
-          </div>
-          <div class="mega-col">
-            <h4>PC Components</h4>
-            <a href="#" onclick="loadT('RTX 5060 Ti vs RX 9070 XT');return false;">Graphics Cards</a>
-            <a href="#" onclick="loadT('Ryzen 7 9800X3D vs Intel Core Ultra 7 265K');return false;">CPUs</a>
-            <a href="#" onclick="loadT('ASUS ROG vs MSI MAG Motherboard');return false;">Motherboards</a>
-            <a href="#" onclick="loadT('Samsung 990 Pro vs WD Black SN850X SSD');return false;">SSDs</a>
-            <a href="#" onclick="loadT('Corsair DDR5 vs G.Skill DDR5 RAM');return false;">Memory</a>
-            <a href="#" onclick="loadT('Logitech MX Master 3S vs Razer DeathAdder V3');return false;">Mice</a>
-          </div>
-          <div class="mega-col">
-            <h4>Audio</h4>
-            <a href="#" onclick="loadT('Sony WH-1000XM5 vs Bose QuietComfort 45');return false;">Headphones</a>
-            <a href="#" onclick="loadT('AirPods Pro 2 vs Samsung Galaxy Buds 3 Pro');return false;">Wireless Earbuds</a>
-            <a href="#" onclick="loadT('Sonos Era 100 vs Bose SoundLink Flex');return false;">BT Speakers</a>
-            <a href="#" onclick="loadT('Blue Yeti vs HyperX QuadCast microphone');return false;">Microphones</a>
-            <a href="#" onclick="loadT('Sonos Beam vs Samsung HW-Q600C Soundbar');return false;">Soundbars</a>
-          </div>
-          <div class="mega-col">
-            <h4>Tools & Lawn</h4>
-            <a href="#" onclick="loadT('DeWalt vs Milwaukee 20V drill');return false;">Power Drills</a>
-            <a href="#" onclick="loadT('DeWalt vs Makita circular saw');return false;">Circular Saws</a>
-            <a href="#" onclick="loadT('Simpson vs Honda pressure washer');return false;">Pressure Washers</a>
-            <a href="#" onclick="loadT('Ego vs Greenworks cordless mower');return false;">Lawn Mowers</a>
-            <a href="#" onclick="loadT('Husqvarna vs Stihl chainsaw');return false;">Chainsaws</a>
-            <a href="#" onclick="loadT('Traeger vs Weber pellet grill');return false;">Grills</a>
-          </div>
-          <div class="mega-col">
-            <h4>Gaming & Home</h4>
-            <a href="#" onclick="loadT('PS5 vs Xbox Series X');return false;">Game Consoles</a>
-            <a href="#" onclick="loadT('LG OLED C4 vs Samsung S90D TV');return false;">TVs</a>
-            <a href="#" onclick="loadT('LG 4K OLED vs Asus ROG gaming monitor');return false;">Monitors</a>
-            <a href="#" onclick="loadT('Dyson V15 vs Shark IZ462H vacuum');return false;">Vacuums</a>
-            <a href="#" onclick="loadT('Instant Pot vs Ninja Foodi');return false;">Kitchen</a>
-            <a href="#" onclick="loadT('Vitamix 5200 vs Ninja Professional blender');return false;">Blenders</a>
-          </div>
-        </div>
-        <a class="mega-all" href="#dealSections">See All Deals →</a>
-      </div>
-    </li>
-    <li class="nav-item"><a href="#" onclick="setCat('gpu',this);window.scrollTo(0,600);return false;">GRAPHICS CARDS</a></li>
-    <li class="nav-item"><a href="#" onclick="setCat('tech',this);window.scrollTo(0,600);return false;">TECH</a></li>
-    <li class="nav-item"><a href="#" onclick="setCat('tools',this);window.scrollTo(0,600);return false;">TOOLS</a></li>
-    <li class="nav-item"><a href="#" onclick="setCat('gaming',this);window.scrollTo(0,600);return false;">GAMING</a></li>
-    <li class="nav-item"><a href="#contactSection">CONTACT</a></li>
-  </ul>
-  <div class="nav-r">
+  <a class="logo" href="#">
+    <div class="logo-mark">N</div>
+    Neo<span style="color:var(--accent2);">Comparison</span>
+    <span class="logo-sub">by Nesich Technologies</span>
+  </a>
+  <div class="nav-center">
+    <a class="nav-link on" href="#deals">Deals</a>
+    <a class="nav-link" href="#" onclick="setCat('gpu',this);scrollTo(0,500);return false;">GPUs & PCs</a>
+    <a class="nav-link" href="#" onclick="setCat('tools',this);scrollTo(0,500);return false;">Tools</a>
+    <a class="nav-link" href="#" onclick="setCat('gaming',this);scrollTo(0,500);return false;">Gaming</a>
+    <a class="nav-link" href="#" onclick="setCat('home',this);scrollTo(0,500);return false;">Home</a>
+    <a class="nav-link" href="#contactWrap">Contact</a>
+  </div>
+  <div class="nav-right">
     <div id="navGuest" style="display:flex;gap:0.4rem;">
-      <button class="nbtn" onclick="openM('login')">SIGN IN</button>
-      <button class="nbtn pri" onclick="openM('register')">JOIN FREE</button>
+      <button class="nbtn" onclick="openM('login')">Sign in</button>
+      <button class="nbtn pri" onclick="openM('register')">Join free</button>
     </div>
     <div id="navUser" style="display:none;align-items:center;gap:0.4rem;">
-      <button class="u-chip" onclick="toggleWL()">◈ <span id="uname"></span></button>
-      <button class="nbtn" onclick="logout()">SIGN OUT</button>
+      <button class="u-pill" onclick="toggleWL()">🔔 <span id="uname"></span></button>
+      <button class="nbtn" onclick="logout()">Sign out</button>
     </div>
-    <button class="icon-btn" id="themeBtn" onclick="toggleTheme()">◑</button>
+    <button class="tbtn" id="themeBtn" onclick="toggleTheme()">🌙</button>
   </div>
 </nav>
 
 <div class="hero">
-  <div class="hero-content">
-    <div class="hero-pill"><span class="blink"></span>// AI_POWERED · REVIEW_ANALYZED · FREE</div>
-    <h1>COMPARE ANYTHING.<br>KNOW BEFORE YOU BUY.</h1>
-    <p class="hero-sub">Deep AI analysis from thousands of verified reviews with full spec breakdowns, point-by-point comparisons, and a clear buying verdict.</p>
+  <div class="hero-badge"><span class="badge-dot"></span>AI-Powered · Review-Analyzed · 100% Free</div>
+  <h1>Compare Anything.<br><span>Know Before You Buy.</span></h1>
+  <p class="hero-sub">Deep AI analysis from thousands of verified reviews. Compare products side by side with real scores, pros, cons, and a clear winner.</p>
+
+  <div class="mode-wrap">
     <div class="mode-tabs" id="modeTabs">
-      <button class="mode-tab" onclick="setMode(1,this)">[ SINGLE ]</button>
-      <button class="mode-tab on" onclick="setMode(2,this)">[ 1 VS 1 ]</button>
-      <button class="mode-tab" onclick="setMode(3,this)">[ 3-WAY ]</button>
-      <button class="mode-tab" onclick="setMode(4,this)">[ 4-WAY ]</button>
+      <button class="mode-tab" onclick="setMode(1,this)">Single Item</button>
+      <button class="mode-tab on" onclick="setMode(2,this)">1 vs 1</button>
+      <button class="mode-tab" onclick="setMode(3,this)">3-Way</button>
+      <button class="mode-tab" onclick="setMode(4,this)">4-Way</button>
     </div>
-    <div class="search-card">
-      <div class="search-lbl" id="searchLbl">// ENTER_PRODUCTS_TO_COMPARE</div>
-      <div id="multiInputs" class="multi-inputs"></div>
-      <button class="search-btn" id="goBtn" onclick="runCompare()">ANALYZE →</button>
-    </div>
-    <div class="trending-row">
-      <span class="trend-lbl">// TRENDING:</span>
-      <button class="chip" onclick="loadT('DeWalt vs Milwaukee drill')">DeWalt vs Milwaukee</button>
-      <button class="chip" onclick="loadT('iPhone 16 vs Samsung Galaxy S25')">iPhone vs Samsung</button>
-      <button class="chip" onclick="loadT('PS5 vs Xbox Series X')">PS5 vs Xbox</button>
-      <button class="chip" onclick="loadT('RTX 5060 Ti vs RX 9070 XT vs RTX 4070 Super')">GPU 3-Way</button>
-      <button class="chip" onclick="loadT('Traeger vs Weber grill')">Traeger vs Weber</button>
-    </div>
+    <div class="mode-lbl" id="modeLbl">Enter two products to compare</div>
+    <div class="inputs-wrap" id="inputsWrap"></div>
+    <button class="go-btn" id="goBtn" onclick="runCompare()">
+      <span>Compare</span><span>→</span>
+    </button>
+  </div>
+
+  <div class="trending">
+    <span class="t-lbl">Trending:</span>
+    <button class="t-chip" onclick="loadT('DeWalt vs Milwaukee drill')">DeWalt vs Milwaukee</button>
+    <button class="t-chip" onclick="loadT('iPhone 16 vs Samsung Galaxy S25')">iPhone vs Samsung</button>
+    <button class="t-chip" onclick="loadT('PS5 vs Xbox Series X')">PS5 vs Xbox</button>
+    <button class="t-chip" onclick="loadT('RTX 5060 Ti vs RX 9070 XT vs RTX 4070 Super')">GPU 3-Way</button>
+    <button class="t-chip" onclick="loadT('Traeger vs Weber pellet grill')">Traeger vs Weber</button>
   </div>
 </div>
 
-<div class="catbar">
-  <button class="catbtn on" onclick="setCat('all',this)">◈ ALL DEALS</button>
-  <button class="catbtn" onclick="setCat('gpu',this)">◈ GPUS & PC PARTS</button>
-  <button class="catbtn" onclick="setCat('tech',this)">◈ COMPUTER & TECH</button>
-  <button class="catbtn" onclick="setCat('tools',this)">◈ POWER TOOLS</button>
-  <button class="catbtn" onclick="setCat('lawn',this)">◈ LAWN & GARDEN</button>
-  <button class="catbtn" onclick="setCat('home',this)">◈ HOME & KITCHEN</button>
-  <button class="catbtn" onclick="setCat('bbq',this)">◈ BBQ & OUTDOOR</button>
-  <button class="catbtn" onclick="setCat('gaming',this)">◈ GAMING</button>
+<div class="filter-bar" id="filterBar">
+  <button class="f-btn on" onclick="setCat('all',this)" id="catAll">🔥 All</button>
+  <button class="f-btn" onclick="setCat('gpu',this)">🖥 GPUs & PCs</button>
+  <button class="f-btn" onclick="setCat('tech',this)">💻 Tech</button>
+  <button class="f-btn" onclick="setCat('tools',this)">🔧 Tools</button>
+  <button class="f-btn" onclick="setCat('lawn',this)">🌿 Lawn</button>
+  <button class="f-btn" onclick="setCat('home',this)">🏠 Home</button>
+  <button class="f-btn" onclick="setCat('bbq',this)">🔥 BBQ</button>
+  <button class="f-btn" onclick="setCat('gaming',this)">🎮 Gaming</button>
+  <div class="f-sep"></div>
+  <select class="sort-select" id="sortSel" onchange="applySort()">
+    <option value="price">Price: Low to High</option>
+    <option value="rating">Best Rated</option>
+    <option value="save">Biggest Discount</option>
+  </select>
+  <button class="prime-toggle" id="primeTog" onclick="togglePrime()">✓ Prime</button>
 </div>
 
-<div class="page">
+<div class="page" id="deals">
   <div class="errbox" id="errBox"></div>
+
   <div class="loader" id="loader">
-    <div class="spinner"></div>
-    <div class="loader-msg">// ANALYZING_PRODUCTS_AND_REVIEWS...</div>
-    <div class="loader-steps">
-      <div class="lstep on" id="ls1">01_READING_REVIEWS</div>
-      <div class="lstep" id="ls2">02_ANALYZING_SPECS</div>
-      <div class="lstep" id="ls3">03_SCORING_PRODUCTS</div>
-      <div class="lstep" id="ls4">04_FINAL_VERDICT</div>
+    <div class="spin"></div>
+    <div class="load-txt">Analyzing products & reviews...</div>
+    <div class="load-steps">
+      <div class="lstep on" id="ls1">📖 Reading reviews</div>
+      <div class="lstep" id="ls2">📊 Scoring</div>
+      <div class="lstep" id="ls3">⚡ Building comparison</div>
+      <div class="lstep" id="ls4">✅ Final verdict</div>
     </div>
   </div>
+
   <div class="wl-panel" id="wlPanel">
-    <div class="wl-top"><div class="wl-title">◈ WATCHLIST</div><button class="nbtn" onclick="toggleWL()">CLOSE</button></div>
+    <div class="wl-top">
+      <div class="wl-ttl">🔔 My Watchlist</div>
+      <button class="nbtn" onclick="toggleWL()">Close</button>
+    </div>
     <div id="wlItems"></div>
   </div>
+
   <div class="result-zone" id="resultZone">
-    <div class="result-top">
-      <div class="result-title" id="resTitle"></div>
-      <div class="result-meta" id="resMeta"></div>
+    <div class="res-head">
+      <div class="res-title" id="resTitle"></div>
+      <div class="res-meta" id="resMeta"></div>
     </div>
-    <div class="win-bar" id="winBar" style="display:none;">
-      <div class="win-trophy">◈</div>
+    <div class="win-strip" id="winStrip" style="display:none;">
+      <div class="win-ico">🏆</div>
       <div>
-        <div class="win-tag">// AI_RECOMMENDATION</div>
-        <div class="win-nm" id="winName"></div>
-        <div class="win-rsn" id="winReason"></div>
+        <div class="win-lbl">AI Recommendation</div>
+        <div class="win-name" id="winName"></div>
+        <div class="win-why" id="winWhy"></div>
       </div>
     </div>
     <div id="vsGrid"></div>
-    <div class="spec-box" id="specBox">
-      <div class="spec-hd">// FULL_SPEC_COMPARISON</div>
-      <div style="overflow-x:auto"><table id="specTable"></table></div>
+    <div class="spec-card" id="specCard">
+      <div class="spec-hd">Side-by-side specs</div>
+      <div style="overflow-x:auto"><table id="specTbl"></table></div>
     </div>
-    <div class="ai-verdict" id="aiVerdict">
-      <div class="ai-hd"><div class="ai-pulse"></div>// AI_VERDICT — BASED_ON_REAL_REVIEWS</div>
-      <div class="ai-body" id="aiBody"></div>
+    <div class="ai-card" id="aiCard">
+      <div class="ai-hd"><div class="ai-dot"></div>AI Verdict — Based on Real Reviews</div>
+      <div class="ai-txt" id="aiTxt"></div>
     </div>
-  </div>
-  <div class="empty" id="emptyState">
-    <div class="empty-icon">⚔</div>
-    <div class="empty-title">AWAITING_INPUT</div>
-    <div class="empty-sub">// select_mode → enter_products → execute</div>
   </div>
 
-  <div id="dealSections" style="display:block;">
-    <div class="sec-hdr">
-      <div><div class="sec-title">◈ EARLY PRIME DAY DEALS — JUNE 13 2026</div><div class="sec-sub">// prime_day_june_23-26 — 50%_off_ring_cam · 54%_off_instant_pot · 50%_off_milwaukee — updated_daily</div></div>
+  <div class="empty" id="emptyState">
+    <div class="empty-ico">⚔️</div>
+    <div class="empty-ttl">Ready to compare</div>
+    <div class="empty-sub">Enter any products above to get an in-depth AI comparison</div>
+  </div>
+
+  <div id="dealSections">
+    <div class="sec-head">
+      <div>
+        <div class="sec-title">🔥 Best Deals Today — June 13 2026</div>
+        <div class="sec-sub">Sorted by lowest price · Prime Day starts June 23 · Updated daily</div>
+      </div>
     </div>
     <div class="deals-grid" id="dealsGrid"></div>
-    <div class="sec-hdr">
-      <div><div class="sec-title">◈ GPU & PC PRIME DAY DEALS</div><div class="sec-sub">// rtx_5060_ti · rx_9070_xt · ryzen_9800x3d · ddr5_at_all_time_lows</div></div>
+
+    <div class="sec-head">
+      <div>
+        <div class="sec-title">🖥 GPU & PC Component Deals</div>
+        <div class="sec-sub">RTX 5060 Ti · RX 9070 XT · DDR5 at all-time lows · Ryzen 9800X3D</div>
+      </div>
     </div>
     <div class="deals-grid" id="pcGrid"></div>
-    <div class="sec-hdr">
-      <div><div class="sec-title">◈ BEST SELLERS</div><div class="sec-sub">// top_rated — highest_reviewed — most_purchased</div></div>
+
+    <div class="sec-head">
+      <div>
+        <div class="sec-title">⭐ Best Sellers</div>
+        <div class="sec-sub">Top-rated products people are buying right now</div>
+      </div>
     </div>
     <div class="deals-grid" id="bestsGrid"></div>
   </div>
 
-  <div class="contact-section" id="contactSection">
+  <div class="contact-wrap" id="contactWrap">
     <div class="contact-grid">
       <div class="contact-info">
-        <h3>◈ Contact The Creator</h3>
-        <p>Have a suggestion, found a bug, want to partner, or just want to say hello?</p>
-        <p>NeoComparison is independently built and your feedback shapes the roadmap.</p>
-        <div class="contact-detail">◈ SITE: neocomparison.com</div>
+        <h3>Contact the Creator</h3>
+        <p>Have a suggestion, found a bug, or want to partner with NeoComparison? I'd love to hear from you.</p>
+        <p>NeoComparison is independently built and your feedback shapes what gets built next.</p>
+        <div class="contact-detail">🌐 neocomparison.com</div>
+        <div class="contact-detail">⚡ Powered by Nesich Technologies</div>
       </div>
       <div class="contact-form">
-        <h3>◈ Send A Message</h3>
-        <div class="fg"><label class="fl">// YOUR_NAME</label><input class="fi" type="text" id="cName" placeholder="Your name"></div>
-        <div class="fg"><label class="fl">// YOUR_EMAIL</label><input class="fi" type="email" id="cEmail" placeholder="your@email.com"></div>
-        <div class="fg"><label class="fl">// MESSAGE</label><textarea class="fi" id="cMsg" placeholder="Your message..."></textarea></div>
-        <button class="fsub" onclick="sendContact()">SEND_MESSAGE →</button>
+        <h3>Send a message</h3>
+        <div class="fg"><label class="fl">Your name</label><input class="fi" type="text" id="cName" placeholder="Your name"></div>
+        <div class="fg"><label class="fl">Your email</label><input class="fi" type="email" id="cEmail" placeholder="your@email.com"></div>
+        <div class="fg"><label class="fl">Message</label><textarea class="fi" id="cMsg" placeholder="Your message..."></textarea></div>
+        <button class="fsub" onclick="sendContact()">Send message →</button>
       </div>
     </div>
   </div>
@@ -495,23 +490,23 @@ footer a:hover{color:var(--accent2);}
 <div class="overlay" id="authOverlay">
   <div class="modal">
     <button class="modal-x" onclick="closeOverlay('authOverlay')">✕</button>
-    <div class="modal-title" id="mTitle">WELCOME_BACK</div>
-    <div class="modal-sub" id="mSub">// sign_in to save comparisons and track deals</div>
+    <div class="modal-ttl" id="mTtl">Welcome back</div>
+    <div class="modal-sub" id="mSub">Sign in to save comparisons and track deals</div>
     <div class="mtabs">
-      <button class="mtab on" id="mt1" onclick="switchTab('login')">SIGN_IN</button>
-      <button class="mtab" id="mt2" onclick="switchTab('register')">JOIN_FREE</button>
+      <button class="mtab on" id="mt1" onclick="switchTab('login')">Sign in</button>
+      <button class="mtab" id="mt2" onclick="switchTab('register')">Join free</button>
     </div>
     <div id="loginF">
-      <div class="fg"><label class="fl">// EMAIL</label><input class="fi" type="email" id="le" placeholder="you@example.com"></div>
-      <div class="fg"><label class="fl">// PASSWORD</label><input class="fi" type="password" id="lp" placeholder="••••••••"></div>
-      <button class="fsub" onclick="doLogin()">SIGN_IN →</button>
+      <div class="fg"><label class="fl">Email</label><input class="fi" type="email" id="le" placeholder="you@example.com"></div>
+      <div class="fg"><label class="fl">Password</label><input class="fi" type="password" id="lp" placeholder="••••••••"></div>
+      <button class="fsub" onclick="doLogin()">Sign in</button>
     </div>
     <div id="regF" style="display:none;">
-      <div class="fg"><label class="fl">// NAME</label><input class="fi" type="text" id="rn" placeholder="Your name"></div>
-      <div class="fg"><label class="fl">// EMAIL</label><input class="fi" type="email" id="re" placeholder="you@example.com"></div>
-      <div class="fg"><label class="fl">// PASSWORD</label><input class="fi" type="password" id="rp" placeholder="6+ characters"></div>
+      <div class="fg"><label class="fl">Name</label><input class="fi" type="text" id="rn" placeholder="Your name"></div>
+      <div class="fg"><label class="fl">Email</label><input class="fi" type="email" id="re" placeholder="you@example.com"></div>
+      <div class="fg"><label class="fl">Password</label><input class="fi" type="password" id="rp" placeholder="6+ characters"></div>
       <div class="fchk"><input type="checkbox" id="ea" checked><label for="ea">Email me when watchlist items go on sale</label></div>
-      <button class="fsub" onclick="doRegister()">CREATE_ACCOUNT →</button>
+      <button class="fsub" onclick="doRegister()">Create account</button>
     </div>
   </div>
 </div>
@@ -519,9 +514,9 @@ footer a:hover{color:var(--accent2);}
 <div class="toast" id="toast"></div>
 
 <footer>
-  <p>NEOCOMPARISON © 2026 — AI-POWERED PRODUCT COMPARISONS BASED ON REAL CUSTOMER REVIEWS</p>
-  <p style="margin-top:0.4rem"><a href="#">PRIVACY</a> · <a href="#">AFFILIATE_DISCLOSURE</a> · <a href="#contactSection">CONTACT</a></p>
-  <p style="margin-top:0.4rem">AS AN AMAZON ASSOCIATE, NEOCOMPARISON EARNS FROM QUALIFYING PURCHASES AT NO EXTRA COST TO YOU.</p>
+  <p>NeoComparison © 2026 — AI-powered product comparisons based on real customer reviews</p>
+  <p style="margin-top:0.4rem"><a href="#">Privacy</a> · <a href="#">Affiliate Disclosure</a> · <a href="#contactWrap">Contact</a></p>
+  <p style="margin-top:0.4rem">As an Amazon Associate, NeoComparison earns from qualifying purchases at no extra cost to you.</p>
 </footer>
 
 <script>
@@ -530,170 +525,206 @@ var user=JSON.parse(localStorage.getItem('nc_u')||'null');
 var wl=JSON.parse(localStorage.getItem('nc_wl')||'[]');
 var theme=localStorage.getItem('nc_theme')||'dark';
 var cmpMode=2;
+var primeOnly=false;
+var currentSort='price';
+var currentCat='all';
 
 document.documentElement.setAttribute('data-theme',theme);
-document.getElementById('themeBtn').textContent=theme==='dark'?'◐':'◑';
+document.getElementById('themeBtn').textContent=theme==='dark'?'☀️':'🌙';
+refreshNav();
+buildInputs(2);
 
-function toggleTheme(){
-  theme=theme==='dark'?'light':'dark';
-  document.documentElement.setAttribute('data-theme',theme);
-  document.getElementById('themeBtn').textContent=theme==='dark'?'◐':'◑';
-  localStorage.setItem('nc_theme',theme);
-}
-
-function amzLink(asin,search,name){
-  if(asin&&asin.length>=10&&asin!=='B0XXXXXXXXX'&&asin!=='') return 'https://www.amazon.com/dp/'+asin+'?tag='+TAG;
-  var q=search||name||'';
-  return 'https://www.amazon.com/s?tag='+TAG+'&k='+encodeURIComponent(q);
-}
-
-// Use Amazon's PA API image format - works with affiliate tag
+// Amazon affiliate image CDN — official affiliate image endpoint
 function amzImg(asin){
-  if(!asin) return '';
+  if(!asin||asin.length<10) return '';
   return 'https://ws-na.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN='+asin+'&Format=_SL300_&ID=AsinImage&MarketPlace=US&ServiceVersion=20070822&WS=1&tag='+TAG;
+}
+function amzLink(asin,searchTerm){
+  if(asin&&asin.length>=10) return 'https://www.amazon.com/dp/'+asin+'?tag='+TAG+'&linkCode=ogi&th=1&psc=1';
+  return 'https://www.amazon.com/s?tag='+TAG+'&k='+encodeURIComponent(searchTerm||'');
 }
 
 function stars(n){var s='';for(var i=0;i<5;i++)s+=i<Math.round(n)?'★':'☆';return s;}
 function flagCls(f){return f==='hot'?'hot':f==='top'?'top':f==='new'?'new':'sale';}
-function flagTxt(f){return f==='hot'?'HOT':f==='top'?'BEST':f==='new'?'NEW':'SALE';}
-
-function catEmoji(cat){
-  var c=(cat||'').toLowerCase();
-  if(c.indexOf('gpu')>-1||c.indexOf('graphic')>-1) return '🎮';
-  if(c.indexOf('cpu')>-1||c.indexOf('processor')>-1) return '⚡';
-  if(c.indexOf('storage')>-1||c.indexOf('ssd')>-1) return '💾';
-  if(c.indexOf('memory')>-1||c.indexOf('ram')>-1) return '🔩';
-  if(c.indexOf('motherboard')>-1||c.indexOf('case')>-1) return '🖥';
-  if(c.indexOf('cool')>-1) return '❄';
-  if(c.indexOf('monitor')>-1) return '🖥';
-  if(c.indexOf('keyboard')>-1) return '⌨';
-  if(c.indexOf('mouse')>-1||c.indexOf('periph')>-1) return '🖱';
-  if(c.indexOf('laptop')>-1) return '💻';
-  if(c.indexOf('audio')>-1||c.indexOf('headphone')>-1||c.indexOf('earb')>-1) return '🎧';
-  if(c.indexOf('tool')>-1||c.indexOf('drill')>-1||c.indexOf('saw')>-1) return '🔧';
-  if(c.indexOf('washer')>-1) return '💦';
-  if(c.indexOf('lawn')>-1||c.indexOf('mow')>-1||c.indexOf('garden')>-1) return '🌿';
-  if(c.indexOf('bbq')>-1||c.indexOf('grill')>-1||c.indexOf('smoker')>-1) return '🔥';
-  if(c.indexOf('gaming')>-1||c.indexOf('console')>-1) return '🎮';
-  if(c.indexOf('kitchen')>-1||c.indexOf('home')>-1||c.indexOf('vacuum')>-1) return '🏠';
-  if(c.indexOf('security')>-1||c.indexOf('camera')>-1) return '📷';
-  if(c.indexOf('smart')>-1) return '🏡';
+function flagTxt(f){return f==='hot'?'🔥 HOT':f==='top'?'⭐ TOP':f==='new'?'✨ NEW':'SALE';}
+function catEmoji(c){
+  c=(c||'').toLowerCase();
+  if(c.includes('gpu')||c.includes('graphic')) return '🎮';
+  if(c.includes('cpu')||c.includes('processor')) return '⚡';
+  if(c.includes('storage')||c.includes('ssd')||c.includes('nvme')) return '💾';
+  if(c.includes('memory')||c.includes('ram')||c.includes('ddr')) return '🔩';
+  if(c.includes('motherboard')||c.includes('case')) return '🖥️';
+  if(c.includes('cool')) return '❄️';
+  if(c.includes('monitor')) return '🖥️';
+  if(c.includes('keyboard')) return '⌨️';
+  if(c.includes('mouse')||c.includes('periph')) return '🖱️';
+  if(c.includes('laptop')) return '💻';
+  if(c.includes('audio')||c.includes('headphone')||c.includes('earb')) return '🎧';
+  if(c.includes('tool')||c.includes('drill')||c.includes('saw')) return '🔧';
+  if(c.includes('washer')) return '💦';
+  if(c.includes('lawn')||c.includes('mow')||c.includes('garden')) return '🌿';
+  if(c.includes('bbq')||c.includes('grill')||c.includes('smoker')) return '🔥';
+  if(c.includes('gaming')||c.includes('console')) return '🎮';
+  if(c.includes('kitchen')||c.includes('home')||c.includes('vacuum')) return '🏠';
+  if(c.includes('security')||c.includes('camera')) return '📷';
+  if(c.includes('fitness')) return '💪';
   return '📦';
 }
 
-// DEALS DATA - June 2026 Early Prime Day
+// ── PRODUCTS ──
+// priceNum: numeric price for sorting
+// prime: true/false for Prime eligibility
 var PRODUCTS={
   all:[
-    {cat:'SECURITY',name:'Ring Stick Up Cam Battery HD',asin:'B07Q6ZZFLS',rating:4.6,rev:31000,price:'$39',was:'$79',save:'51%',flag:'hot'},
-    {cat:'AUDIO',name:'Sony WH-1000XM5 Headphones',asin:'B09XS7JWHH',rating:4.8,rev:67000,price:'$229',was:'$349',save:'34%',flag:'hot'},
-    {cat:'STORAGE',name:'Samsung 990 Pro 2TB NVMe SSD',asin:'B0BHJJ9Y77',rating:4.9,rev:23100,price:'$99',was:'$189',save:'48%',flag:'hot'},
-    {cat:'HOME_KITCHEN',name:'Instant Pot Duo 7-in-1 8Qt',asin:'B00FLYWNYQ',rating:4.7,rev:98000,price:'$59',was:'$129',save:'54%',flag:'hot'},
-    {cat:'POWER_TOOLS',name:'Milwaukee M12 FUEL 1/2" Drill Kit',asin:'B01NAWVLBE',rating:4.9,rev:14200,price:'$74',was:'$149',save:'50%',flag:'hot'},
-    {cat:'HOME_KITCHEN',name:'Ninja DZ401 Dual Zone Air Fryer',asin:'B08DV4JC88',rating:4.8,rev:41000,price:'$99',was:'$199',save:'50%',flag:'hot'},
-    {cat:'GAMING',name:'PS5 DualSense Wireless Controller',asin:'B08FC6C75Y',rating:4.8,rev:45000,price:'$49',was:'$69',save:'29%',flag:'sale'},
-    {cat:'FITNESS',name:'Fitbit Charge 6 Fitness Tracker',asin:'',rating:4.4,rev:28000,price:'$99',was:'$159',save:'38%',flag:'sale'},
+    {cat:'SECURITY',name:'Ring Stick Up Cam Battery HD',asin:'B07Q6ZZFLS',rating:4.6,rev:31000,price:'$39',priceNum:39,was:'$79',save:'51%',flag:'hot',prime:true,search:'Ring Stick Up Cam Battery'},
+    {cat:'HOME_KITCHEN',name:'Instant Pot Duo 7-in-1 8Qt',asin:'B00FLYWNYQ',rating:4.7,rev:98000,price:'$59',priceNum:59,was:'$129',save:'54%',flag:'hot',prime:true,search:'Instant Pot Duo 8 quart'},
+    {cat:'GAMING',name:'PS5 DualSense Wireless Controller',asin:'B08FC6C75Y',rating:4.8,rev:45000,price:'$49',priceNum:49,was:'$69',save:'29%',flag:'sale',prime:true,search:'PS5 DualSense controller'},
+    {cat:'POWER_TOOLS',name:'Milwaukee M12 FUEL 1/2" Drill Kit',asin:'B01NAWVLBE',rating:4.9,rev:14200,price:'$74',priceNum:74,was:'$149',save:'50%',flag:'hot',prime:true,search:'Milwaukee M12 FUEL drill'},
+    {cat:'HOME_KITCHEN',name:'Ninja DZ401 Dual Zone Air Fryer 10Qt',asin:'B08DV4JC88',rating:4.8,rev:41000,price:'$99',priceNum:99,was:'$199',save:'50%',flag:'hot',prime:true,search:'Ninja DZ401 air fryer'},
+    {cat:'STORAGE',name:'Samsung 990 Pro 2TB NVMe SSD',asin:'B0BHJJ9Y77',rating:4.9,rev:23100,price:'$99',priceNum:99,was:'$189',save:'48%',flag:'hot',prime:true,search:'Samsung 990 Pro 2TB'},
+    {cat:'AUDIO',name:'Sony WH-1000XM5 Headphones',asin:'B09XS7JWHH',rating:4.8,rev:67000,price:'$229',priceNum:229,was:'$349',save:'34%',flag:'hot',prime:true,search:'Sony WH-1000XM5'},
+    {cat:'FITNESS',name:'Fitbit Charge 6 Fitness Tracker',asin:'B0CDJ7ZHMV',rating:4.4,rev:28000,price:'$99',priceNum:99,was:'$159',save:'38%',flag:'sale',prime:true,search:'Fitbit Charge 6'},
   ],
   gpu:[
-    {cat:'GRAPHICS_CARD',name:'NVIDIA GeForce RTX 5060 Ti 16GB',search:'NVIDIA RTX 5060 Ti 16GB graphics card',asin:'',rating:4.8,rev:1200,price:'$499',was:'$599',save:'17%',flag:'new'},
-    {cat:'GRAPHICS_CARD',name:'AMD Radeon RX 9070 XT 16GB',search:'AMD RX 9070 XT graphics card',asin:'',rating:4.7,rev:980,price:'$549',was:'$699',save:'21%',flag:'new'},
-    {cat:'GRAPHICS_CARD',name:'NVIDIA RTX 4070 Super 12GB',asin:'B0CQSQC7GD',rating:4.8,rev:4200,price:'$499',was:'$599',save:'17%',flag:'sale'},
-    {cat:'PROCESSOR',name:'AMD Ryzen 7 9800X3D',asin:'',rating:4.9,rev:5600,price:'$449',was:'$479',save:'6%',flag:'new'},
-    {cat:'PROCESSOR',name:'Intel Core Ultra 7 265K',asin:'',rating:4.7,rev:3200,price:'$299',was:'$394',save:'24%',flag:'sale'},
-    {cat:'MEMORY',name:'Corsair Vengeance 32GB DDR5 6000',asin:'B09NNVR6JP',rating:4.8,rev:11400,price:'$79',was:'$139',save:'43%',flag:'hot'},
-    {cat:'STORAGE',name:'WD Black SN850X 2TB NVMe SSD',asin:'B0B7CKVCCV',rating:4.8,rev:14200,price:'$99',was:'$199',save:'50%',flag:'hot'},
-    {cat:'MOTHERBOARD',name:'ASUS ROG Strix B850-F WiFi',asin:'',rating:4.7,rev:1800,price:'$229',was:'$299',save:'23%',flag:'new'},
+    {cat:'GRAPHICS_CARD',name:'NVIDIA RTX 4070 Super 12GB',asin:'B0CQSQC7GD',rating:4.8,rev:4200,price:'$499',priceNum:499,was:'$599',save:'17%',flag:'sale',prime:true,search:'RTX 4070 Super graphics card'},
+    {cat:'GRAPHICS_CARD',name:'NVIDIA GeForce RTX 5060 Ti 16GB',asin:'',rating:4.8,rev:1200,price:'$499',priceNum:499,was:'$599',save:'17%',flag:'new',prime:false,search:'RTX 5060 Ti 16GB graphics card'},
+    {cat:'GRAPHICS_CARD',name:'AMD Radeon RX 9070 XT 16GB',asin:'',rating:4.7,rev:980,price:'$549',priceNum:549,was:'$699',save:'21%',flag:'new',prime:false,search:'AMD RX 9070 XT graphics card'},
+    {cat:'MEMORY',name:'Corsair Vengeance 32GB DDR5 6000MHz',asin:'B09NNVR6JP',rating:4.8,rev:11400,price:'$79',priceNum:79,was:'$139',save:'43%',flag:'hot',prime:true,search:'Corsair 32GB DDR5 6000'},
+    {cat:'STORAGE',name:'WD Black SN850X 2TB NVMe SSD',asin:'B0B7CKVCCV',rating:4.8,rev:14200,price:'$99',priceNum:99,was:'$199',save:'50%',flag:'hot',prime:true,search:'WD Black SN850X 2TB'},
+    {cat:'PROCESSOR',name:'AMD Ryzen 7 9800X3D',asin:'',rating:4.9,rev:5600,price:'$449',priceNum:449,was:'$479',save:'6%',flag:'new',prime:false,search:'AMD Ryzen 7 9800X3D processor'},
+    {cat:'PROCESSOR',name:'Intel Core Ultra 7 265K',asin:'',rating:4.7,rev:3200,price:'$299',priceNum:299,was:'$394',save:'24%',flag:'sale',prime:false,search:'Intel Core Ultra 7 265K processor'},
+    {cat:'STORAGE',name:'Samsung 990 Pro 2TB NVMe SSD',asin:'B0BHJJ9Y77',rating:4.9,rev:23100,price:'$99',priceNum:99,was:'$189',save:'48%',flag:'hot',prime:true,search:'Samsung 990 Pro 2TB'},
   ],
   tech:[
-    {cat:'STORAGE',name:'Samsung 990 Pro 2TB NVMe SSD',asin:'B0BHJJ9Y77',rating:4.9,rev:23100,price:'$99',was:'$189',save:'48%',flag:'hot'},
-    {cat:'PERIPHERALS',name:'Logitech MX Master 3S Mouse',asin:'B09HM94VDS',rating:4.8,rev:31000,price:'$74',was:'$99',save:'25%',flag:'sale'},
-    {cat:'STORAGE',name:'Samsung T9 2TB Portable SSD',asin:'',rating:4.8,rev:18000,price:'$109',was:'$179',save:'39%',flag:'hot'},
-    {cat:'MONITOR',name:'LG 27" UltraGear 4K 144Hz OLED',asin:'',rating:4.9,rev:4200,price:'$499',was:'$799',save:'38%',flag:'hot'},
-    {cat:'KEYBOARD',name:'Keychron Q1 Pro QMK Keyboard',asin:'',rating:4.8,rev:8900,price:'$149',was:'$199',save:'25%',flag:'sale'},
-    {cat:'TABLET',name:'iPad Air 13" M2 WiFi 128GB',asin:'',rating:4.9,rev:12000,price:'$699',was:'$799',save:'13%',flag:'sale'},
+    {cat:'STORAGE',name:'Samsung 990 Pro 2TB NVMe SSD',asin:'B0BHJJ9Y77',rating:4.9,rev:23100,price:'$99',priceNum:99,was:'$189',save:'48%',flag:'hot',prime:true,search:'Samsung 990 Pro 2TB'},
+    {cat:'PERIPHERALS',name:'Logitech MX Master 3S Mouse',asin:'B09HM94VDS',rating:4.8,rev:31000,price:'$74',priceNum:74,was:'$99',save:'25%',flag:'sale',prime:true,search:'Logitech MX Master 3S'},
+    {cat:'STORAGE',name:'WD Black SN850X 2TB NVMe SSD',asin:'B0B7CKVCCV',rating:4.8,rev:14200,price:'$99',priceNum:99,was:'$199',save:'50%',flag:'hot',prime:true,search:'WD Black SN850X 2TB'},
+    {cat:'AUDIO',name:'Sony WH-1000XM5 Headphones',asin:'B09XS7JWHH',rating:4.8,rev:67000,price:'$229',priceNum:229,was:'$349',save:'34%',flag:'hot',prime:true,search:'Sony WH-1000XM5'},
+    {cat:'MONITOR',name:'LG 34" UltraWide Curved Monitor',asin:'B09BR5WNXQ',rating:4.6,rev:8900,price:'$299',priceNum:299,was:'$499',save:'40%',flag:'sale',prime:true,search:'LG 34 ultrawide monitor'},
+    {cat:'KEYBOARD',name:'Keychron K2 Mechanical Keyboard',asin:'B07ZGB7Y43',rating:4.7,rev:22000,price:'$89',priceNum:89,was:'$109',save:'18%',flag:'sale',prime:true,search:'Keychron K2 keyboard'},
   ],
   tools:[
-    {cat:'POWER_TOOLS',name:'DeWalt 20V MAX 5-Tool Combo Kit',asin:'B01M0MVISE',rating:4.8,rev:9800,price:'$449',was:'$639',save:'30%',flag:'hot'},
-    {cat:'POWER_TOOLS',name:'Milwaukee M18 FUEL Hackzall',asin:'B00IXVTUS4',rating:4.9,rev:6200,price:'$127',was:'$187',save:'32%',flag:'sale'},
-    {cat:'POWER_TOOLS',name:'Milwaukee M12 FUEL 1/2" Drill Kit',asin:'B01NAWVLBE',rating:4.9,rev:14200,price:'$74',was:'$111',save:'33%',flag:'sale'},
-    {cat:'POWER_TOOLS',name:'Makita 18V LXT 2-Piece Combo',asin:'B008LKVLBS',rating:4.8,rev:9800,price:'$179',was:'$249',save:'28%',flag:'sale'},
-    {cat:'POWER_TOOLS',name:'DeWalt 20V MAX SDS Rotary Hammer',asin:'B07BHC7TZK',rating:4.7,rev:5400,price:'$199',was:'$269',save:'26%',flag:'sale'},
-    {cat:'PRESSURE_WASHER',name:'Simpson 3400 PSI Gas Pressure Washer',asin:'B00R1DV74U',rating:4.6,rev:4200,price:'$329',was:'$449',save:'27%',flag:'sale'},
+    {cat:'POWER_TOOLS',name:'Milwaukee M12 FUEL 1/2" Drill Kit',asin:'B01NAWVLBE',rating:4.9,rev:14200,price:'$74',priceNum:74,was:'$149',save:'50%',flag:'hot',prime:true,search:'Milwaukee M12 FUEL drill'},
+    {cat:'POWER_TOOLS',name:'Makita 18V LXT 2-Piece Combo',asin:'B008LKVLBS',rating:4.8,rev:9800,price:'$179',priceNum:179,was:'$249',save:'28%',flag:'sale',prime:true,search:'Makita 18V LXT combo'},
+    {cat:'POWER_TOOLS',name:'DeWalt 20V MAX XR Drill Driver',asin:'B07BHC7TZK',rating:4.8,rev:12400,price:'$149',priceNum:149,was:'$219',save:'32%',flag:'sale',prime:true,search:'DeWalt 20V MAX XR drill'},
+    {cat:'POWER_TOOLS',name:'Milwaukee M18 FUEL Circular Saw',asin:'B00IXVTUS4',rating:4.9,rev:7600,price:'$179',priceNum:179,was:'$249',save:'28%',flag:'sale',prime:true,search:'Milwaukee M18 FUEL circular saw'},
+    {cat:'PRESSURE_WASHER',name:'Simpson 3400 PSI Gas Pressure Washer',asin:'B00R1DV74U',rating:4.6,rev:4200,price:'$329',priceNum:329,was:'$449',save:'27%',flag:'sale',prime:false,search:'Simpson 3400 PSI pressure washer'},
+    {cat:'POWER_TOOLS',name:'DeWalt 20V MAX 5-Tool Combo Kit',asin:'B01M0MVISE',rating:4.8,rev:9800,price:'$449',priceNum:449,was:'$639',save:'30%',flag:'hot',prime:true,search:'DeWalt 20V MAX 5 tool combo'},
   ],
   lawn:[
-    {cat:'LAWN_GARDEN',name:'Ego 56V Self-Propelled Mower 21"',asin:'B09NQYT38F',rating:4.7,rev:8200,price:'$399',was:'$599',save:'33%',flag:'hot'},
-    {cat:'LAWN_GARDEN',name:'Greenworks 60V Cordless Trimmer',asin:'B07VCMT5L4',rating:4.6,rev:7100,price:'$99',was:'$149',save:'34%',flag:'sale'},
-    {cat:'LAWN_GARDEN',name:'Husqvarna 450 Rancher Chainsaw',asin:'B01MCXRUJX',rating:4.8,rev:3900,price:'$349',was:'$499',save:'30%',flag:'sale'},
-    {cat:'LAWN_GARDEN',name:'Milwaukee M18 FUEL Blower Tool',asin:'',rating:4.9,rev:8800,price:'$149',was:'$249',save:'40%',flag:'hot'},
+    {cat:'LAWN_GARDEN',name:'Greenworks 60V String Trimmer',asin:'B07VCMT5L4',rating:4.6,rev:7100,price:'$99',priceNum:99,was:'$149',save:'34%',flag:'sale',prime:true,search:'Greenworks 60V trimmer'},
+    {cat:'LAWN_GARDEN',name:'Ego 56V Self-Propelled Mower 21"',asin:'B09NQYT38F',rating:4.7,rev:8200,price:'$399',priceNum:399,was:'$599',save:'33%',flag:'hot',prime:true,search:'Ego 56V self propelled mower'},
+    {cat:'LAWN_GARDEN',name:'Husqvarna 450 Rancher Chainsaw',asin:'B01MCXRUJX',rating:4.8,rev:3900,price:'$349',priceNum:349,was:'$499',save:'30%',flag:'sale',prime:true,search:'Husqvarna 450 Rancher chainsaw'},
+    {cat:'LAWN_GARDEN',name:'Honda HRX217VKA Self-Propelled Mower',asin:'B07K3CBPQ3',rating:4.8,rev:7800,price:'$549',priceNum:549,was:'$649',save:'15%',flag:'sale',prime:false,search:'Honda HRX217VKA mower'},
   ],
   home:[
-    {cat:'HOME_KITCHEN',name:'Instant Pot Duo 7-in-1 8Qt',asin:'B00FLYWNYQ',rating:4.7,rev:98000,price:'$69',was:'$129',save:'47%',flag:'hot'},
-    {cat:'HOME_KITCHEN',name:'Ninja DZ401 Dual Air Fryer 10Qt',asin:'B08DV4JC88',rating:4.8,rev:41000,price:'$119',was:'$199',save:'40%',flag:'sale'},
-    {cat:'HOME_KITCHEN',name:'Dyson V15 Detect Vacuum',asin:'B09PRGQHTW',rating:4.7,rev:22000,price:'$499',was:'$749',save:'33%',flag:'sale'},
-    {cat:'SMART_HOME',name:'Ring Battery Doorbell Plus',asin:'B09WZBPX7K',rating:4.6,rev:28000,price:'$59',was:'$99',save:'40%',flag:'hot'},
+    {cat:'HOME_KITCHEN',name:'Instant Pot Duo 7-in-1 8Qt',asin:'B00FLYWNYQ',rating:4.7,rev:98000,price:'$59',priceNum:59,was:'$129',save:'54%',flag:'hot',prime:true,search:'Instant Pot Duo 8 quart'},
+    {cat:'HOME_KITCHEN',name:'Ninja DZ401 Dual Zone Air Fryer',asin:'B08DV4JC88',rating:4.8,rev:41000,price:'$99',priceNum:99,was:'$199',save:'50%',flag:'hot',prime:true,search:'Ninja DZ401 air fryer'},
+    {cat:'HOME_KITCHEN',name:'Dyson V15 Detect Vacuum',asin:'B09PRGQHTW',rating:4.7,rev:22000,price:'$449',priceNum:449,was:'$749',save:'40%',flag:'sale',prime:true,search:'Dyson V15 Detect vacuum'},
+    {cat:'SMART_HOME',name:'Ring Battery Doorbell Plus',asin:'B09WZBPX7K',rating:4.6,rev:28000,price:'$59',priceNum:59,was:'$99',save:'40%',flag:'hot',prime:true,search:'Ring Battery Doorbell Plus'},
+    {cat:'HOME_KITCHEN',name:'Vitamix 5200 Professional Blender',asin:'B008H4SLV6',rating:4.8,rev:29000,price:'$349',priceNum:349,was:'$499',save:'30%',flag:'sale',prime:true,search:'Vitamix 5200 blender'},
   ],
   bbq:[
-    {cat:'BBQ_OUTDOOR',name:'Traeger Ironwood 885 Pellet Grill',asin:'B08QNQV44J',rating:4.7,rev:5200,price:'$799',was:'$1099',save:'27%',flag:'sale'},
-    {cat:'BBQ_OUTDOOR',name:'Weber Spirit E-310 Gas Grill',asin:'B07GZDPCZT',rating:4.7,rev:9200,price:'$449',was:'$599',save:'25%',flag:'sale'},
-    {cat:'BBQ_OUTDOOR',name:'Blackstone 36" Griddle Station',asin:'B0758ZNJ88',rating:4.8,rev:28000,price:'$267',was:'$397',save:'33%',flag:'hot'},
-    {cat:'BBQ_OUTDOOR',name:'Oklahoma Joe Longhorn Smoker',asin:'B001CXYMR4',rating:4.5,rev:5600,price:'$299',was:'$499',save:'40%',flag:'hot'},
+    {cat:'BBQ_OUTDOOR',name:'Blackstone 36" Griddle Station',asin:'B0758ZNJ88',rating:4.8,rev:28000,price:'$267',priceNum:267,was:'$397',save:'33%',flag:'hot',prime:true,search:'Blackstone 36 inch griddle'},
+    {cat:'BBQ_OUTDOOR',name:'Oklahoma Joe Longhorn Smoker',asin:'B001CXYMR4',rating:4.5,rev:5600,price:'$299',priceNum:299,was:'$499',save:'40%',flag:'hot',prime:false,search:'Oklahoma Joe Longhorn smoker'},
+    {cat:'BBQ_OUTDOOR',name:'Weber Spirit E-310 Gas Grill',asin:'B07GZDPCZT',rating:4.7,rev:9200,price:'$449',priceNum:449,was:'$599',save:'25%',flag:'sale',prime:true,search:'Weber Spirit E-310'},
+    {cat:'BBQ_OUTDOOR',name:'Traeger Ironwood 885 Pellet Grill',asin:'B08QNQV44J',rating:4.7,rev:5200,price:'$799',priceNum:799,was:'$1099',save:'27%',flag:'sale',prime:false,search:'Traeger Ironwood 885'},
   ],
   gaming:[
-    {cat:'GAMING',name:'PS5 DualSense Wireless Controller',asin:'B08FC6C75Y',rating:4.8,rev:45000,price:'$54',was:'$69',save:'22%',flag:'sale'},
-    {cat:'GAMING',name:'Xbox Wireless Controller Carbon Black',asin:'B08DF26MLL',rating:4.8,rev:32000,price:'$44',was:'$59',save:'25%',flag:'sale'},
-    {cat:'GAMING',name:'SteelSeries Arctis Nova 7 Wireless',asin:'B09ZXNT98Y',rating:4.7,rev:15000,price:'$99',was:'$149',save:'34%',flag:'sale'},
-    {cat:'GAMING',name:'LG 27" UltraGear 4K OLED Monitor',asin:'',rating:4.9,rev:4200,price:'$499',was:'$799',save:'38%',flag:'hot'},
+    {cat:'GAMING',name:'PS5 DualSense Wireless Controller',asin:'B08FC6C75Y',rating:4.8,rev:45000,price:'$49',priceNum:49,was:'$69',save:'29%',flag:'sale',prime:true,search:'PS5 DualSense controller'},
+    {cat:'GAMING',name:'Xbox Wireless Controller',asin:'B08DF26MLL',rating:4.8,rev:32000,price:'$44',priceNum:44,was:'$59',save:'25%',flag:'sale',prime:true,search:'Xbox wireless controller'},
+    {cat:'GAMING',name:'SteelSeries Arctis Nova 7 Wireless',asin:'B09ZXNT98Y',rating:4.7,rev:15000,price:'$99',priceNum:99,was:'$149',save:'34%',flag:'sale',prime:true,search:'SteelSeries Arctis Nova 7'},
+    {cat:'GAMING',name:'LG 27" UltraGear 4K OLED Monitor',asin:'B09NK4Q3QJ',rating:4.8,rev:8900,price:'$349',priceNum:349,was:'$499',save:'30%',flag:'hot',prime:true,search:'LG 27 UltraGear 4K monitor'},
   ]
 };
+
 var BESTS=[
-  {cat:'POWER_TOOLS',name:'Milwaukee M18 FUEL Hammer Drill Kit',asin:'B00Y5XSQJ0',rating:4.9,rev:18400,price:'$179',flag:'top'},
-  {cat:'LAPTOP',name:'Apple MacBook Air M4 13"',asin:'',rating:4.9,rev:8900,price:'$1099',flag:'top'},
-  {cat:'GRAPHICS_CARD',name:'NVIDIA RTX 5060 Ti 16GB',asin:'',rating:4.8,rev:1200,price:'$499',flag:'top'},
-  {cat:'BBQ',name:'Weber Genesis E-325s Gas Grill',asin:'',rating:4.8,rev:5400,price:'$799',flag:'top'},
-  {cat:'HOME_KITCHEN',name:'Vitamix 5200 Professional Blender',asin:'B008H4SLV6',rating:4.8,rev:29000,price:'$349',flag:'top'},
-  {cat:'AUDIO',name:'Sony WH-1000XM5 Headphones',asin:'B09XS7JWHH',rating:4.8,rev:67000,price:'$229',flag:'top'},
-  {cat:'PROCESSOR',name:'AMD Ryzen 7 9800X3D Processor',asin:'',rating:4.9,rev:5600,price:'$449',flag:'top'},
-  {cat:'LAWN_GARDEN',name:'Honda HRX217VKA Mower',asin:'B07K3CBPQ3',rating:4.8,rev:7800,price:'$549',flag:'top'},
-];
-var PC_PICKS=[
-  {cat:'GRAPHICS_CARD',name:'NVIDIA GeForce RTX 5060 Ti 16GB',search:'NVIDIA RTX 5060 Ti 16GB graphics card',asin:'',rating:4.8,rev:1200,price:'$499',was:'$599',save:'17%',flag:'new'},
-  {cat:'GRAPHICS_CARD',name:'AMD Radeon RX 9070 XT 16GB',search:'AMD RX 9070 XT graphics card',asin:'',rating:4.7,rev:980,price:'$549',was:'$699',save:'21%',flag:'new'},
-  {cat:'GRAPHICS_CARD',name:'NVIDIA RTX 4070 Super 12GB',asin:'B0CQSQC7GD',rating:4.8,rev:4200,price:'$499',was:'$599',save:'17%',flag:'sale'},
-  {cat:'PROCESSOR',name:'AMD Ryzen 7 9800X3D',asin:'',rating:4.9,rev:5600,price:'$449',was:'$479',save:'6%',flag:'new'},
-  {cat:'PROCESSOR',name:'Intel Core Ultra 7 265K',asin:'',rating:4.7,rev:3200,price:'$299',was:'$394',save:'24%',flag:'sale'},
-  {cat:'MEMORY',name:'Corsair Vengeance 32GB DDR5 6000',asin:'B09NNVR6JP',rating:4.8,rev:11400,price:'$79',was:'$139',save:'43%',flag:'hot'},
-  {cat:'STORAGE',name:'WD Black SN850X 2TB NVMe SSD',asin:'B0B7CKVCCV',rating:4.8,rev:14200,price:'$99',was:'$199',save:'50%',flag:'hot'},
-  {cat:'CPU_COOLING',name:'Noctua NH-D15 G2 CPU Cooler',asin:'',rating:4.9,rev:3200,price:'$109',was:'$149',save:'27%',flag:'sale'},
+  {cat:'POWER_TOOLS',name:'Milwaukee M18 FUEL Hammer Drill',asin:'B00Y5XSQJ0',rating:4.9,rev:18400,price:'$179',priceNum:179,flag:'top',prime:true,search:'Milwaukee M18 FUEL hammer drill'},
+  {cat:'GAMING',name:'PS5 DualSense Controller',asin:'B08FC6C75Y',rating:4.8,rev:45000,price:'$49',priceNum:49,flag:'top',prime:true,search:'PS5 DualSense controller'},
+  {cat:'GRAPHICS_CARD',name:'NVIDIA RTX 4070 Super',asin:'B0CQSQC7GD',rating:4.8,rev:4200,price:'$499',priceNum:499,flag:'top',prime:true,search:'RTX 4070 Super'},
+  {cat:'HOME_KITCHEN',name:'Vitamix 5200 Blender',asin:'B008H4SLV6',rating:4.8,rev:29000,price:'$349',priceNum:349,flag:'top',prime:true,search:'Vitamix 5200'},
+  {cat:'AUDIO',name:'Sony WH-1000XM5 Headphones',asin:'B09XS7JWHH',rating:4.8,rev:67000,price:'$229',priceNum:229,flag:'top',prime:true,search:'Sony WH-1000XM5'},
+  {cat:'LAWN_GARDEN',name:'Ego 56V Cordless Mower',asin:'B09NQYT38F',rating:4.7,rev:8200,price:'$399',priceNum:399,flag:'top',prime:true,search:'Ego 56V mower'},
+  {cat:'MEMORY',name:'Corsair Vengeance 32GB DDR5',asin:'B09NNVR6JP',rating:4.8,rev:11400,price:'$79',priceNum:79,flag:'top',prime:true,search:'Corsair 32GB DDR5'},
+  {cat:'STORAGE',name:'WD Black SN850X 2TB NVMe',asin:'B0B7CKVCCV',rating:4.8,rev:14200,price:'$99',priceNum:99,flag:'top',prime:true,search:'WD Black SN850X 2TB'},
 ];
 
+var PC_PICKS=[
+  {cat:'MEMORY',name:'Corsair Vengeance 32GB DDR5 6000MHz',asin:'B09NNVR6JP',rating:4.8,rev:11400,price:'$79',priceNum:79,was:'$139',save:'43%',flag:'hot',prime:true,search:'Corsair 32GB DDR5 6000'},
+  {cat:'STORAGE',name:'WD Black SN850X 2TB NVMe SSD',asin:'B0B7CKVCCV',rating:4.8,rev:14200,price:'$99',priceNum:99,was:'$199',save:'50%',flag:'hot',prime:true,search:'WD Black SN850X 2TB'},
+  {cat:'STORAGE',name:'Samsung 990 Pro 2TB NVMe SSD',asin:'B0BHJJ9Y77',rating:4.9,rev:23100,price:'$99',priceNum:99,was:'$189',save:'48%',flag:'hot',prime:true,search:'Samsung 990 Pro 2TB'},
+  {cat:'GRAPHICS_CARD',name:'NVIDIA RTX 4070 Super 12GB',asin:'B0CQSQC7GD',rating:4.8,rev:4200,price:'$499',priceNum:499,was:'$599',save:'17%',flag:'sale',prime:true,search:'RTX 4070 Super'},
+  {cat:'GRAPHICS_CARD',name:'NVIDIA RTX 5060 Ti 16GB',asin:'',rating:4.8,rev:1200,price:'$499',priceNum:499,was:'$599',save:'17%',flag:'new',prime:false,search:'NVIDIA RTX 5060 Ti 16GB'},
+  {cat:'GRAPHICS_CARD',name:'AMD Radeon RX 9070 XT',asin:'',rating:4.7,rev:980,price:'$549',priceNum:549,was:'$699',save:'21%',flag:'new',prime:false,search:'AMD Radeon RX 9070 XT'},
+  {cat:'PROCESSOR',name:'Intel Core Ultra 7 265K',asin:'',rating:4.7,rev:3200,price:'$299',priceNum:299,was:'$394',save:'24%',flag:'sale',prime:false,search:'Intel Core Ultra 7 265K'},
+  {cat:'PROCESSOR',name:'AMD Ryzen 7 9800X3D',asin:'',rating:4.9,rev:5600,price:'$449',priceNum:449,was:'$479',save:'6%',flag:'new',prime:false,search:'AMD Ryzen 7 9800X3D'},
+];
+
+function sortItems(items){
+  var filtered=primeOnly?items.filter(function(d){return d.prime;}):items.slice();
+  if(currentSort==='price') filtered.sort(function(a,b){return a.priceNum-b.priceNum;});
+  else if(currentSort==='rating') filtered.sort(function(a,b){return b.rating-a.rating;});
+  else if(currentSort==='save'){
+    filtered.sort(function(a,b){
+      var as=a.save?parseInt(a.save):0;
+      var bs=b.save?parseInt(b.save):0;
+      return bs-as;
+    });
+  }
+  return filtered;
+}
+
 function dealCard(d){
-  var link=amzLink(d.asin,d.search||null,d.name);
+  var link=amzLink(d.asin,d.search||d.name);
   var imgUrl=amzImg(d.asin);
   var emoji=catEmoji(d.cat);
-  var safeName=d.name.replace(/"/g,'&quot;').replace(/'/g,'&#39;');
-  var imgHtml=imgUrl
-    ? '<img src="'+imgUrl+'" alt="'+safeName+'" loading="lazy" onerror="this.style.display=\'none\'">'
-    : '';
+  var safeName=(d.name||'').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
   return '<div class="deal">'+
-    '<div class="deal-img">'+imgHtml+'<div class="deal-img-fallback">'+emoji+'</div><span class="deal-flag '+flagCls(d.flag)+'">'+flagTxt(d.flag)+'</span></div>'+
+    '<div class="deal-img-wrap">'+
+      (imgUrl?'<img class="deal-img" src="'+imgUrl+'" alt="'+safeName+'" loading="lazy" onerror="this.style.display=\'none\'">':'')+
+      '<div class="deal-img-fb">'+emoji+'</div>'+
+      (d.flag?'<span class="deal-flag '+flagCls(d.flag)+'">'+flagTxt(d.flag)+'</span>':'')+
+      (d.prime?'<span class="deal-prime">Prime</span>':'')+
+    '</div>'+
     '<div class="deal-body">'+
-      '<div class="deal-cat">'+d.cat+'</div>'+
+      '<div class="deal-cat">'+d.cat.replace(/_/g,' ')+'</div>'+
       '<div class="deal-name">'+d.name+'</div>'+
       '<div class="deal-stars">'+stars(d.rating)+' '+d.rating+' ('+d.rev.toLocaleString()+')</div>'+
-      '<div class="deal-pricing"><span class="deal-now">'+d.price+'</span>'+(d.was?'<span class="deal-was">'+d.was+'</span>':'')+(d.save?'<span class="deal-pct">-'+d.save+'</span>':'')+'</div>'+
-      '<a class="deal-amz" href="'+link+'" target="_blank" rel="noopener noreferrer nofollow">View on Amazon</a>'+
-      '<button class="deal-cmp" data-name="'+safeName+'" onclick="quickCmp(this)">Compare This</button>'+
+      '<div class="deal-price-row">'+
+        '<span class="deal-price">'+d.price+'</span>'+
+        (d.was?'<span class="deal-was">'+d.was+'</span>':'')+
+        (d.save?'<span class="deal-save">-'+d.save+'</span>':'')+
+      '</div>'+
+      '<a class="deal-amz" href="'+link+'" target="_blank" rel="noopener noreferrer nofollow">View on Amazon →</a>'+
+      '<button class="deal-cmp" data-name="'+safeName+'" onclick="quickCmp(this)">⚡ Compare this</button>'+
     '</div></div>';
 }
 
 function renderDeals(cat){
-  var items=PRODUCTS[cat]||PRODUCTS.all;
+  currentCat=cat||'all';
+  var items=sortItems(PRODUCTS[currentCat]||PRODUCTS.all);
+  var pc=sortItems(PC_PICKS);
+  var bs=sortItems(BESTS);
   document.getElementById('dealsGrid').innerHTML=items.map(dealCard).join('');
-  document.getElementById('bestsGrid').innerHTML=BESTS.map(dealCard).join('');
-  document.getElementById('pcGrid').innerHTML=PC_PICKS.map(dealCard).join('');
+  document.getElementById('pcGrid').innerHTML=pc.map(dealCard).join('');
+  document.getElementById('bestsGrid').innerHTML=bs.map(dealCard).join('');
+}
+
+function applySort(){
+  currentSort=document.getElementById('sortSel').value;
+  renderDeals(currentCat);
+}
+
+function togglePrime(){
+  primeOnly=!primeOnly;
+  var btn=document.getElementById('primeTog');
+  btn.classList.toggle('on',primeOnly);
+  btn.textContent=primeOnly?'✓ Prime Only':'✓ Prime';
+  renderDeals(currentCat);
 }
 
 function setCat(cat,el){
-  document.querySelectorAll('.catbtn,.nav-links a').forEach(function(b){b.classList.remove('on');});
+  document.querySelectorAll('.f-btn,.nav-link').forEach(function(b){b.classList.remove('on');});
   if(el)el.classList.add('on');
   renderDeals(cat);
 }
@@ -703,29 +734,30 @@ function quickCmp(btn){
   var tabs=document.querySelectorAll('.mode-tab');
   setMode(2,tabs[1]);
   var i1=document.getElementById('inp1');
-  if(i1){i1.value=name;}
+  if(i1)i1.value=name;
   var i2=document.getElementById('inp2');
   if(i2)i2.focus();
   window.scrollTo({top:0,behavior:'smooth'});
-  toast('// enter second product to compare with: '+name);
+  toast('Enter a second product to compare with '+name);
 }
 
+// ── COMPARE ──
 function setMode(n,el){
   cmpMode=n;
   document.querySelectorAll('.mode-tab').forEach(function(b){b.classList.remove('on');});
   el.classList.add('on');
   buildInputs(n);
-  var lbls={1:'// ANALYZE_SINGLE_PRODUCT_IN_DEPTH',2:'// COMPARE_TWO_PRODUCTS_HEAD_TO_HEAD',3:'// COMPARE_THREE_PRODUCTS_AT_ONCE',4:'// COMPARE_FOUR_PRODUCTS_SIMULTANEOUSLY'};
-  document.getElementById('searchLbl').textContent=lbls[n]||'// ENTER_PRODUCTS';
-  document.getElementById('goBtn').textContent=n===1?'ANALYZE →':'COMPARE →';
+  var lbls={1:'Analyze a single product in depth',2:'Enter two products to compare',3:'Compare three products at once',4:'Compare four products simultaneously'};
+  document.getElementById('modeLbl').textContent=lbls[n]||'Enter products';
+  document.getElementById('goBtn').querySelector('span').textContent=n===1?'Analyze':'Compare';
 }
 
 function buildInputs(n){
-  var c=document.getElementById('multiInputs');c.innerHTML='';
-  var ph=['Product 1 (e.g. DeWalt DCD800)','Product 2 (e.g. Milwaukee M18)','Product 3 (e.g. Makita XFD131)','Product 4 (e.g. Ryobi PCL206)'];
+  var c=document.getElementById('inputsWrap');c.innerHTML='';
+  var ph=['Product 1 (e.g. DeWalt DCD800)','Product 2 (e.g. Milwaukee M18)','Product 3','Product 4'];
   for(var i=0;i<n;i++){
-    var row=document.createElement('div');row.className='multi-row';
-    row.innerHTML='<div class="multi-num">'+(i+1)+'</div><input class="search-inp" type="text" id="inp'+(i+1)+'" placeholder="'+ph[i]+'" style="flex:1;">';
+    var row=document.createElement('div');row.className='input-row';
+    row.innerHTML='<div class="input-num">'+(i+1)+'</div><input class="s-inp" type="text" id="inp'+(i+1)+'" placeholder="'+ph[i]+'" style="flex:1;">';
     c.appendChild(row);
   }
   var f=document.getElementById('inp1');
@@ -744,18 +776,41 @@ function loadT(q){
   window.scrollTo({top:0,behavior:'smooth'});
 }
 
+function sanitize(str){
+  // Strip dangerous characters, limit length
+  return String(str||'')
+    .replace(/[<>"'`;\\{}\[\]]/g,'')
+    .replace(/javascript:/gi,'')
+    .replace(/on\w+=/gi,'')
+    .replace(/script/gi,'')
+    .replace(/union|select|insert|drop|delete|update|exec|eval/gi,'')
+    .trim()
+    .slice(0,200);
+}
 function getInputs(){
   var items=[];
   for(var i=1;i<=cmpMode;i++){
     var inp=document.getElementById('inp'+i);
-    if(inp&&inp.value.trim())items.push(inp.value.trim());
+    if(inp&&inp.value.trim()){
+      var clean=sanitize(inp.value);
+      if(clean.length>2) items.push(clean);
+    }
   }
   return items;
 }
 
+var _compareCount=0;
+var _compareReset=0;
 function runCompare(){
+  var now=Date.now();
+  if(now-_compareReset>60000){_compareCount=0;_compareReset=now;}
+  _compareCount++;
+  if(_compareCount>5){
+    toast('Too many requests. Please wait a moment.');
+    return;
+  }
   var items=getInputs();
-  if(!items.length){toast('// ERROR: enter at least one product');return;}
+  if(!items.length){toast('Please enter at least one product');return;}
   var btn=document.getElementById('goBtn');btn.disabled=true;
   document.getElementById('emptyState').style.display='none';
   document.getElementById('dealSections').style.display='none';
@@ -764,8 +819,16 @@ function runCompare(){
   document.getElementById('wlPanel').style.display='none';
   document.getElementById('loader').style.display='block';
   animSteps();
-  var q=items.join(' vs ');
-  var prompt='You are an expert product reviewer and tech analyst who has read thousands of verified customer reviews. Analyze: "'+q+'"\n\nProvide a DETAILED analysis with real specs, real review sentiment, and honest verdicts. Return ONLY valid JSON:\n{"query":"short title","products":[{"name":"Exact Product Name as sold on Amazon","category":"product type","asin":"B0XXXXXXXXX","overallScore":87,"description":"2-3 sentence product description covering what it is, who makes it, and its main use case","keySpecs":{"spec1_name":"spec1_value","spec2_name":"spec2_value","spec3_name":"spec3_value","spec4_name":"spec4_value"},"reviewSummary":"one sentence summarizing the overall reviewer consensus","avgRating":4.3,"totalReviews":2847,"ratingBreakdown":{"5star":68,"4star":18,"3star":8,"2star":3,"1star":3},"ratings":{"Performance":88,"Value":75,"Build Quality":90,"Ease of Use":82,"Reliability":85},"pros":["specific strength from reviews 1","specific strength 2","specific strength 3"],"cons":["specific weakness from reviews 1","specific weakness 2"],"reviewHighlights":[{"stars":5,"text":"specific positive quote reflecting what buyers love","author":"Verified Buyer","type":"positive"},{"stars":2,"text":"specific critical quote reflecting common complaints","author":"Verified Buyer","type":"negative"}],"verdict":"2-3 honest sentences based on collective reviewer sentiment. Be specific about who should buy this.","bestFor":"specific use case or buyer type","affiliateSearch":"exact amazon search query to find this product"}],"winner":"exact winning product name or null if single","winnerReason":"one specific sentence explaining why based on reviews","pointDiffs":[{"label":"Performance","diff":8,"winner":0},{"label":"Value","diff":5,"winner":1},{"label":"Build Quality","diff":3,"winner":0}],"specsTable":[{"spec":"Price","values":["$X","$Y"]},{"spec":"Key Spec 1","values":["val","val"]},{"spec":"Key Spec 2","values":["val","val"]},{"spec":"Avg Rating","values":["4.3/5 (2.8k)","4.1/5 (1.9k)"]},{"spec":"Warranty","values":["val","val"]},{"spec":"Best For","values":["val","val"]}],"summary":"4-5 sentence comprehensive verdict. Mention specific strengths and weaknesses. Give a clear recommendation for different buyer types."}';
+  var q=items.map(function(x){return sanitize(x);}).join(' vs ');
+  // Final safety check - block obviously malicious inputs
+  if(q.length<3||q.length>500){
+    toast('Please enter a valid product name to compare.');
+    btn.disabled=false;
+    document.getElementById('loader').style.display='none';
+    document.getElementById('dealSections').style.display='block';
+    return;
+  }
+  var prompt='You are an expert product reviewer. Analyze: "'+q+'". Return ONLY valid JSON:\n{"query":"short title","products":[{"name":"Exact Product Name","category":"type","asin":"B0XXXXXXXXX","overallScore":87,"description":"2-3 sentence overview of what this product is and who it is for","keySpecs":{"Key Spec 1":"value","Key Spec 2":"value","Key Spec 3":"value","Key Spec 4":"value"},"reviewSummary":"one sentence reviewer consensus","avgRating":4.3,"totalReviews":2847,"ratings":{"Performance":88,"Value":75,"Build Quality":90,"Ease of Use":82,"Reliability":85},"pros":["specific strength 1","specific strength 2","specific strength 3"],"cons":["specific weakness 1","specific weakness 2"],"reviewHighlights":[{"stars":5,"text":"positive quote","author":"Verified Buyer","type":"positive"},{"stars":2,"text":"critical quote","author":"Verified Buyer","type":"negative"}],"verdict":"2-3 honest sentences with specific buying advice","affiliateSearch":"best amazon search for this product"}],"winner":"winning product name or null","winnerReason":"one sentence why","pointDiffs":[{"label":"Performance","diff":8,"winner":0}],"specsTable":[{"spec":"Price","values":["$X","$Y"]},{"spec":"Key Spec","values":["val","val"]},{"spec":"Rating","values":["4.3/5","4.1/5"]},{"spec":"Warranty","values":["val","val"]}],"summary":"4-5 sentence comprehensive verdict with clear buying recommendations for different buyer types"}';
   fetch('https://icy-hill-1036.neocaleband.workers.dev',{
     method:'POST',headers:{'Content-Type':'application/json'},
     body:JSON.stringify({model:'deepseek/deepseek-chat-v3-0324:free',max_tokens:4000,messages:[{role:'user',content:prompt}]})
@@ -785,8 +848,9 @@ function runCompare(){
   .catch(function(err){
     document.getElementById('loader').style.display='none';btn.disabled=false;
     document.getElementById('errBox').style.display='block';
-    document.getElementById('errBox').textContent='// ERROR: '+err.message+' — please retry';
+    document.getElementById('errBox').textContent='Something went wrong. Please try again with a different search.';
     document.getElementById('dealSections').style.display='block';
+    console.warn('Compare error');
   });
 }
 
@@ -802,141 +866,107 @@ function animSteps(){
 function showResult(data){
   if(!data||!data.products||!data.products.length){
     document.getElementById('errBox').style.display='block';
-    document.getElementById('errBox').textContent='// ERROR: could not parse results — retry';
+    document.getElementById('errBox').textContent='Could not load results. Try being more specific, e.g. "DeWalt DCD800 vs Milwaukee 2801-20".';
     document.getElementById('dealSections').style.display='block';return;
   }
   document.getElementById('resultZone').style.display='block';
-  document.getElementById('resTitle').textContent=data.query||'COMPARISON';
-  document.getElementById('resMeta').textContent='// '+data.products.length+'_products · AI_analyzed · review_based';
-  if(data.winner&&data.winner!=='null'&&data.winner!==null){
-    document.getElementById('winBar').style.display='flex';
+  document.getElementById('resTitle').textContent=data.query||'Comparison';
+  document.getElementById('resMeta').textContent=data.products.length+' products · AI-analyzed';
+  if(data.winner&&data.winner!=='null'&&data.winner){
+    document.getElementById('winStrip').style.display='flex';
     document.getElementById('winName').textContent=data.winner;
-    document.getElementById('winReason').textContent=data.winnerReason||'';
+    document.getElementById('winWhy').textContent=data.winnerReason||'';
   }
   var grid=document.getElementById('vsGrid');grid.innerHTML='';
   var n=data.products.length;
-  var cls=n===1?'one':n===2?'two':n===3?'three':'four';
-  var wrapper=document.createElement('div');wrapper.className='vs-grid '+cls;grid.appendChild(wrapper);
+  var cls={1:'g1',2:'g2',3:'g3',4:'g4'}[n]||'g2';
+  var wrap=document.createElement('div');wrap.className='vs-grid '+cls;grid.appendChild(wrap);
   for(var i=0;i<n;i++){
-    var c=document.createElement('div');wrapper.appendChild(c);
+    var c=document.createElement('div');wrap.appendChild(c);
     buildCard(c,data.products[i],data.products[i].name===data.winner,data,i);
   }
   if(data.specsTable&&data.specsTable.length){
-    document.getElementById('specBox').style.display='block';
-    var hdrs=['SPEC'];
-    for(var i=0;i<n;i++)hdrs.push(data.products[i].name);
+    document.getElementById('specCard').style.display='block';
+    var hdrs=['Spec'];for(var i=0;i<n;i++)hdrs.push(data.products[i].name);
     var html='<thead><tr>'+hdrs.map(function(h){return '<th>'+h+'</th>';}).join('')+'</tr></thead><tbody>';
     for(var i=0;i<data.specsTable.length;i++){
       var row=data.specsTable[i];
       html+='<tr><td>'+row.spec+'</td>'+(row.values||[]).map(function(v){return '<td>'+v+'</td>';}).join('')+'</tr>';
     }
-    html+='</tbody>';
-    document.getElementById('specTable').innerHTML=html;
+    document.getElementById('specTbl').innerHTML=html+'</tbody>';
   }
   if(data.summary){
-    document.getElementById('aiVerdict').style.display='block';
-    document.getElementById('aiBody').textContent=data.summary;
+    document.getElementById('aiCard').style.display='block';
+    document.getElementById('aiTxt').textContent=data.summary;
   }
   document.getElementById('dealSections').style.display='block';
+  document.getElementById('resultZone').scrollIntoView({behavior:'smooth',block:'start'});
 }
 
 function buildCard(el,p,isWin,data,idx){
-  el.className='pcard'+(isWin?' win':'');
+  el.className='pc'+(isWin?' winner':'');
   var imgUrl=amzImg(p.asin);
   var emoji=catEmoji(p.category||'');
   var bars='';
   var rkeys=Object.keys(p.ratings||{});
   for(var i=0;i<rkeys.length;i++){
     var k=rkeys[i],v=p.ratings[k];
-    bars+='<div class="statrow"><span class="stat-k">'+k+'</span><div class="stat-track"><div class="stat-fill'+(v>=80?' hi':'')+'" style="width:'+v+'%"></div></div><span class="stat-v">'+v+'</span></div>';
+    bars+='<div class="stat-row"><span class="stat-k">'+k+'</span><div class="stat-bar"><div class="stat-fill'+(v>=80?' hi':'')+'" style="width:'+v+'%"></div></div><span class="stat-v">'+v+'</span></div>';
   }
-
-  // Rating breakdown bars
-  var rb=p.ratingBreakdown||{};
-  var rbHtml='';
-  if(rb['5star']){
-    var rbs=[['5',rb['5star']||0],['4',rb['4star']||0],['3',rb['3star']||0],['2',rb['2star']||0],['1',rb['1star']||0]];
-    for(var i=0;i<rbs.length;i++){
-      rbHtml+='<div class="rev-bar-row"><span class="rev-bar-lbl">'+rbs[i][0]+'★</span><div class="rev-bar-track"><div class="rev-bar-fill" style="width:'+rbs[i][1]+'%"></div></div></div>';
-    }
-  }
-
-  // Point diffs
   var pdHtml='';
-  if(data.pointDiffs&&data.pointDiffs.length&&data.products.length>1){
-    pdHtml='<div class="pdiffs"><div class="pdiffs-title">// POINT_DIFFERENCES_VS_OPPONENTS</div>';
+  if(data.pointDiffs&&data.pointDiffs.length>0&&data.products.length>1){
+    pdHtml='<div class="pd-box"><div class="pd-title">Point differences</div>';
     for(var i=0;i<data.pointDiffs.length;i++){
       var pd=data.pointDiffs[i];var amW=(pd.winner===idx);
-      pdHtml+='<div class="pdrow"><span class="pd-k">'+pd.label+'</span><span class="pd-v '+(amW?'up':'dn')+'">'+(amW?'+':'-')+Math.abs(pd.diff)+' PTS</span></div>';
+      pdHtml+='<div class="pd-row"><span class="pd-k">'+pd.label+'</span><span class="pd-v '+(amW?'up':'dn')+'">'+(amW?'+':'-')+Math.abs(pd.diff)+' pts</span></div>';
     }
     pdHtml+='</div>';
   }
-
-  var pros=(p.pros||[]).map(function(x){return '<div class="pc-li">+ '+x+'</div>';}).join('');
-  var cons=(p.cons||[]).map(function(x){return '<div class="pc-li">- '+x+'</div>';}).join('');
-
-  // Key specs
+  var pros=(p.pros||[]).map(function(x){return '<div class="pc-li">✓ '+x+'</div>';}).join('');
+  var cons=(p.cons||[]).map(function(x){return '<div class="pc-li">✗ '+x+'</div>';}).join('');
+  var revs=(p.reviewHighlights||p.sampleReviews||[]).map(function(r){
+    return '<div class="rev-card '+(r.type==='positive'?'pos':r.type==='negative'?'neg':'')+'">'+
+      '<div class="rev-top"><span class="rev-stars">'+stars(r.stars)+' '+r.stars+'/5</span><span class="rev-type">'+(r.type||'verified')+'</span></div>'+
+      '<div class="rev-txt">"'+r.text+'"</div>'+
+      '<div class="rev-auth">— '+(r.author||'Verified Buyer')+'</div></div>';
+  }).join('');
   var specsHtml='';
   if(p.keySpecs){
     var sk=Object.keys(p.keySpecs);
     for(var i=0;i<sk.length;i++){
-      specsHtml+='<div class="desc-spec"><span class="desc-spec-k">'+sk[i]+':</span><span class="desc-spec-v">'+p.keySpecs[sk[i]]+'</span></div>';
+      specsHtml+='<div style="display:flex;gap:0.5rem;padding:0.2rem 0;font-size:0.73rem;"><span style="color:var(--text3);min-width:90px;">'+sk[i]+'</span><span style="color:var(--text);font-weight:500;">'+p.keySpecs[sk[i]]+'</span></div>';
     }
   }
-
-  // Reviews
-  var revHtml='';
-  var revs=p.reviewHighlights||p.sampleReviews||[];
-  for(var i=0;i<revs.length;i++){
-    var r=revs[i];
-    var rtype=r.type==='positive'?'pos':(r.type==='negative'?'neg':'');
-    revHtml+='<div class="rev-card '+rtype+'"><div class="rev-top"><span class="rev-stars">'+stars(r.stars)+' '+r.stars+'/5</span><span class="rev-type">'+(r.type||'verified')+'</span></div><div class="rev-body">"'+r.text+'"</div><div class="rev-author">— '+(r.author||'Verified Buyer')+'</div></div>';
-  }
-
-  var link=p.asin&&p.asin!=='B0XXXXXXXXX'&&p.asin.length>=10?
-    'https://www.amazon.com/dp/'+p.asin+'?tag='+TAG:
+  var link=p.asin&&p.asin.length>=10&&p.asin!=='B0XXXXXXXXX'?
+    'https://www.amazon.com/dp/'+p.asin+'?tag='+TAG+'&linkCode=ogi&th=1&psc=1':
     'https://www.amazon.com/s?tag='+TAG+'&k='+encodeURIComponent(p.affiliateSearch||p.name);
-
   var watching=false;
   for(var i=0;i<wl.length;i++){if(wl[i].name===p.name){watching=true;break;}}
-  var safeN=p.name.replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+  var safeN=(p.name||'').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
 
-  el.innerHTML='<div class="pcard-inner">'+
-    '<div class="pcard-top">'+
-      '<div class="pcard-img">'+(imgUrl?'<img src="'+imgUrl+'" alt="'+safeN+'" onerror="this.style.display=\'none\'">':'')+'<div class="pcard-img-ph">'+emoji+'</div></div>'+
-      '<div class="pcard-info"><div class="pcard-name">'+p.name+'</div><div class="pcard-cat">'+(p.category||'')+'</div><div class="pcard-rating">'+stars(Math.round(p.avgRating||4))+' '+(p.avgRating||'?')+' ('+(p.totalReviews||0).toLocaleString()+' reviews)</div></div>'+
-      '<div class="score-box"><div class="score-n '+(isWin?'top':'bot')+'">'+p.overallScore+'</div><div class="score-l">SCORE</div></div>'+
+  el.innerHTML=
+    '<div class="pc-img-wrap">'+
+      (isWin?'<div class="pc-winner-bar"></div>':'')+
+      (imgUrl?'<img class="pc-img" src="'+imgUrl+'" alt="'+safeN+'" onerror="this.style.display=\'none\'">':'')+
+      '<div class="pc-img-fallback">'+emoji+'</div>'+
+      '<div class="pc-score-badge '+(isWin?'win':'')+'">'+p.overallScore+'/100</div>'+
     '</div>'+
-
-    '<div class="desc-path">'+
-      '<div class="desc-path-title">// PRODUCT_OVERVIEW</div>'+
-      '<div class="desc-path-text">'+(p.description||p.reviewSummary||'')+'</div>'+
-      (specsHtml?'<div class="desc-specs">'+specsHtml+'</div>':'')+
-    '</div>'+
-
-    '<div class="statlist">'+bars+'</div>'+
-    pdHtml+
-
-    '<div class="pc"><div class="pc-col pros"><div class="pc-hd">++ STRENGTHS</div>'+pros+'</div><div class="pc-col cons"><div class="pc-hd">-- WEAKNESSES</div>'+cons+'</div></div>'+
-
-    '<div class="verdict'+(isWin?' win':'')+'">'+p.verdict+'</div>'+
-
-    '<div class="rev-section">'+
-      '<div class="rev-hd">// REVIEW_ANALYSIS</div>'+
-      '<div class="rev-avg">'+
-        '<div class="rev-avg-score">'+(p.avgRating||'?')+'</div>'+
-        '<div><div class="rev-avg-stars">'+stars(Math.round(p.avgRating||4))+'</div>'+
-        (rbHtml?'<div class="rev-bars">'+rbHtml+'</div>':'')+
-        '<div class="rev-avg-count">'+(p.totalReviews||0).toLocaleString()+' verified reviews</div></div>'+
-      '</div>'+
-      revHtml+
-    '</div>'+
-
-    '<a class="btn-amz" href="'+link+'" target="_blank" rel="noopener noreferrer nofollow">◈ VIEW ON AMAZON</a>'+
-    '<button class="btn-watch'+(watching?' saved':'')+'" data-p="'+safeN+'" onclick="addWL(this)">'+
-      (watching?'◈ WATCHING_FOR_DEALS':'◈ WATCH_FOR_DEALS')+
-    '</button>'+
-  '</div>';
+    '<div class="pc-body">'+
+      '<div class="pc-name">'+p.name+'</div>'+
+      '<div class="pc-cat">'+(p.category||'')+'</div>'+
+      '<div class="pc-rating">'+stars(Math.round(p.avgRating||4))+' '+(p.avgRating||'?')+' ('+(p.totalReviews||0).toLocaleString()+' reviews)</div>'+
+      '<div class="pc-summary">"'+(p.reviewSummary||'')+'"</div>'+
+      (specsHtml?'<div style="background:var(--bg3);border-radius:var(--radius-sm);padding:0.65rem;margin-bottom:0.85rem;">'+specsHtml+'</div>':'')+
+      '<div class="stat-list">'+bars+'</div>'+
+      pdHtml+
+      '<div class="pc-grid"><div class="pc-col pros"><div class="pc-hd">Pros</div>'+pros+'</div><div class="pc-col cons"><div class="pc-hd">Cons</div>'+cons+'</div></div>'+
+      '<div class="verdict-box'+(isWin?' win':'')+'">'+p.verdict+'</div>'+
+      '<div class="rev-sec"><div class="rev-lbl">What reviewers say</div>'+revs+'</div>'+
+      '<a class="amz-btn" href="'+link+'" target="_blank" rel="noopener noreferrer nofollow">🛒 View on Amazon</a>'+
+      '<button class="watch-btn'+(watching?' saved':'')+'" data-p="'+safeN+'" onclick="addWL(this)">'+
+        (watching?'✓ Watching for deals':'🔔 Watch for deals')+
+      '</button>'+
+    '</div>';
 }
 
 // AUTH
@@ -948,30 +978,34 @@ function switchTab(t){
   document.getElementById('regF').style.display=t==='register'?'block':'none';
   document.getElementById('mt1').className='mtab'+(t==='login'?' on':'');
   document.getElementById('mt2').className='mtab'+(t==='register'?' on':'');
-  document.getElementById('mTitle').textContent=t==='login'?'WELCOME_BACK':'CREATE_ACCOUNT';
-  document.getElementById('mSub').textContent=t==='login'?'// sign in to save and track deals':'// get notified when items go on sale';
+  document.getElementById('mTtl').textContent=t==='login'?'Welcome back':'Create your account';
+  document.getElementById('mSub').textContent=t==='login'?'Sign in to save comparisons and track deals':'Get notified when watchlist items go on sale';
 }
 function doLogin(){
-  var e=document.getElementById('le').value.trim(),p=document.getElementById('lp').value;
-  if(!e||!p){toast('// fill in all fields');return;}
+  var e=document.getElementById('le').value.trim().slice(0,200),p=document.getElementById('lp').value.slice(0,200);
+  if(!e||!p){toast('Please fill in all fields');return;}
+  if(!e.includes('@')){toast('Please enter a valid email');return;}
   var users=JSON.parse(localStorage.getItem('nc_users')||'[]'),found=null;
   for(var i=0;i<users.length;i++){if(users[i].email===e&&users[i].password===p){found=users[i];break;}}
-  if(!found){toast('// invalid credentials');return;}
+  if(!found){toast('Invalid email or password');return;}
   user=found;localStorage.setItem('nc_u',JSON.stringify(user));
-  closeOverlay('authOverlay');refreshNav();toast('// WELCOME_BACK: '+(user.name||user.email));
+  closeOverlay('authOverlay');refreshNav();toast('Welcome back, '+(user.name||user.email)+'!');
 }
 function doRegister(){
-  var n=document.getElementById('rn').value.trim(),e=document.getElementById('re').value.trim(),p=document.getElementById('rp').value;
-  if(!n||!e||!p){toast('// fill in all fields');return;}
-  if(p.length<6){toast('// password must be 6+ chars');return;}
+  var n=sanitize(document.getElementById('rn').value.trim()).slice(0,100);
+  var e=document.getElementById('re').value.trim().slice(0,200);
+  var p=document.getElementById('rp').value.slice(0,200);
+  if(!n||!e||!p){toast('Please fill in all fields');return;}
+  if(!e.includes('@')){toast('Please enter a valid email');return;}
+  if(p.length<6){toast('Password must be 6+ characters');return;}
   var users=JSON.parse(localStorage.getItem('nc_users')||'[]');
-  for(var i=0;i<users.length;i++){if(users[i].email===e){toast('// email already registered');return;}}
+  for(var i=0;i<users.length;i++){if(users[i].email===e){toast('Email already registered');return;}}
   var u={name:n,email:e,password:p,alerts:document.getElementById('ea').checked,joined:new Date().toISOString()};
   users.push(u);localStorage.setItem('nc_users',JSON.stringify(users));
   user=u;localStorage.setItem('nc_u',JSON.stringify(u));
-  closeOverlay('authOverlay');refreshNav();toast('// ACCOUNT_CREATED: welcome '+n);
+  closeOverlay('authOverlay');refreshNav();toast('Welcome, '+n+'! 🎉');
 }
-function logout(){user=null;localStorage.removeItem('nc_u');refreshNav();toast('// SIGNED_OUT');}
+function logout(){user=null;localStorage.removeItem('nc_u');refreshNav();toast('Signed out');}
 function refreshNav(){
   if(user){
     document.getElementById('navGuest').style.display='none';
@@ -983,40 +1017,47 @@ function refreshNav(){
     document.getElementById('navUser').style.display='none';
   }
 }
+function toggleTheme(){
+  theme=theme==='dark'?'light':'dark';
+  document.documentElement.setAttribute('data-theme',theme);
+  document.getElementById('themeBtn').textContent=theme==='dark'?'☀️':'🌙';
+  localStorage.setItem('nc_theme',theme);
+}
 function toggleWL(){
   var p=document.getElementById('wlPanel');
   p.style.display=p.style.display==='block'?'none':'block';renderWL();
 }
 function renderWL(){
   var el=document.getElementById('wlItems');
-  if(!wl.length){el.innerHTML='<div class="wl-empty">// NO_ITEMS — add from any comparison</div>';return;}
+  if(!wl.length){el.innerHTML='<div class="wl-empty">No products yet. Compare and click Watch for deals.</div>';return;}
   var h='';
   for(var i=0;i<wl.length;i++){
-    h+='<div class="wl-row"><div><div class="wl-name">'+wl[i].name+'</div><div class="wl-date">// added_'+new Date(wl[i].added).toLocaleDateString()+'</div></div><button class="wl-del" onclick="rmWL('+i+')">✕</button></div>';
+    h+='<div class="wl-row"><div><div class="wl-name">'+wl[i].name+'</div><div class="wl-date">Added '+new Date(wl[i].added).toLocaleDateString()+'</div></div><button class="wl-del" onclick="rmWL('+i+')">✕</button></div>';
   }
   el.innerHTML=h;
 }
 function addWL(btn){
   var name=btn.getAttribute('data-p');
-  if(!user){openM('register');toast('// create account to track deals');return;}
-  for(var i=0;i<wl.length;i++){if(wl[i].name===name){toast('// already on watchlist');return;}}
+  if(!user){openM('register');toast('Create an account to track deals!');return;}
+  for(var i=0;i<wl.length;i++){if(wl[i].name===name){toast('Already on your watchlist!');return;}}
   wl.push({name:name,added:new Date().toISOString()});
   localStorage.setItem('nc_wl',JSON.stringify(wl));
-  toast('// ADDED: '+name);
-  document.querySelectorAll('.btn-watch').forEach(function(b){
-    if(b.getAttribute('data-p')===name){b.textContent='◈ WATCHING_FOR_DEALS';b.className='btn-watch saved';}
+  toast(name+' added to watchlist! 🔔');
+  document.querySelectorAll('.watch-btn').forEach(function(b){
+    if(b.getAttribute('data-p')===name){b.textContent='✓ Watching for deals';b.className='watch-btn saved';}
   });
 }
-function rmWL(i){wl.splice(i,1);localStorage.setItem('nc_wl',JSON.stringify(wl));renderWL();toast('// REMOVED');}
+function rmWL(i){wl.splice(i,1);localStorage.setItem('nc_wl',JSON.stringify(wl));renderWL();toast('Removed from watchlist');}
 function sendContact(){
-  var n=document.getElementById('cName').value.trim();
-  var e=document.getElementById('cEmail').value.trim();
-  var m=document.getElementById('cMsg').value.trim();
-  if(!n||!e||!m){toast('// fill in all fields');return;}
+  var n=sanitize(document.getElementById('cName').value.trim()).slice(0,100);
+  var e=sanitize(document.getElementById('cEmail').value.trim()).slice(0,200);
+  var m=sanitize(document.getElementById('cMsg').value.trim()).slice(0,2000);
+  if(!n||!e||!m){toast('Please fill in all fields');return;}
+  if(!e.includes('@')){toast('Please enter a valid email');return;}
   var subject=encodeURIComponent('NeoComparison Message from '+n);
   var body=encodeURIComponent('Name: '+n+'\nEmail: '+e+'\n\nMessage:\n'+m);
   window.location.href='mailto:nesichtechnologies@gmail.com?subject='+subject+'&body='+body;
-  toast('// OPENING_EMAIL_CLIENT...');
+  toast('Opening your email client...');
   document.getElementById('cName').value='';document.getElementById('cEmail').value='';document.getElementById('cMsg').value='';
 }
 function toast(msg){
@@ -1025,8 +1066,6 @@ function toast(msg){
 }
 
 // INIT
-refreshNav();
-buildInputs(2);
 renderDeals('all');
 </script>
 </body>

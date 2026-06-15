@@ -142,6 +142,11 @@ nav{height:60px;display:flex;align-items:center;justify-content:space-between;pa
 .pc-cat{font-size:0.7rem;color:var(--text3);margin-bottom:0.3rem;}
 .pc-rating{font-size:0.75rem;color:var(--star);margin-bottom:0.75rem;}
 .pc-price{font-size:1.3rem;font-weight:800;color:var(--text);letter-spacing:-0.02em;margin-bottom:0.2rem;}
+.pc-price-row{display:flex;align-items:center;gap:0.5rem;flex-wrap:wrap;margin-bottom:0.65rem;padding:0.6rem 0.75rem;background:var(--bg3);border-radius:var(--radius-sm);}
+.pc-current-price{font-size:1.4rem;font-weight:800;color:var(--text);letter-spacing:-0.03em;}
+.pc-orig-price{font-size:0.85rem;color:var(--text3);text-decoration:line-through;}
+.pc-in-stock{font-size:0.68rem;font-weight:600;color:var(--green);background:var(--green-bg);padding:0.15rem 0.5rem;border-radius:100px;margin-left:auto;}
+.pc-oos{font-size:0.68rem;font-weight:600;color:var(--red);background:var(--red-bg);padding:0.15rem 0.5rem;border-radius:100px;margin-left:auto;}
 .pc-price-was{font-size:0.78rem;color:var(--text3);text-decoration:line-through;margin-right:0.3rem;}
 .pc-price-save{font-size:0.75rem;font-weight:600;color:var(--green);}
 .pc-summary{font-size:0.77rem;color:var(--text2);font-style:italic;line-height:1.5;margin-bottom:0.85rem;padding-bottom:0.85rem;border-bottom:1px solid var(--border);}
@@ -536,11 +541,30 @@ buildInputs(2);
 
 // Amazon affiliate image CDN — official affiliate image endpoint
 function amzImg(asin){
-  if(!asin||asin.length<10) return '';
+  if(!isValidAsin(asin)) return '';
   return 'https://ws-na.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN='+asin+'&Format=_SL300_&ID=AsinImage&MarketPlace=US&ServiceVersion=20070822&WS=1&tag='+TAG;
 }
+function isValidAsin(asin){
+  if(!asin||typeof asin!=='string') return false;
+  // Must be exactly 10 alphanumeric characters
+  if(!/^[A-Z0-9]{10}$/.test(asin)) return false;
+  // Must start with B0 (all modern Amazon product ASINs do)
+  if(!asin.startsWith('B0')) return false;
+  // Block known fake/placeholder patterns
+  var fakes=['B0XXXXXXXXX','B0ABC56789','B0E5F6G7H8','B0XYZ12345'];
+  if(fakes.indexOf(asin)>-1) return false;
+  // Block sequential-looking patterns (AI hallucinations like B0E5F6G7H8)
+  // Real ASINs don't have perfectly sequential alphanumeric runs
+  var seq=asin.slice(2);
+  var sequential=true;
+  for(var i=1;i<seq.length;i++){
+    if(seq.charCodeAt(i)-seq.charCodeAt(i-1)!==1){sequential=false;break;}
+  }
+  if(sequential) return false;
+  return true;
+}
 function amzLink(asin,searchTerm){
-  if(asin&&asin.length>=10) return 'https://www.amazon.com/dp/'+asin+'/?tag='+TAG;
+  if(isValidAsin(asin)) return 'https://www.amazon.com/dp/'+asin+'/?tag='+TAG;
   return 'https://www.amazon.com/s?tag='+TAG+'&k='+encodeURIComponent(searchTerm||'');
 }
 
@@ -965,8 +989,9 @@ function buildCard(el,p,isWin,data,idx){
     '</div>'+
     '<div class="pc-body">'+
       '<div class="pc-name">'+p.name+'</div>'+
-      '<div class="pc-cat">'+(p.category||'')+'</div>'+
+      '<div class="pc-cat">'+(p.brand?p.brand+' · ':'')+''+(p.category||'')+'</div>'+
       '<div class="pc-rating">'+stars(Math.round(p.avgRating||4))+' '+(p.avgRating||'?')+' ('+(p.totalReviews||0).toLocaleString()+' reviews)</div>'+
+      (p.currentPrice?'<div class="pc-price-row"><span class="pc-current-price">'+p.currentPrice+'</span>'+(p.originalPrice&&p.originalPrice!==p.currentPrice?'<span class="pc-orig-price">'+p.originalPrice+'</span>':'')+(p.inStock===false?'<span class="pc-oos">Out of Stock</span>':'<span class="pc-in-stock">In Stock</span>')+'</div>':'')+
       '<div class="pc-summary">"'+(p.reviewSummary||'')+'"</div>'+
       (specsHtml?'<div style="background:var(--bg3);border-radius:var(--radius-sm);padding:0.65rem;margin-bottom:0.85rem;">'+specsHtml+'</div>':'')+
       '<div class="stat-list">'+bars+'</div>'+

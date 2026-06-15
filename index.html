@@ -540,7 +540,7 @@ function amzImg(asin){
   return 'https://ws-na.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN='+asin+'&Format=_SL300_&ID=AsinImage&MarketPlace=US&ServiceVersion=20070822&WS=1&tag='+TAG;
 }
 function amzLink(asin,searchTerm){
-  if(asin&&asin.length>=10) return 'https://www.amazon.com/dp/'+asin+'?tag='+TAG+'&linkCode=ogi&th=1&psc=1';
+  if(asin&&asin.length>=10) return 'https://www.amazon.com/dp/'+asin+'/?tag='+TAG;
   return 'https://www.amazon.com/s?tag='+TAG+'&k='+encodeURIComponent(searchTerm||'');
 }
 
@@ -579,20 +579,20 @@ var PRODUCTS={
     {cat:'SECURITY',name:'Ring Stick Up Cam Battery HD',asin:'B07Q6ZZFLS',rating:4.6,rev:31000,price:'$40',priceNum:40,was:'$80',save:'50%',flag:'hot',prime:true,search:'Ring Stick Up Cam Battery outdoor'},
     {cat:'HOME_KITCHEN',name:'Instant Pot Duo 7-in-1 8Qt',asin:'B00FLYWNYQ',rating:4.7,rev:98000,price:'$59',priceNum:59,was:'$129',save:'54%',flag:'hot',prime:true,search:'Instant Pot Duo 8 quart'},
     {cat:'GAMING',name:'PS5 DualSense Wireless Controller',asin:'B08FC6C75Y',rating:4.8,rev:45000,price:'$49',priceNum:49,was:'$69',save:'29%',flag:'sale',prime:true,search:'PS5 DualSense controller'},
-    {cat:'TECH',name:'Google Pixel 10 Pro 128GB',asin:'B0DKQSB84D',rating:4.4,rev:900,price:'$749',priceNum:749,was:'$999',save:'25%',flag:'hot',prime:true,search:'Google Pixel 10 Pro'},
-    {cat:'ENTERTAINMENT',name:'Victrola Journey+ Record & Cassette Player',asin:'B0C7QPQZJV',rating:4.3,rev:2400,price:'$50',priceNum:50,was:'$120',save:'58%',flag:'hot',prime:true,search:'Victrola Journey Plus record player'},
+    {cat:'TECH',name:'Google Pixel 10 Pro 128GB Unlocked',asin:'B0FFTT2J6N',rating:4.4,rev:900,price:'$749',priceNum:749,was:'$999',save:'25%',flag:'hot',prime:true,search:'Google Pixel 10 Pro'},
+    {cat:'ENTERTAINMENT',name:'Victrola Journey+ Bluetooth Suitcase Record Player',asin:'B09855KFX1',rating:4.3,rev:2400,price:'$50',priceNum:50,was:'$120',save:'58%',flag:'hot',prime:true,search:'Victrola Journey Plus record player'},
     {cat:'POWER_TOOLS',name:'Milwaukee M12 FUEL 1/2" Drill Kit',asin:'B01NAWVLBE',rating:4.9,rev:14200,price:'$74',priceNum:74,was:'$149',save:'50%',flag:'hot',prime:true,search:'Milwaukee M12 FUEL drill kit'},
     {cat:'HOME_KITCHEN',name:'Ninja DZ401 Dual Zone Air Fryer 10Qt',asin:'B08DV4JC88',rating:4.8,rev:41000,price:'$99',priceNum:99,was:'$199',save:'50%',flag:'hot',prime:true,search:'Ninja DZ401 air fryer'},
     {cat:'AUDIO',name:'Sony WH-1000XM5 Headphones',asin:'B09XS7JWHH',rating:4.8,rev:67000,price:'$229',priceNum:229,was:'$349',save:'34%',flag:'hot',prime:true,search:'Sony WH-1000XM5 headphones'},
   ],
   gpu:[
     {cat:'GRAPHICS_CARD',name:'NVIDIA RTX 4070 Super 12GB',asin:'B0CQSQC7GD',rating:4.8,rev:4200,price:'$499',priceNum:499,was:'$599',save:'17%',flag:'sale',prime:true,search:'RTX 4070 Super graphics card'},
-    {cat:'GRAPHICS_CARD',name:'NVIDIA GeForce RTX 5060 Ti 16GB',asin:'',rating:4.8,rev:1200,price:'$499',priceNum:499,was:'$599',save:'17%',flag:'new',prime:false,search:'RTX 5060 Ti 16GB graphics card'},
-    {cat:'GRAPHICS_CARD',name:'AMD Radeon RX 9070 XT 16GB',asin:'',rating:4.7,rev:980,price:'$549',priceNum:549,was:'$699',save:'21%',flag:'new',prime:false,search:'AMD RX 9070 XT graphics card'},
+    {cat:'GRAPHICS_CARD',name:'NVIDIA GeForce RTX 5060 Ti 16GB',asin:'B0FFLSN4CP',rating:4.8,rev:1200,price:'$499',priceNum:499,was:'$599',save:'17%',flag:'new',prime:false,search:'NVIDIA RTX 5060 Ti 16GB'},
+    {cat:'GRAPHICS_CARD',name:'AMD Radeon RX 9070 XT 16GB',asin:'B0FFM8S5F4',rating:4.7,rev:980,price:'$549',priceNum:549,was:'$699',save:'21%',flag:'new',prime:false,search:'AMD Radeon RX 9070 XT'},
     {cat:'MEMORY',name:'Corsair Vengeance 32GB DDR5 6000MHz',asin:'B09NNVR6JP',rating:4.8,rev:11400,price:'$79',priceNum:79,was:'$139',save:'43%',flag:'hot',prime:true,search:'Corsair 32GB DDR5 6000'},
     {cat:'STORAGE',name:'WD Black SN850X 2TB NVMe SSD',asin:'B0B7CKVCCV',rating:4.8,rev:14200,price:'$99',priceNum:99,was:'$199',save:'50%',flag:'hot',prime:true,search:'WD Black SN850X 2TB'},
-    {cat:'PROCESSOR',name:'AMD Ryzen 7 9800X3D',asin:'',rating:4.9,rev:5600,price:'$449',priceNum:449,was:'$479',save:'6%',flag:'new',prime:false,search:'AMD Ryzen 7 9800X3D processor'},
-    {cat:'PROCESSOR',name:'Intel Core Ultra 7 265K',asin:'',rating:4.7,rev:3200,price:'$299',priceNum:299,was:'$394',save:'24%',flag:'sale',prime:false,search:'Intel Core Ultra 7 265K processor'},
+    {cat:'PROCESSOR',name:'AMD Ryzen 7 9800X3D',asin:'B0DW48G6DH',rating:4.9,rev:5600,price:'$449',priceNum:449,was:'$479',save:'6%',flag:'new',prime:false,search:'AMD Ryzen 7 9800X3D'},
+    {cat:'PROCESSOR',name:'Intel Core Ultra 7 265K',asin:'B0CHJT4XSP',rating:4.7,rev:3200,price:'$299',priceNum:299,was:'$394',save:'24%',flag:'sale',prime:false,search:'Intel Core Ultra 7 265K'},
     {cat:'STORAGE',name:'Samsung 990 Pro 2TB NVMe SSD',asin:'B0BHJJ9Y77',rating:4.9,rev:23100,price:'$99',priceNum:99,was:'$189',save:'48%',flag:'hot',prime:true,search:'Samsung 990 Pro 2TB'},
   ],
   tech:[
@@ -654,10 +654,10 @@ var PC_PICKS=[
   {cat:'STORAGE',name:'WD Black SN850X 2TB NVMe SSD',asin:'B0B7CKVCCV',rating:4.8,rev:14200,price:'$99',priceNum:99,was:'$199',save:'50%',flag:'hot',prime:true,search:'WD Black SN850X 2TB'},
   {cat:'STORAGE',name:'Samsung 990 Pro 2TB NVMe SSD',asin:'B0BHJJ9Y77',rating:4.9,rev:23100,price:'$99',priceNum:99,was:'$189',save:'48%',flag:'hot',prime:true,search:'Samsung 990 Pro 2TB'},
   {cat:'GRAPHICS_CARD',name:'NVIDIA RTX 4070 Super 12GB',asin:'B0CQSQC7GD',rating:4.8,rev:4200,price:'$499',priceNum:499,was:'$599',save:'17%',flag:'sale',prime:true,search:'RTX 4070 Super'},
-  {cat:'GRAPHICS_CARD',name:'NVIDIA RTX 5060 Ti 16GB',asin:'',rating:4.8,rev:1200,price:'$499',priceNum:499,was:'$599',save:'17%',flag:'new',prime:false,search:'NVIDIA RTX 5060 Ti 16GB'},
-  {cat:'GRAPHICS_CARD',name:'AMD Radeon RX 9070 XT',asin:'',rating:4.7,rev:980,price:'$549',priceNum:549,was:'$699',save:'21%',flag:'new',prime:false,search:'AMD Radeon RX 9070 XT'},
-  {cat:'PROCESSOR',name:'Intel Core Ultra 7 265K',asin:'',rating:4.7,rev:3200,price:'$299',priceNum:299,was:'$394',save:'24%',flag:'sale',prime:false,search:'Intel Core Ultra 7 265K'},
-  {cat:'PROCESSOR',name:'AMD Ryzen 7 9800X3D',asin:'',rating:4.9,rev:5600,price:'$449',priceNum:449,was:'$479',save:'6%',flag:'new',prime:false,search:'AMD Ryzen 7 9800X3D'},
+  {cat:'GRAPHICS_CARD',name:'NVIDIA RTX 5060 Ti 16GB',asin:'B0FFLSN4CP',rating:4.8,rev:1200,price:'$499',priceNum:499,was:'$599',save:'17%',flag:'new',prime:false,search:'NVIDIA RTX 5060 Ti 16GB'},
+  {cat:'GRAPHICS_CARD',name:'AMD Radeon RX 9070 XT',asin:'B0FFM8S5F4',rating:4.7,rev:980,price:'$549',priceNum:549,was:'$699',save:'21%',flag:'new',prime:false,search:'AMD Radeon RX 9070 XT'},
+  {cat:'PROCESSOR',name:'Intel Core Ultra 7 265K',asin:'B0CHJT4XSP',rating:4.7,rev:3200,price:'$299',priceNum:299,was:'$394',save:'24%',flag:'sale',prime:false,search:'Intel Core Ultra 7 265K'},
+  {cat:'PROCESSOR',name:'AMD Ryzen 7 9800X3D',asin:'B0DW48G6DH',rating:4.9,rev:5600,price:'$449',priceNum:449,was:'$479',save:'6%',flag:'new',prime:false,search:'AMD Ryzen 7 9800X3D'},
 ];
 
 function sortItems(items){
@@ -828,7 +828,7 @@ function runCompare(){
     document.getElementById('dealSections').style.display='block';
     return;
   }
-  var prompt='You are an expert product reviewer. Analyze: "'+q+'". Return ONLY valid JSON:\n{"query":"short title","products":[{"name":"Exact Product Name","category":"type","asin":"B0XXXXXXXXX","overallScore":87,"description":"2-3 sentence overview of what this product is and who it is for","keySpecs":{"Key Spec 1":"value","Key Spec 2":"value","Key Spec 3":"value","Key Spec 4":"value"},"reviewSummary":"one sentence reviewer consensus","avgRating":4.3,"totalReviews":2847,"ratings":{"Performance":88,"Value":75,"Build Quality":90,"Ease of Use":82,"Reliability":85},"pros":["specific strength 1","specific strength 2","specific strength 3"],"cons":["specific weakness 1","specific weakness 2"],"reviewHighlights":[{"stars":5,"text":"positive quote","author":"Verified Buyer","type":"positive"},{"stars":2,"text":"critical quote","author":"Verified Buyer","type":"negative"}],"verdict":"2-3 honest sentences with specific buying advice","affiliateSearch":"best amazon search for this product"}],"winner":"winning product name or null","winnerReason":"one sentence why","pointDiffs":[{"label":"Performance","diff":8,"winner":0}],"specsTable":[{"spec":"Price","values":["$X","$Y"]},{"spec":"Key Spec","values":["val","val"]},{"spec":"Rating","values":["4.3/5","4.1/5"]},{"spec":"Warranty","values":["val","val"]}],"summary":"4-5 sentence comprehensive verdict with clear buying recommendations for different buyer types"}';
+  var prompt='You are an expert product reviewer. Analyze: "'+q+'". Return ONLY valid JSON:\n{"query":"short title","products":[{"name":"Exact Product Name","category":"type","overallScore":87,"description":"2-3 sentence overview of what this product is and who it is for","keySpecs":{"Key Spec 1":"value","Key Spec 2":"value","Key Spec 3":"value","Key Spec 4":"value"},"reviewSummary":"one sentence reviewer consensus","avgRating":4.3,"totalReviews":2847,"ratings":{"Performance":88,"Value":75,"Build Quality":90,"Ease of Use":82,"Reliability":85},"pros":["specific strength 1","specific strength 2","specific strength 3"],"cons":["specific weakness 1","specific weakness 2"],"reviewHighlights":[{"stars":5,"text":"positive quote","author":"Verified Buyer","type":"positive"},{"stars":2,"text":"critical quote","author":"Verified Buyer","type":"negative"}],"verdict":"2-3 honest sentences with specific buying advice","affiliateSearch":"best amazon search for this product"}],"winner":"winning product name or null","winnerReason":"one sentence why","pointDiffs":[{"label":"Performance","diff":8,"winner":0}],"specsTable":[{"spec":"Price","values":["$X","$Y"]},{"spec":"Key Spec","values":["val","val"]},{"spec":"Rating","values":["4.3/5","4.1/5"]},{"spec":"Warranty","values":["val","val"]}],"summary":"4-5 sentence comprehensive verdict with clear buying recommendations for different buyer types"}';
   fetch('https://icy-hill-1036.neocaleband.workers.dev',{
     method:'POST',headers:{'Content-Type':'application/json'},
     body:JSON.stringify({model:'deepseek/deepseek-chat-v3-0324:free',max_tokens:4000,messages:[{role:'user',content:prompt}]})
@@ -863,6 +863,19 @@ function animSteps(){
   },700);
 }
 
+function isFakeAsin(str){
+  // Detects placeholder/hallucinated ASINs like B0ABC56789, B0XXXXXXXXX etc.
+  if(!str||str.length<10) return true;
+  if(str==='B0XXXXXXXXX') return true;
+  // Real ASINs don't have sequential letters like ABCDE or repeated chars
+  if(/B0ABC|B0XYZ|B0XXX|B012345|B09876/.test(str)) return true;
+  return false;
+}
+function safeAmzLink(name, affiliateSearch){
+  // Always use search — 100% guaranteed to work, still earns commission
+  var q = affiliateSearch || name || '';
+  return 'https://www.amazon.com/s?tag='+TAG+'&k='+encodeURIComponent(q);
+}
 function showResult(data){
   if(!data||!data.products||!data.products.length){
     document.getElementById('errBox').style.display='block';
@@ -905,7 +918,7 @@ function showResult(data){
 
 function buildCard(el,p,isWin,data,idx){
   el.className='pc'+(isWin?' winner':'');
-  var imgUrl=amzImg(p.asin);
+  var imgUrl=''; // Don't use AI ASINs for images - they're often fake
   var emoji=catEmoji(p.category||'');
   var bars='';
   var rkeys=Object.keys(p.ratings||{});
@@ -937,9 +950,8 @@ function buildCard(el,p,isWin,data,idx){
       specsHtml+='<div style="display:flex;gap:0.5rem;padding:0.2rem 0;font-size:0.73rem;"><span style="color:var(--text3);min-width:90px;">'+sk[i]+'</span><span style="color:var(--text);font-weight:500;">'+p.keySpecs[sk[i]]+'</span></div>';
     }
   }
-  var link=p.asin&&p.asin.length>=10&&p.asin!=='B0XXXXXXXXX'?
-    'https://www.amazon.com/dp/'+p.asin+'?tag='+TAG+'&linkCode=ogi&th=1&psc=1':
-    'https://www.amazon.com/s?tag='+TAG+'&k='+encodeURIComponent(p.affiliateSearch||p.name);
+  // Always use search - AI ASINs are unreliable and cause 404s
+  var link=safeAmzLink(p.name, p.affiliateSearch);
   var watching=false;
   for(var i=0;i<wl.length;i++){if(wl[i].name===p.name){watching=true;break;}}
   var safeN=(p.name||'').replace(/"/g,'&quot;').replace(/'/g,'&#39;');

@@ -853,36 +853,44 @@ function runCompare(){
     return;
   }
   var prompt='Analyze these products for a comparison: '+q+'\n\nRespond ONLY with this exact JSON structure, no other text:\n{\n"query":"short title",\n"products":[{\n"name":"exact product name",\n"category":"product type",\n"overallScore":85,\n"reviewSummary":"one sentence summary",\n"avgRating":4.3,\n"totalReviews":5000,\n"ratings":{"Performance":85,"Value":80,"Build Quality":88,"Ease of Use":82,"Reliability":84},\n"pros":["pro 1","pro 2","pro 3"],\n"cons":["con 1","con 2"],\n"reviewHighlights":[{"stars":5,"text":"positive review","author":"Verified Buyer","type":"positive"},{"stars":2,"text":"negative review","author":"Verified Buyer","type":"negative"}],\n"verdict":"2 sentence buying advice",\n"currentPrice":"$XX",\n"affiliateSearch":"product name for amazon search"\n}],\n"winner":"product name or null",\n"winnerReason":"why it wins",\n"pointDiffs":[{"label":"Performance","diff":5,"winner":0},{"label":"Value","diff":3,"winner":1}],\n"specsTable":[{"spec":"Price","values":["$X","$Y"]},{"spec":"Rating","values":["4.3/5","4.1/5"]},{"spec":"Best For","values":["use case","use case"]}],\n"summary":"3 sentence final verdict"\n}';
-  fetch('https://icy-hill-1036.neocaleband.workers.dev',{
-    method:'POST',headers:{'Content-Type':'application/json'},
-    body:JSON.stringify({model:'deepseek/deepseek-chat-v3-0324:free',max_tokens:4000,messages:[{role:'user',content:prompt}]})
-  })
-  .then(function(r){
-    if(!r.ok) throw new Error('API error '+r.status);
-    return r.json();
-  })
-  .then(function(data){
-    var raw='';
-    if(!data||!data.content){throw new Error('Empty response from API');}
-    for(var i=0;i<data.content.length;i++){if(data.content[i].text)raw+=data.content[i].text;}
-    // Strip markdown code fences
-    raw=raw.replace(/```json/g,'').replace(/```/g,'').trim();
-    // Extract JSON object
-    var js=raw.indexOf('{'),je=raw.lastIndexOf('}');
-    if(js===-1||je===-1) throw new Error('No JSON found in response');
-    raw=raw.substring(js,je+1);
-    var result=JSON.parse(raw);
-    document.getElementById('loader').style.display='none';
-    btn.disabled=false;
-    showResult(result);
-  })
-  .catch(function(err){
-    document.getElementById('loader').style.display='none';
-    btn.disabled=false;
-    document.getElementById('errBox').style.display='block';
-    document.getElementById('errBox').textContent='Comparison failed — please try again. If it keeps failing, try being more specific (e.g. "DeWalt DCD800 vs Milwaukee M18 2801-20").';
-    document.getElementById('dealsZone').style.display='block';
-  });
+  var MODELS=['deepseek/deepseek-chat-v3-0324:free','meta-llama/llama-3.1-8b-instruct:free','mistralai/mistral-7b-instruct:free'];
+  function tryModel(idx){
+    if(idx>=MODELS.length){
+      document.getElementById('loader').style.display='none';
+      btn.disabled=false;
+      document.getElementById('errBox').style.display='block';
+      document.getElementById('errBox').textContent='Service is temporarily busy. Please try again in a moment.';
+      document.getElementById('dealsZone').style.display='block';
+      return;
+    }
+    fetch('https://icy-hill-1036.neocaleband.workers.dev',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({model:MODELS[idx],max_tokens:2000,messages:[{role:'user',content:prompt}]})
+    })
+    .then(function(r){
+      if(!r.ok) throw new Error('HTTP '+r.status);
+      return r.json();
+    })
+    .then(function(data){
+      if(!data||!data.content||!data.content.length) throw new Error('Empty response');
+      var raw='';
+      for(var i=0;i<data.content.length;i++){if(data.content[i].text)raw+=data.content[i].text;}
+      raw=raw.replace(/```json/g,'').replace(/```/g,'').trim();
+      var js=raw.indexOf('{'),je=raw.lastIndexOf('}');
+      if(js===-1||je===-1) throw new Error('No JSON in response');
+      raw=raw.substring(js,je+1);
+      var result=JSON.parse(raw);
+      if(!result.products||!result.products.length) throw new Error('No products in response');
+      document.getElementById('loader').style.display='none';
+      btn.disabled=false;
+      showResult(result);
+    })
+    .catch(function(){
+      tryModel(idx+1);
+    });
+  }
+  tryModel(0);
 }
 
 function animSteps(){
